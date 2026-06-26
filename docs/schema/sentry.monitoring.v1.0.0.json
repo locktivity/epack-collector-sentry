@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sentry.monitoring.v1.0.0.json",
+  "title": "Sentry Monitoring Collector Output",
+  "description": "Schema for the sentry collector detailed artifact at all collection levels.",
+  "type": "object",
+  "required": ["schema_version", "collected_at", "collected_at_level", "organization", "monitoring_summary", "diagnostics"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "collected_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "collected_at_level": {
+      "type": "string",
+      "enum": ["trust", "audit", "internal"]
+    },
+    "organization": {
+      "type": "string"
+    },
+    "monitoring_summary": {
+      "$ref": "#/$defs/monitoring_summary"
+    },
+    "monitors": {
+      "$ref": "#/$defs/monitor_metrics"
+    },
+    "alert_rules": {
+      "$ref": "#/$defs/alert_rule_metrics"
+    },
+    "users": {
+      "$ref": "#/$defs/user_metrics"
+    },
+    "teams": {
+      "$ref": "#/$defs/team_metrics"
+    },
+    "diagnostics": {
+      "$ref": "#/$defs/diagnostics"
+    }
+  },
+  "$defs": {
+    "monitoring_summary": {
+      "type": "object",
+      "required": ["alerts_or_monitors_enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "alerts_or_monitors_enabled": { "type": "boolean" },
+        "total_monitoring_rules": { "type": "integer" },
+        "cron_monitors": { "type": "integer" },
+        "alert_rules": { "type": "integer" },
+        "with_actions_pct": { "type": "integer" }
+      }
+    },
+    "monitor_metrics": {
+      "type": "object",
+      "required": ["total_count", "active_count", "disabled_count", "muted_count", "with_alert_targets_count", "denominator_monitors"],
+      "additionalProperties": false,
+      "properties": {
+        "total_count": { "type": "integer" },
+        "active_count": { "type": "integer" },
+        "disabled_count": { "type": "integer" },
+        "muted_count": { "type": "integer" },
+        "with_alert_targets_count": { "type": "integer" },
+        "with_alert_targets_pct": { "type": ["integer", "null"] },
+        "denominator_monitors": { "type": "integer" },
+        "inventory": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/monitor_inventory" }
+        }
+      }
+    },
+    "monitor_inventory": {
+      "type": "object",
+      "required": ["id", "name", "type", "status", "is_muted", "schedule_type", "schedule", "project", "connected_workflows", "environments"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "status": { "type": "string" },
+        "is_muted": { "type": "boolean" },
+        "schedule_type": { "type": "string" },
+        "schedule": {},
+        "project": { "type": "string" },
+        "owner": { "type": "string" },
+        "connected_workflows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["target_type", "target_identifier"],
+            "additionalProperties": false,
+            "properties": {
+              "target_type": { "type": "string" },
+              "target_identifier": { "type": "integer" }
+            }
+          }
+        },
+        "latest_group": {
+          "type": "object",
+          "required": ["environment", "status"],
+          "additionalProperties": false,
+          "properties": {
+            "environment": { "type": "string" },
+            "status": { "type": "string" },
+            "last_check_in": { "type": ["string", "null"], "format": "date-time" },
+            "next_check_in": { "type": ["string", "null"], "format": "date-time" },
+            "active_incident": {
+              "type": ["object", "null"],
+              "properties": {
+                "starting_timestamp": { "type": "string", "format": "date-time" },
+                "resolving_timestamp": { "type": ["string", "null"], "format": "date-time" }
+              }
+            }
+          }
+        },
+        "environments": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "open_alert_count": { "type": "integer" }
+      }
+    },
+    "alert_rule_metrics": {
+      "type": "object",
+      "required": ["total_count", "metric_alert_count", "issue_alert_count", "with_actions_count", "denominator_alert_rules"],
+      "additionalProperties": false,
+      "properties": {
+        "total_count": { "type": "integer" },
+        "metric_alert_count": { "type": "integer" },
+        "issue_alert_count": { "type": "integer" },
+        "with_actions_count": { "type": "integer" },
+        "with_actions_pct": { "type": ["integer", "null"] },
+        "denominator_alert_rules": { "type": "integer" },
+        "inventory": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/alert_rule_inventory" }
+        }
+      }
+    },
+    "alert_rule_inventory": {
+      "type": "object",
+      "required": ["id", "name", "type", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "status": {},
+        "aggregate": { "type": "string" },
+        "time_window_minutes": { "type": "number" },
+        "threshold_type": { "type": "string" },
+        "detection_type": { "type": "string" },
+        "project": { "type": "string" },
+        "environment": { "type": "string" },
+        "owner": { "type": "string" },
+        "triggers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "alert_threshold", "actions"],
+            "additionalProperties": false,
+            "properties": {
+              "label": { "type": "string" },
+              "alert_threshold": { "type": "number" },
+              "actions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["type", "target_type"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": { "type": "string" },
+                    "target_type": { "type": "string" },
+                    "integration_id": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "date_created": { "type": "string" }
+      }
+    },
+    "user_metrics": {
+      "type": "object",
+      "required": ["total_count", "active_count", "pending_count", "has_2fa_count", "sso_linked_count", "denominator_active_users"],
+      "additionalProperties": false,
+      "properties": {
+        "total_count": { "type": "integer" },
+        "active_count": { "type": "integer" },
+        "pending_count": { "type": "integer" },
+        "has_2fa_count": { "type": "integer" },
+        "has_2fa_pct": { "type": ["integer", "null"] },
+        "sso_linked_count": { "type": "integer" },
+        "sso_linked_pct": { "type": ["integer", "null"] },
+        "denominator_active_users": { "type": "integer" },
+        "inventory": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/user_inventory" }
+        }
+      }
+    },
+    "user_inventory": {
+      "type": "object",
+      "required": ["id", "email", "name", "org_role", "has_2fa", "sso_linked", "is_active"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "org_role": { "type": "string" },
+        "has_2fa": { "type": "boolean" },
+        "sso_linked": { "type": "boolean" },
+        "is_active": { "type": "boolean" },
+        "date_created": { "type": "string" },
+        "last_active": { "type": "string" },
+        "team_memberships": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["team_slug", "team_role"],
+            "additionalProperties": false,
+            "properties": {
+              "team_slug": { "type": "string" },
+              "team_role": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "team_metrics": {
+      "type": "object",
+      "required": ["total_count", "with_members_count"],
+      "additionalProperties": false,
+      "properties": {
+        "total_count": { "type": "integer" },
+        "with_members_count": { "type": "integer" },
+        "inventory": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/team_inventory" }
+        }
+      }
+    },
+    "team_inventory": {
+      "type": "object",
+      "required": ["id", "slug", "name", "member_count", "project_count"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "member_count": { "type": "integer" },
+        "project_count": { "type": "integer" },
+        "date_created": { "type": "string" },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["user_id", "email", "team_role"],
+            "additionalProperties": false,
+            "properties": {
+              "user_id": { "type": "string" },
+              "email": { "type": "string" },
+              "team_role": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "object",
+      "required": ["errors", "warnings", "truncation"],
+      "additionalProperties": false,
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "warnings": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "truncation": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    }
+  }
+}

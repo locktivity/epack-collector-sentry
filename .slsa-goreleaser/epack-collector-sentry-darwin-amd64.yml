@@ -1,0 +1,13 @@
+version: 1
+env:
+  - CGO_ENABLED=0
+flags:
+  - -trimpath
+ldflags:
+  - "-s"
+  - "-w"
+  - "-X main.Version={{ .Env.VERSION }}"
+main: ./cmd/epack-collector-sentry
+goos: darwin
+goarch: amd64
+binary: epack-collector-sentry-darwin-amd64
