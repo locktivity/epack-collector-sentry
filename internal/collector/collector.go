@@ -205,6 +205,6 @@ func (c *Collector) classifyError(err error) error {
 	case http.StatusForbidden:
 		return componentsdk.NewAuthError("token missing required scope (need org:read, alerts:read)")
 	default:
-		return componentsdk.NewNetworkError("sentry API error (status %d): %s", apiErr.StatusCode, apiErr.Body)
+		return componentsdk.NewNetworkError("sentry API error (status %d)", apiErr.StatusCode)
 	}
 }

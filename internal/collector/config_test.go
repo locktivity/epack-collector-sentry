@@ -68,3 +68,28 @@ func TestParseConfig_NilConfig(t *testing.T) {
 	}
 }
 
+func TestParseConfig_SentryURLRejectsHTTP(t *testing.T) {
+	raw := map[string]any{
+		"organization": "acme",
+		"sentry_url":   "http://sentry.example.com",
+	}
+	_, err := ParseConfig(raw)
+	if err == nil {
+		t.Fatal("expected error for http:// sentry_url")
+	}
+}
+
+func TestParseConfig_SentryURLAcceptsHTTPS(t *testing.T) {
+	raw := map[string]any{
+		"organization": "acme",
+		"sentry_url":   "https://sentry.example.com",
+	}
+	cfg, err := ParseConfig(raw)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.SentryURL != "https://sentry.example.com" {
+		t.Errorf("SentryURL = %q, want %q", cfg.SentryURL, "https://sentry.example.com")
+	}
+}
+

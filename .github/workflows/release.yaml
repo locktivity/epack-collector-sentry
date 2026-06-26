@@ -69,7 +69,6 @@ jobs:
       go-version-file: go.mod
       config-file: .slsa-goreleaser/epack-collector-sentry-${{ matrix.os }}-${{ matrix.arch }}.yml
       evaluated-envs: "VERSION:${{ needs.args.outputs.version }}"
-      private-repository: true
 
   # Create GitHub Release with all artifacts
   release:

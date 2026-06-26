@@ -1,6 +1,9 @@
 package collector
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Config struct {
 	Organization string
@@ -30,6 +33,9 @@ func ParseConfig(raw map[string]any) (Config, error) {
 		s, ok := v.(string)
 		if !ok {
 			return cfg, fmt.Errorf("config key 'sentry_url' must be a string")
+		}
+		if s != "" && !strings.HasPrefix(s, "https://") {
+			return cfg, fmt.Errorf("config key 'sentry_url' must use https://")
 		}
 		cfg.SentryURL = s
 	}
