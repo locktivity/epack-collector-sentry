@@ -61,7 +61,7 @@ jobs:
         run: go build -o epack-collector-sentry ./cmd/epack-collector-sentry
 
       - name: Install epack-conformance
-        run: go install -tags conformance github.com/locktivity/epack/cmd/epack-conformance@latest
+        run: go install -tags conformance github.com/locktivity/epack/cmd/epack-conformance@v0.1.34
 
       - name: Run conformance tests
         run: epack-conformance collector ./epack-collector-sentry --level standard

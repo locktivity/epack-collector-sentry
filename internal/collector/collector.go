@@ -9,47 +9,13 @@ import (
 	"github.com/locktivity/epack-collector-sentry/internal/sentry"
 )
 
-type Level string
+type Level = componentsdk.Level
 
 const (
-	LevelTrust    Level = "trust"
-	LevelAudit    Level = "audit"
-	LevelInternal Level = "internal"
+	LevelTrust    = componentsdk.LevelTrust
+	LevelAudit    = componentsdk.LevelAudit
+	LevelInternal = componentsdk.LevelInternal
 )
-
-func (l Level) AtLeast(other Level) bool {
-	return levelOrd(l) >= levelOrd(other)
-}
-
-func levelOrd(l Level) int {
-	switch l {
-	case LevelTrust:
-		return 0
-	case LevelAudit:
-		return 1
-	case LevelInternal:
-		return 2
-	default:
-		return 0
-	}
-}
-
-func ParseLevel(cfg map[string]any) Level {
-	v, ok := cfg["level"]
-	if !ok {
-		return LevelTrust
-	}
-	s, ok := v.(string)
-	if !ok {
-		return LevelTrust
-	}
-	switch Level(s) {
-	case LevelTrust, LevelAudit, LevelInternal:
-		return Level(s)
-	default:
-		return LevelTrust
-	}
-}
 
 type Output struct {
 	SchemaVersion     string             `json:"schema_version"`

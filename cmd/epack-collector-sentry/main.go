@@ -17,6 +17,7 @@ func main() {
 	componentsdk.RunCollector(componentsdk.CollectorSpec{
 		Name:        "sentry",
 		Version:     Version,
+		Commit:      Commit,
 		Description: "Collects Sentry application monitoring posture",
 		Timeout:     5 * time.Minute,
 	}, run)
@@ -35,12 +36,16 @@ func run(ctx componentsdk.CollectorContext) error {
 
 	client := sentry.NewClient(cfg.SentryURL, cfg.Organization, token)
 
-	level := collector.ParseLevel(ctx.Config())
-	c := collector.New(cfg, client, level)
+	c := collector.New(cfg, client, ctx.Level())
 	result, err := c.Collect(ctx.Context())
 	if err != nil {
 		return err
 	}
 
-	return ctx.Emit(result)
+	return ctx.Emit([]componentsdk.CollectedArtifact{
+		{
+			Data: result,
+			Path: "artifacts/sentry.monitoring.json",
+		},
+	})
 }
