@@ -23,7 +23,7 @@ func TestClient_AuthHeader(t *testing.T) {
 	_, c := testServer(t, func(w http.ResponseWriter, r *http.Request) {
 		gotAuth = r.Header.Get("Authorization")
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]Monitor{})
+		_ = json.NewEncoder(w).Encode([]Monitor{})
 	})
 
 	_, _ = c.ListMonitors(context.Background(), nil, nil)
@@ -41,7 +41,7 @@ func TestClient_ListMonitors_SinglePage(t *testing.T) {
 			t.Errorf("expected project=-1 for empty project list, got %q", r.URL.Query().Get("project"))
 		}
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]Monitor{
+		_ = json.NewEncoder(w).Encode([]Monitor{
 			{ID: "m1", Name: "daily-sync", Status: "active"},
 		})
 	})
@@ -69,7 +69,7 @@ func TestClient_ListMonitors_ProjectAndEnvParams(t *testing.T) {
 			t.Errorf("environments = %v, want [production]", envs)
 		}
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]Monitor{})
+		_ = json.NewEncoder(w).Encode([]Monitor{})
 	})
 
 	_, err := c.ListMonitors(context.Background(), []string{"billing", "api"}, []string{"production"})
@@ -88,13 +88,13 @@ func TestClient_ListMonitors_Pagination(t *testing.T) {
 				`<http://x>; rel="previous"; results="false"; cursor="0:0:1", `+
 					`<http://x>; rel="next"; results="true"; cursor="1608208573:0:0"`)
 			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode([]Monitor{{ID: "m1"}})
+			_ = json.NewEncoder(w).Encode([]Monitor{{ID: "m1"}})
 		case 2:
 			if r.URL.Query().Get("cursor") != "1608208573:0:0" {
 				t.Errorf("cursor = %q, want %q", r.URL.Query().Get("cursor"), "1608208573:0:0")
 			}
 			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode([]Monitor{{ID: "m2"}})
+			_ = json.NewEncoder(w).Encode([]Monitor{{ID: "m2"}})
 		default:
 			t.Fatalf("unexpected call %d", n)
 		}
@@ -118,7 +118,7 @@ func TestClient_ListAlertRules_SinglePage(t *testing.T) {
 			t.Errorf("unexpected path: %s", r.URL.Path)
 		}
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]AlertRule{
+		_ = json.NewEncoder(w).Encode([]AlertRule{
 			{ID: "ar1", Name: "High Error Rate", Type: "alert_rule"},
 		})
 	})
@@ -138,7 +138,7 @@ func TestClient_ListMembers_SinglePage(t *testing.T) {
 			t.Errorf("unexpected path: %s", r.URL.Path)
 		}
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]Member{
+		_ = json.NewEncoder(w).Encode([]Member{
 			{ID: "u1", Email: "admin@acme.com", OrgRole: "admin"},
 		})
 	})
@@ -158,7 +158,7 @@ func TestClient_ListTeams_SinglePage(t *testing.T) {
 			t.Errorf("unexpected path: %s", r.URL.Path)
 		}
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]Team{
+		_ = json.NewEncoder(w).Encode([]Team{
 			{ID: "t1", Slug: "backend", Name: "Backend"},
 		})
 	})
@@ -178,7 +178,7 @@ func TestClient_ListTeamMembers_SinglePage(t *testing.T) {
 			t.Errorf("unexpected path: %s, want /teams/acme/backend/members/", r.URL.Path)
 		}
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]TeamMember{
+		_ = json.NewEncoder(w).Encode([]TeamMember{
 			{ID: "u1", Email: "admin@acme.com", TeamRole: "admin"},
 		})
 	})
@@ -195,7 +195,7 @@ func TestClient_ListTeamMembers_SinglePage(t *testing.T) {
 func TestClient_Unauthorized(t *testing.T) {
 	_, c := testServer(t, func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("invalid token"))
+		_, _ = w.Write([]byte("invalid token"))
 	})
 
 	_, err := c.ListMonitors(context.Background(), nil, nil)
@@ -217,7 +217,7 @@ func TestClient_Unauthorized(t *testing.T) {
 func TestClient_Forbidden(t *testing.T) {
 	_, c := testServer(t, func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusForbidden)
-		w.Write([]byte("missing scope"))
+		_, _ = w.Write([]byte("missing scope"))
 	})
 
 	_, err := c.ListMembers(context.Background())
@@ -236,7 +236,7 @@ func TestClient_Forbidden(t *testing.T) {
 func TestClient_NonRetryableError(t *testing.T) {
 	_, c := testServer(t, func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("bad request"))
+		_, _ = w.Write([]byte("bad request"))
 	})
 
 	_, err := c.ListAlertRules(context.Background())
@@ -258,11 +258,11 @@ func TestClient_RetryableError_EventualSuccess(t *testing.T) {
 		n := callCount.Add(1)
 		if n == 1 {
 			w.WriteHeader(http.StatusTooManyRequests)
-			w.Write([]byte("rate limited"))
+			_, _ = w.Write([]byte("rate limited"))
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]Monitor{{ID: "m1"}})
+		_ = json.NewEncoder(w).Encode([]Monitor{{ID: "m1"}})
 	})
 
 	monitors, err := c.ListMonitors(context.Background(), nil, nil)
@@ -284,11 +284,11 @@ func TestClient_RetryAfterHeader(t *testing.T) {
 		if n == 1 {
 			w.Header().Set("Retry-After", "1")
 			w.WriteHeader(http.StatusTooManyRequests)
-			w.Write([]byte("rate limited"))
+			_, _ = w.Write([]byte("rate limited"))
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]Monitor{{ID: "m1"}})
+		_ = json.NewEncoder(w).Encode([]Monitor{{ID: "m1"}})
 	})
 
 	monitors, err := c.ListMonitors(context.Background(), nil, nil)
@@ -306,7 +306,7 @@ func TestClient_RetryAfterHeader(t *testing.T) {
 func TestClient_ContextCanceled(t *testing.T) {
 	_, c := testServer(t, func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]Monitor{})
+		_ = json.NewEncoder(w).Encode([]Monitor{})
 	})
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -323,7 +323,7 @@ func TestClient_CustomBaseURL(t *testing.T) {
 	_, c := testServer(t, func(w http.ResponseWriter, r *http.Request) {
 		gotPath = r.URL.Path
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]Monitor{})
+		_ = json.NewEncoder(w).Encode([]Monitor{})
 	})
 
 	_, _ = c.ListMonitors(context.Background(), nil, nil)

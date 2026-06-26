@@ -228,7 +228,7 @@ func TestGolden_EmptyOrg_Trust(t *testing.T) {
 	}
 	data, _ := json.Marshal(out)
 	var m map[string]any
-	json.Unmarshal(data, &m)
+	_ = json.Unmarshal(data, &m)
 
 	summary := m["monitoring_summary"].(map[string]any)
 	if summary["alerts_or_monitors_enabled"] != false {

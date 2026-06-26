@@ -211,7 +211,7 @@ func (c *Client) doPagedRequest(ctx context.Context, path string, params url.Val
 		}
 
 		if resp.StatusCode == http.StatusOK {
-			defer resp.Body.Close()
+			defer func() { _ = resp.Body.Close() }()
 			if err := json.NewDecoder(resp.Body).Decode(target); err != nil {
 				return nil, fmt.Errorf("decoding response: %w", err)
 			}
@@ -220,7 +220,7 @@ func (c *Client) doPagedRequest(ctx context.Context, path string, params url.Val
 		}
 
 		body, _ := io.ReadAll(resp.Body)
-		resp.Body.Close()
+		_ = resp.Body.Close()
 
 		if resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusForbidden {
 			return nil, &APIError{StatusCode: resp.StatusCode, Body: string(body)}
