@@ -89,20 +89,11 @@ func mapWorkflowActions(rule *AlertRule, workflowIds []string, workflowMap map[s
 				Label:   w.Name,
 				Actions: actions,
 			}
-			if rule.ThresholdType >= 0 && len(rule.Triggers) == 0 {
-				trigger.AlertThreshold = extractThreshold(rule)
-			}
 			rule.Triggers = append(rule.Triggers, trigger)
 		} else {
 			rule.Actions = append(rule.Actions, actions...)
 		}
 	}
-}
-
-func extractThreshold(rule *AlertRule) float64 {
-	// In the new model the threshold value is in the detector's conditionResult,
-	// which we don't cleanly have here. Return 0 as a placeholder.
-	return 0
 }
 
 func collectWorkflowActions(w Workflow) []AlertAction {

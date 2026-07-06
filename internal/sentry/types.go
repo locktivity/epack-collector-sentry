@@ -108,7 +108,7 @@ type AlertRule struct {
 
 type AlertTrigger struct {
 	Label          string        `json:"label"`
-	AlertThreshold float64       `json:"alertThreshold"`
+	AlertThreshold *float64      `json:"alertThreshold,omitempty"`
 	Actions        []AlertAction `json:"actions"`
 }
 

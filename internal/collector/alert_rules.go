@@ -34,7 +34,7 @@ type AlertRuleInventory struct {
 
 type AlertTriggerInventory struct {
 	Label          string                 `json:"label"`
-	AlertThreshold float64               `json:"alert_threshold"`
+	AlertThreshold *float64               `json:"alert_threshold,omitempty"`
 	Actions        []AlertActionInventory `json:"actions"`
 }
 
@@ -140,6 +140,7 @@ func buildAlertRuleInventory(r sentry.AlertRule, level Level) AlertRuleInventory
 			AlertThreshold: t.AlertThreshold,
 			Actions:        actions,
 		})
+
 	}
 	if len(triggers) > 0 {
 		item.Triggers = triggers

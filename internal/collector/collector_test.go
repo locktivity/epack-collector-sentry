@@ -98,7 +98,7 @@ func richFake() *fakeSentryAPI {
 				Aggregate: "count()", TimeWindow: 5, ThresholdType: 0,
 				Projects: []string{"billing"}, Environment: &env, Owner: &owner,
 				Triggers: []sentry.AlertTrigger{
-					{Label: "critical", AlertThreshold: 100, Actions: []sentry.AlertAction{
+					{Label: "critical", AlertThreshold: ptrFloat64(100), Actions: []sentry.AlertAction{
 						{Type: "slack", TargetType: "specific", IntegrationID: float64(123)},
 					}},
 				},
