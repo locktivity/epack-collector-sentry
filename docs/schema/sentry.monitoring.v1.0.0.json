@@ -160,7 +160,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["label", "alert_threshold", "actions"],
+            "required": ["label", "actions"],
             "additionalProperties": false,
             "properties": {
               "label": { "type": "string" },
