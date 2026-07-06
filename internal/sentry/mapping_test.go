@@ -37,13 +37,12 @@ func TestMapDetectorsToAlertRules_MetricAlert(t *testing.T) {
 		},
 	}
 
-	intID := "123"
 	workflows := []Workflow{{
 		ID:   "w1",
 		Name: "Notify Slack",
 		ActionFilters: []WorkflowActionFilter{{
 			Actions: []WorkflowAction{
-				{Type: "slack", IntegrationID: &intID},
+				{Type: "slack", IntegrationID: &FlexibleID{Value: "123"}},
 			},
 		}},
 	}}
@@ -166,6 +165,30 @@ func TestMapDetectorsToAlertRules_ProjectFallbackToID(t *testing.T) {
 	rules := mapDetectorsToAlertRules(detectors, nil, projects)
 	if rules[0].Projects[0] != "999" {
 		t.Errorf("expected project ID fallback, got %q", rules[0].Projects[0])
+	}
+}
+
+func TestFlexibleID_UnmarshalJSON(t *testing.T) {
+	tests := []struct {
+		name  string
+		input string
+		want  string
+	}{
+		{"string", `"456"`, "456"},
+		{"number", `789`, "789"},
+		{"float", `12.5`, "12.5"},
+		{"null", `null`, ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var id FlexibleID
+			if err := id.UnmarshalJSON([]byte(tt.input)); err != nil {
+				t.Fatalf("UnmarshalJSON(%s) error: %v", tt.input, err)
+			}
+			if id.Value != tt.want {
+				t.Errorf("Value = %q, want %q", id.Value, tt.want)
+			}
+		})
 	}
 }
 

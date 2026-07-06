@@ -119,8 +119,8 @@ func mapWorkflowActionToAlertAction(a WorkflowAction) AlertAction {
 		Type:       a.Type,
 		TargetType: "specific",
 	}
-	if a.IntegrationID != nil {
-		aa.IntegrationID = *a.IntegrationID
+	if a.IntegrationID != nil && a.IntegrationID.Value != "" {
+		aa.IntegrationID = a.IntegrationID.Value
 	}
 	return aa
 }

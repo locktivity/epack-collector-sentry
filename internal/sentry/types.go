@@ -2,6 +2,7 @@ package sentry
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 	"time"
 )
@@ -47,6 +48,29 @@ type MonitorOwner struct {
 	Type string `json:"type"`
 	ID   string `json:"id"`
 	Name string `json:"name"`
+}
+
+// FlexibleID handles Sentry API fields that may be returned as a string,
+// number, or null. Normalizes to a string value.
+type FlexibleID struct {
+	Value string
+}
+
+func (id *FlexibleID) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil {
+		id.Value = s
+		return nil
+	}
+	var n json.Number
+	if err := json.Unmarshal(data, &n); err == nil {
+		id.Value = n.String()
+		return nil
+	}
+	return fmt.Errorf("integrationId: expected string, number, or null, got %s", string(data))
 }
 
 // OwnerField handles the Sentry API returning owner as either a string
@@ -261,7 +285,7 @@ type WorkflowCondition struct {
 type WorkflowAction struct {
 	ID            string          `json:"id"`
 	Type          string          `json:"type"`
-	IntegrationID *string         `json:"integrationId"`
+	IntegrationID *FlexibleID     `json:"integrationId"`
 	Data          json.RawMessage `json:"data"`
 	Config        json.RawMessage `json:"config"`
 }
