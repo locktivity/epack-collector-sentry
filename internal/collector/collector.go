@@ -46,7 +46,7 @@ type Diagnostics struct {
 
 type SentryAPI interface {
 	ListMonitors(ctx context.Context, projects []string, environments []string) ([]sentry.Monitor, error)
-	ListAlertRules(ctx context.Context) ([]sentry.AlertRule, error)
+	ListAlertRules(ctx context.Context, projects []string) ([]sentry.AlertRule, error)
 	ListMembers(ctx context.Context) ([]sentry.Member, error)
 	ListTeams(ctx context.Context) ([]sentry.Team, error)
 	ListTeamMembers(ctx context.Context, teamSlug string) ([]sentry.TeamMember, error)
@@ -82,7 +82,7 @@ func (c *Collector) Collect(ctx context.Context) (*Output, error) {
 		return nil, c.classifyError(err)
 	}
 
-	alertRules, err := c.client.ListAlertRules(ctx)
+	alertRules, err := c.client.ListAlertRules(ctx, c.cfg.Projects)
 	if err != nil {
 		return nil, c.classifyError(err)
 	}

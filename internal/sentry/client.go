@@ -87,8 +87,65 @@ func (c *Client) ListMonitors(ctx context.Context, projects []string, environmen
 	return all, nil
 }
 
-func (c *Client) ListAlertRules(ctx context.Context) ([]AlertRule, error) {
-	var all []AlertRule
+func (c *Client) ListAlertRules(ctx context.Context, projects []string) ([]AlertRule, error) {
+	detectors, err := c.listDetectors(ctx, projects)
+	if err != nil {
+		return nil, err
+	}
+
+	workflows, err := c.listWorkflows(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	projectList, err := c.listProjects(ctx)
+	if err != nil {
+		if apiErr, ok := err.(*APIError); ok && apiErr.StatusCode == 403 {
+			projectList = nil
+		} else {
+			return nil, err
+		}
+	}
+
+	return mapDetectorsToAlertRules(detectors, workflows, projectList), nil
+}
+
+func (c *Client) listDetectors(ctx context.Context, projects []string) ([]Detector, error) {
+	var all []Detector
+	cursor := ""
+
+	for {
+		params := url.Values{}
+		params.Set("per_page", "100")
+		if len(projects) > 0 {
+			for _, p := range projects {
+				params.Add("project", p)
+			}
+		}
+		if cursor != "" {
+			params.Set("cursor", cursor)
+		}
+
+		path := fmt.Sprintf("/organizations/%s/detectors/", c.organization)
+		var page []Detector
+		resp, err := c.doPagedRequest(ctx, path, params, &page)
+		if err != nil {
+			return nil, err
+		}
+		all = append(all, page...)
+
+		info := parseLinkHeader(resp)
+		if !info.HasNext {
+			break
+		}
+		cursor = info.NextCursor
+	}
+
+	return all, nil
+}
+
+func (c *Client) listWorkflows(ctx context.Context) ([]Workflow, error) {
+	var all []Workflow
 	cursor := ""
 
 	for {
@@ -98,8 +155,37 @@ func (c *Client) ListAlertRules(ctx context.Context) ([]AlertRule, error) {
 			params.Set("cursor", cursor)
 		}
 
-		path := fmt.Sprintf("/organizations/%s/combined-rules/", c.organization)
-		var page []AlertRule
+		path := fmt.Sprintf("/organizations/%s/workflows/", c.organization)
+		var page []Workflow
+		resp, err := c.doPagedRequest(ctx, path, params, &page)
+		if err != nil {
+			return nil, err
+		}
+		all = append(all, page...)
+
+		info := parseLinkHeader(resp)
+		if !info.HasNext {
+			break
+		}
+		cursor = info.NextCursor
+	}
+
+	return all, nil
+}
+
+func (c *Client) listProjects(ctx context.Context) ([]Project, error) {
+	var all []Project
+	cursor := ""
+
+	for {
+		params := url.Values{}
+		params.Set("per_page", "100")
+		if cursor != "" {
+			params.Set("cursor", cursor)
+		}
+
+		path := fmt.Sprintf("/organizations/%s/projects/", c.organization)
+		var page []Project
 		resp, err := c.doPagedRequest(ctx, path, params, &page)
 		if err != nil {
 			return nil, err

@@ -156,3 +156,119 @@ type TeamMember struct {
 	Name     string `json:"name"`
 	TeamRole string `json:"teamRole"`
 }
+
+// Detector represents a monitoring rule from the documented
+// GET /api/0/organizations/{org}/detectors/ endpoint.
+type Detector struct {
+	ID           string              `json:"id"`
+	ProjectID    string              `json:"projectId"`
+	Name         string              `json:"name"`
+	Type         string              `json:"type"`
+	Description  *string             `json:"description"`
+	Owner        *OwnerField         `json:"owner"`
+	CreatedBy    *string             `json:"createdBy"`
+	DateCreated  string              `json:"dateCreated"`
+	DateUpdated  string              `json:"dateUpdated"`
+	WorkflowIds  []string            `json:"workflowIds"`
+	DataSources  []DetectorDataSource `json:"dataSources"`
+	ConditionGroup *DetectorConditionGroup `json:"conditionGroup"`
+	Config       DetectorConfig      `json:"config"`
+	Enabled      bool                `json:"enabled"`
+}
+
+type DetectorDataSource struct {
+	ID       string                `json:"id"`
+	Type     string                `json:"type"`
+	SourceID string                `json:"sourceId"`
+	QueryObj *DetectorQueryObj     `json:"queryObj"`
+}
+
+type DetectorQueryObj struct {
+	ID          string               `json:"id"`
+	SnubaQuery  *DetectorSnubaQuery  `json:"snubaQuery"`
+}
+
+type DetectorSnubaQuery struct {
+	Dataset     string   `json:"dataset"`
+	Query       string   `json:"query"`
+	Aggregate   string   `json:"aggregate"`
+	TimeWindow  float64  `json:"timeWindow"`
+	Environment *string  `json:"environment"`
+}
+
+type DetectorConditionGroup struct {
+	ID         string               `json:"id"`
+	LogicType  string               `json:"logicType"`
+	Conditions []DetectorCondition  `json:"conditions"`
+}
+
+type DetectorCondition struct {
+	ID              string                    `json:"id"`
+	Type            string                    `json:"type"`
+	Comparison      DetectorConditionComparison `json:"comparison"`
+	ConditionResult any                       `json:"conditionResult"`
+}
+
+type DetectorConditionComparison struct {
+	ThresholdType int     `json:"thresholdType"`
+	Sensitivity   string  `json:"sensitivity,omitempty"`
+	Seasonality   string  `json:"seasonality,omitempty"`
+}
+
+type DetectorConfig struct {
+	DetectionType   string `json:"detectionType"`
+	ComparisonDelta any    `json:"comparisonDelta"`
+}
+
+// Workflow represents a notification/action config from the documented
+// GET /api/0/organizations/{org}/workflows/ endpoint.
+type Workflow struct {
+	ID             string              `json:"id"`
+	Name           string              `json:"name"`
+	OrganizationID string              `json:"organizationId"`
+	CreatedBy      *string             `json:"createdBy"`
+	DateCreated    string              `json:"dateCreated"`
+	DateUpdated    string              `json:"dateUpdated"`
+	Triggers       *WorkflowTriggers   `json:"triggers"`
+	ActionFilters  []WorkflowActionFilter `json:"actionFilters"`
+	Environment    *string             `json:"environment"`
+	Config         json.RawMessage     `json:"config"`
+	DetectorIds    []string            `json:"detectorIds"`
+	Enabled        bool                `json:"enabled"`
+	LastTriggered  *string             `json:"lastTriggered"`
+	Owner          *string             `json:"owner"`
+}
+
+type WorkflowTriggers struct {
+	LogicType  string              `json:"logicType"`
+	Conditions []WorkflowCondition `json:"conditions"`
+	Actions    []WorkflowAction    `json:"actions"`
+}
+
+type WorkflowActionFilter struct {
+	LogicType  string              `json:"logicType"`
+	Conditions []WorkflowCondition `json:"conditions"`
+	Actions    []WorkflowAction    `json:"actions"`
+}
+
+type WorkflowCondition struct {
+	ID              string `json:"id"`
+	Type            string `json:"type"`
+	Comparison      any    `json:"comparison"`
+	ConditionResult any    `json:"conditionResult"`
+}
+
+type WorkflowAction struct {
+	ID            string          `json:"id"`
+	Type          string          `json:"type"`
+	IntegrationID *string         `json:"integrationId"`
+	Data          json.RawMessage `json:"data"`
+	Config        json.RawMessage `json:"config"`
+}
+
+// Project is used to resolve project IDs to slugs.
+type Project struct {
+	ID   string `json:"id"`
+	Slug string `json:"slug"`
+	Name string `json:"name"`
+}

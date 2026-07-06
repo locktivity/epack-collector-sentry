@@ -36,7 +36,7 @@ func (f *fakeSentryAPI) ListMonitors(_ context.Context, _ []string, _ []string) 
 	return f.monitors, nil
 }
 
-func (f *fakeSentryAPI) ListAlertRules(_ context.Context) ([]sentry.AlertRule, error) {
+func (f *fakeSentryAPI) ListAlertRules(_ context.Context, _ []string) ([]sentry.AlertRule, error) {
 	if f.alertRulesErr != nil {
 		return nil, f.alertRulesErr
 	}
