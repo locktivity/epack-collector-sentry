@@ -1,6 +1,10 @@
 package sentry
 
-import "time"
+import (
+	"encoding/json"
+	"strings"
+	"time"
+)
 
 type Monitor struct {
 	ID          string          `json:"id"`
@@ -45,6 +49,33 @@ type MonitorOwner struct {
 	Name string `json:"name"`
 }
 
+// OwnerField handles the Sentry API returning owner as either a string
+// ("team:backend") or an object ({"type":"team","id":"42","name":"backend"}).
+type OwnerField struct {
+	*MonitorOwner
+}
+
+func (o *OwnerField) UnmarshalJSON(data []byte) error {
+	// Try object first
+	var obj MonitorOwner
+	if err := json.Unmarshal(data, &obj); err == nil && obj.Type != "" {
+		o.MonitorOwner = &obj
+		return nil
+	}
+	// Fall back to string like "team:backend"
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil && s != "" {
+		parts := strings.SplitN(s, ":", 2)
+		if len(parts) == 2 {
+			o.MonitorOwner = &MonitorOwner{Type: parts[0], Name: parts[1]}
+		} else {
+			o.MonitorOwner = &MonitorOwner{Name: s}
+		}
+		return nil
+	}
+	return nil
+}
+
 type MonitorEnv struct {
 	Name            string           `json:"name"`
 	Status          string           `json:"status"`
@@ -66,7 +97,7 @@ type AlertRule struct {
 	DateCreated   string            `json:"dateCreated"`
 	Projects      []string          `json:"projects"`
 	Environment   *string           `json:"environment"`
-	Owner         *string           `json:"owner"`
+	Owner         *OwnerField       `json:"owner"`
 	Triggers      []AlertTrigger    `json:"triggers,omitempty"`
 	Actions       []AlertAction     `json:"actions,omitempty"`
 	Aggregate     string            `json:"aggregate,omitempty"`

@@ -71,7 +71,7 @@ var goldenTime = time.Date(2026, 6, 26, 14, 0, 0, 0, time.UTC)
 
 func richFake() *fakeSentryAPI {
 	env := "production"
-	owner := "team:backend"
+	owner := sentry.OwnerField{MonitorOwner: &sentry.MonitorOwner{Type: "team", Name: "backend"}}
 	return &fakeSentryAPI{
 		monitors: []sentry.Monitor{
 			{

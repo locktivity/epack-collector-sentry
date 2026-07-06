@@ -92,7 +92,7 @@ func TestComputeAlertRuleMetrics_TrustOmitsInventory(t *testing.T) {
 
 func TestComputeAlertRuleMetrics_AuditIncludesInventory(t *testing.T) {
 	env := "production"
-	owner := "team:backend"
+	owner := sentry.OwnerField{MonitorOwner: &sentry.MonitorOwner{Type: "team", Name: "backend"}}
 	rules := []sentry.AlertRule{
 		{
 			ID:            "789",
