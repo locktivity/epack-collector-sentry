@@ -114,21 +114,42 @@ func TestClient_ListMonitors_Pagination(t *testing.T) {
 
 func TestClient_ListAlertRules_SinglePage(t *testing.T) {
 	_, c := testServer(t, func(w http.ResponseWriter, r *http.Request) {
-		if !strings.Contains(r.URL.Path, "/organizations/acme/combined-rules/") {
+		w.WriteHeader(http.StatusOK)
+		switch {
+		case strings.Contains(r.URL.Path, "/detectors/"):
+			_ = json.NewEncoder(w).Encode([]Detector{
+				{
+					ID: "d1", Name: "High Error Rate", Type: "metric_issue",
+					ProjectID: "p1", Enabled: true,
+					Config: DetectorConfig{DetectionType: "static"},
+				},
+			})
+		case strings.Contains(r.URL.Path, "/workflows/"):
+			_ = json.NewEncoder(w).Encode([]Workflow{})
+		case strings.Contains(r.URL.Path, "/projects/"):
+			_ = json.NewEncoder(w).Encode([]Project{
+				{ID: "p1", Slug: "billing", Name: "Billing"},
+			})
+		default:
 			t.Errorf("unexpected path: %s", r.URL.Path)
 		}
-		w.WriteHeader(http.StatusOK)
-		_ = json.NewEncoder(w).Encode([]AlertRule{
-			{ID: "ar1", Name: "High Error Rate", Type: "alert_rule"},
-		})
 	})
 
-	rules, err := c.ListAlertRules(context.Background())
+	rules, err := c.ListAlertRules(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("ListAlertRules error: %v", err)
 	}
-	if len(rules) != 1 || rules[0].ID != "ar1" {
-		t.Errorf("got %v, want 1 rule with ID ar1", rules)
+	if len(rules) != 1 {
+		t.Fatalf("got %d rules, want 1", len(rules))
+	}
+	if rules[0].ID != "d1" {
+		t.Errorf("ID = %q, want %q", rules[0].ID, "d1")
+	}
+	if rules[0].Type != "alert_rule" {
+		t.Errorf("Type = %q, want %q", rules[0].Type, "alert_rule")
+	}
+	if len(rules[0].Projects) != 1 || rules[0].Projects[0] != "billing" {
+		t.Errorf("Projects = %v, want [billing]", rules[0].Projects)
 	}
 }
 
@@ -239,7 +260,7 @@ func TestClient_NonRetryableError(t *testing.T) {
 		_, _ = w.Write([]byte("bad request"))
 	})
 
-	_, err := c.ListAlertRules(context.Background())
+	_, err := c.ListAlertRules(context.Background(), nil)
 	if err == nil {
 		t.Fatal("expected error for 400")
 	}

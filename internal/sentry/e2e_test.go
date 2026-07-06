@@ -33,7 +33,7 @@ func TestE2E_ListMonitors(t *testing.T) {
 
 func TestE2E_ListAlertRules(t *testing.T) {
 	c := e2eClient(t)
-	rules, err := c.ListAlertRules(context.Background())
+	rules, err := c.ListAlertRules(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("ListAlertRules: %v", err)
 	}

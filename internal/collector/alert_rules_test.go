@@ -6,6 +6,8 @@ import (
 	"github.com/locktivity/epack-collector-sentry/internal/sentry"
 )
 
+func ptrFloat64(v float64) *float64 { return &v }
+
 func TestComputeAlertRuleMetrics_Empty(t *testing.T) {
 	m, trunc := computeAlertRuleMetrics(nil, LevelTrust)
 	if m.TotalCount != 0 {
@@ -92,7 +94,7 @@ func TestComputeAlertRuleMetrics_TrustOmitsInventory(t *testing.T) {
 
 func TestComputeAlertRuleMetrics_AuditIncludesInventory(t *testing.T) {
 	env := "production"
-	owner := "team:backend"
+	owner := sentry.OwnerField{MonitorOwner: &sentry.MonitorOwner{Type: "team", Name: "backend"}}
 	rules := []sentry.AlertRule{
 		{
 			ID:            "789",
@@ -108,7 +110,7 @@ func TestComputeAlertRuleMetrics_AuditIncludesInventory(t *testing.T) {
 			Triggers: []sentry.AlertTrigger{
 				{
 					Label:          "critical",
-					AlertThreshold: 100,
+					AlertThreshold: ptrFloat64(100),
 					Actions:        []sentry.AlertAction{{Type: "slack", TargetType: "specific"}},
 				},
 			},
@@ -184,7 +186,7 @@ func TestBuildAlertRuleInventory_InternalIncludesIntegrationID(t *testing.T) {
 		Triggers: []sentry.AlertTrigger{
 			{
 				Label:          "critical",
-				AlertThreshold: 100,
+				AlertThreshold: ptrFloat64(100),
 				Actions: []sentry.AlertAction{
 					{Type: "slack", TargetType: "specific", IntegrationID: float64(12345)},
 					{Type: "email", TargetType: "user", IntegrationID: nil},

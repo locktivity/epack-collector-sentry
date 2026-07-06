@@ -36,7 +36,7 @@ func (f *fakeSentryAPI) ListMonitors(_ context.Context, _ []string, _ []string) 
 	return f.monitors, nil
 }
 
-func (f *fakeSentryAPI) ListAlertRules(_ context.Context) ([]sentry.AlertRule, error) {
+func (f *fakeSentryAPI) ListAlertRules(_ context.Context, _ []string) ([]sentry.AlertRule, error) {
 	if f.alertRulesErr != nil {
 		return nil, f.alertRulesErr
 	}
@@ -71,7 +71,7 @@ var goldenTime = time.Date(2026, 6, 26, 14, 0, 0, 0, time.UTC)
 
 func richFake() *fakeSentryAPI {
 	env := "production"
-	owner := "team:backend"
+	owner := sentry.OwnerField{MonitorOwner: &sentry.MonitorOwner{Type: "team", Name: "backend"}}
 	return &fakeSentryAPI{
 		monitors: []sentry.Monitor{
 			{
@@ -98,7 +98,7 @@ func richFake() *fakeSentryAPI {
 				Aggregate: "count()", TimeWindow: 5, ThresholdType: 0,
 				Projects: []string{"billing"}, Environment: &env, Owner: &owner,
 				Triggers: []sentry.AlertTrigger{
-					{Label: "critical", AlertThreshold: 100, Actions: []sentry.AlertAction{
+					{Label: "critical", AlertThreshold: ptrFloat64(100), Actions: []sentry.AlertAction{
 						{Type: "slack", TargetType: "specific", IntegrationID: float64(123)},
 					}},
 				},
