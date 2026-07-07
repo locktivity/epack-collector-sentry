@@ -227,16 +227,10 @@ type DetectorConditionGroup struct {
 }
 
 type DetectorCondition struct {
-	ID              string                    `json:"id"`
-	Type            string                    `json:"type"`
-	Comparison      DetectorConditionComparison `json:"comparison"`
-	ConditionResult any                       `json:"conditionResult"`
-}
-
-type DetectorConditionComparison struct {
-	ThresholdType int     `json:"thresholdType"`
-	Sensitivity   string  `json:"sensitivity,omitempty"`
-	Seasonality   string  `json:"seasonality,omitempty"`
+	ID              string          `json:"id"`
+	Type            string          `json:"type"`
+	Comparison      json.RawMessage `json:"comparison"`
+	ConditionResult any             `json:"conditionResult"`
 }
 
 type DetectorConfig struct {
