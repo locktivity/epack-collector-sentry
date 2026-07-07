@@ -1,5 +1,7 @@
 package sentry
 
+import "encoding/json"
+
 
 func mapDetectorsToAlertRules(detectors []Detector, workflows []Workflow, projects []Project) []AlertRule {
 	projectMap := buildProjectMap(projects)
@@ -58,7 +60,12 @@ func extractMetricFields(rule *AlertRule, d Detector) {
 	}
 
 	if d.ConditionGroup != nil && len(d.ConditionGroup.Conditions) > 0 {
-		rule.ThresholdType = d.ConditionGroup.Conditions[0].Comparison.ThresholdType
+		var comp struct {
+			ThresholdType int `json:"thresholdType"`
+		}
+		if err := json.Unmarshal(d.ConditionGroup.Conditions[0].Comparison, &comp); err == nil {
+			rule.ThresholdType = comp.ThresholdType
+		}
 	}
 }
 

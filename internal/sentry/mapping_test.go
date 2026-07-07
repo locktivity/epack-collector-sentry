@@ -1,6 +1,7 @@
 package sentry
 
 import (
+	"encoding/json"
 	"testing"
 )
 
@@ -29,7 +30,7 @@ func TestMapDetectorsToAlertRules_MetricAlert(t *testing.T) {
 			}},
 			ConditionGroup: &DetectorConditionGroup{
 				Conditions: []DetectorCondition{{
-					Comparison: DetectorConditionComparison{ThresholdType: 0},
+					Comparison: json.RawMessage(`{"thresholdType":0}`),
 				}},
 			},
 			Owner:       &OwnerField{MonitorOwner: &MonitorOwner{Type: "team", Name: "backend"}},
@@ -189,6 +190,31 @@ func TestFlexibleID_UnmarshalJSON(t *testing.T) {
 				t.Errorf("Value = %q, want %q", id.Value, tt.want)
 			}
 		})
+	}
+}
+
+func TestMapDetectorsToAlertRules_ComparisonAsString(t *testing.T) {
+	detectors := []Detector{{
+		ID: "d5", Name: "String Comparison", Type: "metric_issue", Enabled: true,
+		Config: DetectorConfig{DetectionType: "static"},
+		DataSources: []DetectorDataSource{{
+			QueryObj: &DetectorQueryObj{
+				SnubaQuery: &DetectorSnubaQuery{Aggregate: "count()", TimeWindow: 10},
+			},
+		}},
+		ConditionGroup: &DetectorConditionGroup{
+			Conditions: []DetectorCondition{{
+				Comparison: json.RawMessage(`"some_string_value"`),
+			}},
+		},
+	}}
+
+	rules := mapDetectorsToAlertRules(detectors, nil, nil)
+	if len(rules) != 1 {
+		t.Fatalf("expected 1 rule, got %d", len(rules))
+	}
+	if rules[0].ThresholdType != 0 {
+		t.Errorf("ThresholdType = %d, want 0 (default when comparison is a string)", rules[0].ThresholdType)
 	}
 }
 
