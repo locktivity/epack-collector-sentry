@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/locktivity/epack-collector-sentry/internal/sentry"
+	"github.com/locktivity/epack/componentsdk"
 )
 
 type FixedClock struct {
@@ -17,16 +18,34 @@ type FixedClock struct {
 func (c FixedClock) Now() time.Time { return c.Time }
 
 type fakeSentryAPI struct {
-	monitors       []sentry.Monitor
-	monitorsErr    error
-	alertRules     []sentry.AlertRule
-	alertRulesErr  error
-	members        []sentry.Member
-	membersErr     error
-	teams          []sentry.Team
-	teamsErr       error
-	teamMembers    map[string][]sentry.TeamMember
-	teamMembersErr error
+	org             *sentry.Organization
+	orgErr          error
+	monitors        []sentry.Monitor
+	monitorsErr     error
+	alertRules      []sentry.AlertRule
+	alertRulesErr   error
+	members         []sentry.Member
+	membersErr      error
+	teams           []sentry.Team
+	teamsErr        error
+	teamMembers     map[string][]sentry.TeamMember
+	teamMembersErr  error
+	authProvider    *sentry.AuthProvider
+	authProviderErr error
+	integrations    []sentry.Integration
+	integrationsErr error
+	installs        []sentry.SentryAppInstallation
+	installsErr     error
+}
+
+func (f *fakeSentryAPI) GetOrganization(_ context.Context) (*sentry.Organization, error) {
+	if f.orgErr != nil {
+		return nil, f.orgErr
+	}
+	if f.org == nil {
+		return &sentry.Organization{ID: "1", Slug: "acme-corp", Name: "Acme Corp"}, nil
+	}
+	return f.org, nil
 }
 
 func (f *fakeSentryAPI) ListMonitors(_ context.Context, _ []string, _ []string) ([]sentry.Monitor, error) {
@@ -65,6 +84,27 @@ func (f *fakeSentryAPI) ListTeamMembers(_ context.Context, teamSlug string) ([]s
 		return f.teamMembers[teamSlug], nil
 	}
 	return nil, nil
+}
+
+func (f *fakeSentryAPI) GetAuthProvider(_ context.Context) (*sentry.AuthProvider, error) {
+	if f.authProviderErr != nil {
+		return nil, f.authProviderErr
+	}
+	return f.authProvider, nil
+}
+
+func (f *fakeSentryAPI) ListIntegrations(_ context.Context) ([]sentry.Integration, error) {
+	if f.integrationsErr != nil {
+		return nil, f.integrationsErr
+	}
+	return f.integrations, nil
+}
+
+func (f *fakeSentryAPI) ListSentryAppInstallations(_ context.Context) ([]sentry.SentryAppInstallation, error) {
+	if f.installsErr != nil {
+		return nil, f.installsErr
+	}
+	return f.installs, nil
 }
 
 var goldenTime = time.Date(2026, 6, 26, 14, 0, 0, 0, time.UTC)
@@ -122,21 +162,41 @@ func richFake() *fakeSentryAPI {
 			},
 		},
 		teams: []sentry.Team{
-			{ID: "t1", Slug: "backend", Name: "Backend", MemberCount: 2, ProjectCount: 3},
+			{ID: "t1", Slug: "backend", Name: "Backend", MemberCount: 2, Projects: []sentry.TeamProject{{Slug: "billing"}, {Slug: "reporting"}, {Slug: "api"}}},
 		},
 		teamMembers: map[string][]sentry.TeamMember{
 			"backend": {
-				{ID: "u1", Email: "admin@acme.com", Name: "Admin", TeamRole: "admin"},
-				{ID: "u2", Email: "dev@acme.com", Name: "Dev", TeamRole: "contributor"},
+				{ID: "u1", Email: "admin@acme.com", Name: "Admin", TeamRole: "admin", User: &sentry.MemberUser{ID: "9001"}},
+				{ID: "u2", Email: "dev@acme.com", Name: "Dev", TeamRole: "contributor", User: &sentry.MemberUser{ID: "9002"}},
 			},
 		},
+		authProvider: &sentry.AuthProvider{ProviderName: "okta", RequireLink: true, ScimEnabled: true},
 	}
 }
 
 func testCollector(fake *fakeSentryAPI, level Level) *Collector {
-	c := New(Config{Organization: "acme-corp"}, fake, level)
-	c.clock = FixedClock{Time: goldenTime}
-	return c
+	return New(Config{Organization: "acme-corp"}, fake, level, FixedClock{Time: goldenTime}, &componentsdk.Recorder{})
+}
+
+// gapAt returns the gap c recorded at pointer.
+func gapAt(c *Collector, pointer string) (componentsdk.Gap, bool) {
+	for _, g := range c.rec.Gaps() {
+		if g.Path == artifactPath && g.Pointer == pointer {
+			return g, true
+		}
+	}
+	return componentsdk.Gap{}, false
+}
+
+func expectGap(t *testing.T, c *Collector, pointer string, status string, code componentsdk.Code) {
+	t.Helper()
+	g, ok := gapAt(c, pointer)
+	if !ok {
+		t.Fatalf("no gap at %s; gaps: %+v", pointer, c.rec.Gaps())
+	}
+	if g.Status != status || g.Code != code {
+		t.Errorf("gap at %s is %s/%s, want %s/%s", pointer, g.Status, g.Code, status, code)
+	}
 }
 
 func TestCollect_TrustLevel(t *testing.T) {
@@ -158,7 +218,7 @@ func TestCollect_TrustLevel(t *testing.T) {
 	if out.Organization != "acme-corp" {
 		t.Errorf("Organization = %q, want %q", out.Organization, "acme-corp")
 	}
-	if !out.MonitoringSummary.AlertsOrMonitorsEnabled {
+	if !*out.MonitoringSummary.AlertsOrMonitorsEnabled {
 		t.Error("AlertsOrMonitorsEnabled = false, want true")
 	}
 	if out.MonitoringSummary.TotalMonitoringRules != nil {
@@ -178,6 +238,21 @@ func TestCollect_TrustLevel(t *testing.T) {
 	}
 }
 
+// A run can be configured with the organization's ID in place of its slug.
+// The output has the slug either way.
+func TestCollect_OrganizationIsTheSlug(t *testing.T) {
+	fake := richFake()
+	fake.org = &sentry.Organization{ID: "4507", Slug: "acme-corp", Name: "Acme Corp"}
+	c := New(Config{Organization: "4507"}, fake, LevelTrust, FixedClock{Time: goldenTime}, &componentsdk.Recorder{})
+	out, err := c.Collect(context.Background())
+	if err != nil {
+		t.Fatalf("Collect() error: %v", err)
+	}
+	if out.Organization != "acme-corp" {
+		t.Errorf("Organization = %q, want the slug %q for organization 4507", out.Organization, "acme-corp")
+	}
+}
+
 func TestCollect_AuditLevel(t *testing.T) {
 	c := testCollector(richFake(), LevelAudit)
 	out, err := c.Collect(context.Background())
@@ -185,7 +260,7 @@ func TestCollect_AuditLevel(t *testing.T) {
 		t.Fatalf("Collect() error: %v", err)
 	}
 
-	if !out.MonitoringSummary.AlertsOrMonitorsEnabled {
+	if !*out.MonitoringSummary.AlertsOrMonitorsEnabled {
 		t.Error("AlertsOrMonitorsEnabled = false, want true")
 	}
 	if out.MonitoringSummary.TotalMonitoringRules == nil || *out.MonitoringSummary.TotalMonitoringRules != 4 {
@@ -271,7 +346,7 @@ func TestCollect_EmptyOrg(t *testing.T) {
 		t.Fatalf("Collect() error: %v", err)
 	}
 
-	if out.MonitoringSummary.AlertsOrMonitorsEnabled {
+	if *out.MonitoringSummary.AlertsOrMonitorsEnabled {
 		t.Error("AlertsOrMonitorsEnabled = true, want false for empty org")
 	}
 	if out.Monitors.TotalCount != 0 {
@@ -297,6 +372,7 @@ func TestCollect_MemberPermissionDenied(t *testing.T) {
 	if len(out.Diagnostics.Warnings) == 0 {
 		t.Error("expected a warning about missing member:read scope")
 	}
+	expectGap(t, c, "/users", componentsdk.GapNotCollected, componentsdk.CodePermissionDenied)
 }
 
 func TestCollect_TeamPermissionDenied(t *testing.T) {
@@ -314,25 +390,88 @@ func TestCollect_TeamPermissionDenied(t *testing.T) {
 	if len(out.Diagnostics.Warnings) == 0 {
 		t.Error("expected a warning about missing team:read scope")
 	}
+	expectGap(t, c, "/teams", componentsdk.GapNotCollected, componentsdk.CodePermissionDenied)
 }
 
-func TestCollect_MonitorAPIError(t *testing.T) {
+func TestCollect_SignInFailureFailsTheRun(t *testing.T) {
 	fake := richFake()
-	fake.monitorsErr = &sentry.APIError{StatusCode: http.StatusUnauthorized, Body: "bad token"}
+	fake.orgErr = &sentry.APIError{StatusCode: http.StatusUnauthorized, Body: `{"detail":"Invalid token"}`}
 	c := testCollector(fake, LevelTrust)
 	_, err := c.Collect(context.Background())
 	if err == nil {
-		t.Fatal("expected error for unauthorized monitors call")
+		t.Fatal("expected an error when the sign-in is rejected")
+	}
+	if code := componentsdk.Classify(err); code != componentsdk.CodeAuthFailed {
+		t.Errorf("Classify(err) = %s, want auth_failed", code)
 	}
 }
 
-func TestCollect_AlertRuleAPIError(t *testing.T) {
+func TestCollect_MonitorFailureLeavesMonitorValuesOut(t *testing.T) {
 	fake := richFake()
-	fake.alertRulesErr = &sentry.APIError{StatusCode: 500, Body: "server error"}
+	fake.monitorsErr = &sentry.APIError{StatusCode: http.StatusForbidden, Body: "missing scope"}
+	c := testCollector(fake, LevelAudit)
+	out, err := c.Collect(context.Background())
+	if err != nil {
+		t.Fatalf("Collect() error: %v", err)
+	}
+
+	s := out.MonitoringSummary
+	if s.AlertsOrMonitorsEnabled == nil || !*s.AlertsOrMonitorsEnabled {
+		t.Errorf("AlertsOrMonitorsEnabled = %v, want true from the alert rules alone", s.AlertsOrMonitorsEnabled)
+	}
+	if s.AlertRules == nil || *s.AlertRules != 2 {
+		t.Errorf("AlertRules = %v, want 2", s.AlertRules)
+	}
+	if s.CronMonitors != nil || s.TotalMonitoringRules != nil || s.WithActionsPct != nil {
+		t.Errorf("summary = %+v, want the monitor counts left out", s)
+	}
+	if out.Monitors != nil {
+		t.Error("Monitors should be left out")
+	}
+	for _, pointer := range []string{"/monitors", "/monitoring_summary/cron_monitors", "/monitoring_summary/total_monitoring_rules", "/monitoring_summary/with_actions_pct"} {
+		expectGap(t, c, pointer, componentsdk.GapNotCollected, componentsdk.CodePermissionDenied)
+	}
+	if _, ok := gapAt(c, "/monitoring_summary/alerts_or_monitors_enabled"); ok {
+		t.Error("alerts_or_monitors_enabled is known from the alert rules and needs no gap")
+	}
+}
+
+func TestCollect_AlertRuleFailureLeavesEnabledUnknown(t *testing.T) {
+	fake := richFake()
+	fake.monitors = nil
+	fake.alertRulesErr = &sentry.APIError{StatusCode: http.StatusInternalServerError, Body: "server error"}
 	c := testCollector(fake, LevelTrust)
-	_, err := c.Collect(context.Background())
-	if err == nil {
-		t.Fatal("expected error for failed alert rules call")
+	out, err := c.Collect(context.Background())
+	if err != nil {
+		t.Fatalf("Collect() error: %v", err)
+	}
+	if out.MonitoringSummary.AlertsOrMonitorsEnabled != nil {
+		t.Errorf("AlertsOrMonitorsEnabled = %v, want null with no monitors and unread alert rules", *out.MonitoringSummary.AlertsOrMonitorsEnabled)
+	}
+	expectGap(t, c, "/monitoring_summary/alerts_or_monitors_enabled", componentsdk.GapNotCollected, componentsdk.CodeVendorError)
+}
+
+func TestCollect_WithActionsPctIsNullOverNoRules(t *testing.T) {
+	c := testCollector(&fakeSentryAPI{}, LevelAudit)
+	out, err := c.Collect(context.Background())
+	if err != nil {
+		t.Fatalf("Collect() error: %v", err)
+	}
+	data, err := json.Marshal(out.MonitoringSummary)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := `{"alerts_or_monitors_enabled":false,"total_monitoring_rules":0,"cron_monitors":0,"alert_rules":0,"with_actions_pct":null}`
+	if string(data) != want {
+		t.Errorf("monitoring_summary = %s, want %s", data, want)
+	}
+
+	trust, err := testCollector(&fakeSentryAPI{}, LevelTrust).Collect(context.Background())
+	if err != nil {
+		t.Fatalf("Collect() error: %v", err)
+	}
+	if data, _ := json.Marshal(trust.MonitoringSummary); string(data) != `{"alerts_or_monitors_enabled":false}` {
+		t.Errorf("trust monitoring_summary = %s, want only alerts_or_monitors_enabled", data)
 	}
 }
 
@@ -384,4 +523,41 @@ func TestCollect_TeamMemberPermissionDenied(t *testing.T) {
 	if !found {
 		t.Error("expected warning about team member detail unavailable")
 	}
+	expectGap(t, c, "/teams/inventory/0/members", componentsdk.GapNotCollected, componentsdk.CodePermissionDenied)
+	expectGap(t, c, "/users/inventory/0/team_memberships", componentsdk.GapPartial, componentsdk.CodePermissionDenied)
+}
+
+func TestCollect_InternalListsReadAsEmptyAreEmpty(t *testing.T) {
+	fake := richFake()
+	fake.teams = append(fake.teams, sentry.Team{ID: "t2", Slug: "empty", Name: "Empty"})
+	fake.members = append(fake.members, sentry.Member{ID: "u3", Email: "solo@acme.com", User: &sentry.MemberUser{IsActive: true}})
+	c := testCollector(fake, LevelInternal)
+	out, err := c.Collect(context.Background())
+	if err != nil {
+		t.Fatalf("Collect() error: %v", err)
+	}
+	if members := out.Teams.Inventory[1].Members; members == nil || len(members) != 0 {
+		t.Errorf("members of a team with none = %#v, want []", members)
+	}
+	if memberships := out.Users.Inventory[2].TeamMemberships; memberships == nil || len(memberships) != 0 {
+		t.Errorf("teams of a user in none = %#v, want []", memberships)
+	}
+	if gaps := c.rec.Gaps(); len(gaps) != 0 {
+		t.Errorf("gaps = %+v, want none", gaps)
+	}
+}
+
+func TestCollect_TeamsFailureLeavesUserTeamsOut(t *testing.T) {
+	fake := richFake()
+	fake.teamsErr = &sentry.APIError{StatusCode: http.StatusBadGateway, Body: "bad gateway"}
+	c := testCollector(fake, LevelInternal)
+	out, err := c.Collect(context.Background())
+	if err != nil {
+		t.Fatalf("Collect() error: %v", err)
+	}
+	if out.Teams != nil || out.Users.Inventory[0].TeamMemberships != nil {
+		t.Errorf("teams = %v, first user's teams = %v; want both left out", out.Teams, out.Users.Inventory[0].TeamMemberships)
+	}
+	expectGap(t, c, "/teams", componentsdk.GapNotCollected, componentsdk.CodeVendorError)
+	expectGap(t, c, "/users/inventory/1/team_memberships", componentsdk.GapNotCollected, componentsdk.CodeVendorError)
 }

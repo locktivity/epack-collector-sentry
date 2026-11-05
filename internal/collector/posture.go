@@ -6,7 +6,7 @@ func computeMonitoringSummary(monitors []sentry.Monitor, alertRules []sentry.Ale
 	enabled := len(monitors) > 0 || len(alertRules) > 0
 
 	s := MonitoringSummary{
-		AlertsOrMonitorsEnabled: enabled,
+		AlertsOrMonitorsEnabled: &enabled,
 	}
 
 	if level.AtLeast(LevelAudit) {

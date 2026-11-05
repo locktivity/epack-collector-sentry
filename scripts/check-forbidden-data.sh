@@ -1,22 +1,28 @@
 #!/usr/bin/env bash
 #
 # Lint: verify that trust-level output contains only the expected fields.
-# Usage: scripts/check-forbidden-data.sh <trust-output.json>
+# Usage: scripts/check-forbidden-data.sh [trust-output.json]
+#
+# Without a file, it checks the trust-level output the collector produces
+# from the test suite's canned Sentry responses.
 #
 # The trust level should only contain:
-#   schema_version, collected_at, collected_at_level, organization,
+#   schema_version, collected_at, collected_at_level, organization, auth,
 #   monitoring_summary (with only alerts_or_monitors_enabled), diagnostics
 #
 # Any monitors, alert_rules, users, or teams sections indicate a data leak.
 
 set -euo pipefail
 
-if [ $# -lt 1 ]; then
-  echo "Usage: $0 <trust-output.json>"
-  exit 1
+if [ $# -ge 1 ]; then
+  FILE="$1"
+else
+  cd "$(dirname "$0")/.."
+  FILE="$(mktemp)"
+  trap 'rm -f "$FILE"' EXIT
+  SENTRY_TRUST_OUTPUT="$FILE" go test ./internal/collector -run '^TestTrustOutputFile$' -count=1 > /dev/null
 fi
 
-FILE="$1"
 if [ ! -f "$FILE" ]; then
   echo "Error: file not found: $FILE"
   exit 1

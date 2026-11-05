@@ -26,13 +26,19 @@ collectors:
 
 | Variable | Description |
 |----------|-------------|
-| `SENTRY_AUTH_TOKEN` | Personal auth token or internal integration token |
+| `SENTRY_AUTH_TOKEN` | Personal auth token or internal integration token. Required: the run exits 2 without it. |
 
 ## Required Sentry scopes
 
 | Scope | Levels | Surface |
 |-------|--------|---------|
-| `org:read` | trust+ | Organization metadata |
+| `org:read` | trust+ | Organization metadata, SSO settings, projects, integrations, and Sentry app installations. From audit, teams. |
 | `alerts:read` | trust+ | Monitors and alert rules |
-| `member:read` | audit+ | Organization members |
-| `team:read` | audit+ | Teams and team members |
+| `member:read` | trust+ | Organization members. A trust run reads them for `artifacts/sentry.access-posture.json` only. |
+| `team:read` | internal | Team members |
+
+The collector checks `org:read` when it signs in, and the run fails without it. A token without one of the other scopes still collects: the values that scope covers are left out and listed in `artifacts/sentry.collector-result.json` with the code `permission_denied`.
+
+To skip the member, integration, and Sentry app reads at trust, leave `access-posture` out of `collect`, as in `collect: [details]`.
+
+`artifacts/sentry.access-posture.json` has no `credentials` section, and its gap has the code `not_read`. Sentry lists organization auth tokens at `GET /api/0/organizations/{org}/org-auth-tokens/` only for a browser session or an OAuth app token with the `org:tokens` scope. A personal or internal integration token cannot list them with any scope.

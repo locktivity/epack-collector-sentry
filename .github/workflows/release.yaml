@@ -13,24 +13,7 @@ permissions: read-all
 jobs:
   # Run tests and conformance checks before building
   test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: go.mod
-
-      - name: Run tests
-        run: go test -race ./...
-
-      - name: Build
-        run: go build -o epack-collector-sentry ./cmd/epack-collector-sentry
-
-      - name: Run conformance tests
-        run: |
-          go install -tags conformance github.com/locktivity/epack/cmd/epack-conformance@v0.1.34
-          epack-conformance collector ./epack-collector-sentry --level standard
+    uses: ./.github/workflows/ci.yaml
 
   # Compute build arguments (version)
   args:

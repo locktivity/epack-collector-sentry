@@ -146,8 +146,8 @@ func TestComputeUserMetrics_InternalIncludesTeamMemberships(t *testing.T) {
 	if m.Inventory[0].TeamMemberships[0].TeamSlug != "backend" {
 		t.Errorf("TeamSlug = %q, want %q", m.Inventory[0].TeamMemberships[0].TeamSlug, "backend")
 	}
-	if m.Inventory[1].TeamMemberships != nil {
-		t.Errorf("expected nil team memberships for u2, got %v", m.Inventory[1].TeamMemberships)
+	if m.Inventory[1].TeamMemberships == nil || len(m.Inventory[1].TeamMemberships) != 0 {
+		t.Errorf("expected an empty, non-nil team membership list for u2, got %#v", m.Inventory[1].TeamMemberships)
 	}
 }
 

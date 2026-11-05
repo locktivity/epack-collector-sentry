@@ -12,7 +12,7 @@ func TestComputeMonitoringSummary_TrustOnlyEnabled(t *testing.T) {
 
 	s := computeMonitoringSummary(monitors, alertRules, LevelTrust)
 
-	if !s.AlertsOrMonitorsEnabled {
+	if !*s.AlertsOrMonitorsEnabled {
 		t.Error("AlertsOrMonitorsEnabled = false, want true")
 	}
 	if s.TotalMonitoringRules != nil {
@@ -32,7 +32,7 @@ func TestComputeMonitoringSummary_TrustOnlyEnabled(t *testing.T) {
 func TestComputeMonitoringSummary_TrustDisabledWhenEmpty(t *testing.T) {
 	s := computeMonitoringSummary(nil, nil, LevelTrust)
 
-	if s.AlertsOrMonitorsEnabled {
+	if *s.AlertsOrMonitorsEnabled {
 		t.Error("AlertsOrMonitorsEnabled = true, want false")
 	}
 }
@@ -49,7 +49,7 @@ func TestComputeMonitoringSummary_AuditIncludesCounts(t *testing.T) {
 
 	s := computeMonitoringSummary(monitors, alertRules, LevelAudit)
 
-	if !s.AlertsOrMonitorsEnabled {
+	if !*s.AlertsOrMonitorsEnabled {
 		t.Error("AlertsOrMonitorsEnabled = false, want true")
 	}
 	if s.TotalMonitoringRules == nil || *s.TotalMonitoringRules != 4 {
@@ -71,7 +71,7 @@ func TestComputeMonitoringSummary_OnlyMonitorsEnabled(t *testing.T) {
 
 	s := computeMonitoringSummary(monitors, nil, LevelTrust)
 
-	if !s.AlertsOrMonitorsEnabled {
+	if !*s.AlertsOrMonitorsEnabled {
 		t.Error("AlertsOrMonitorsEnabled = false, want true with monitors only")
 	}
 }
@@ -81,7 +81,7 @@ func TestComputeMonitoringSummary_OnlyAlertRulesEnabled(t *testing.T) {
 
 	s := computeMonitoringSummary(nil, alertRules, LevelTrust)
 
-	if !s.AlertsOrMonitorsEnabled {
+	if !*s.AlertsOrMonitorsEnabled {
 		t.Error("AlertsOrMonitorsEnabled = false, want true with alert rules only")
 	}
 }

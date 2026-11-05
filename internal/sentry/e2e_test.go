@@ -4,6 +4,7 @@ package sentry
 
 import (
 	"context"
+	"net/http"
 	"os"
 	"testing"
 )
@@ -19,7 +20,7 @@ func e2eClient(t *testing.T) *Client {
 		t.Skip("SENTRY_ORG not set; skipping e2e test")
 	}
 	baseURL := os.Getenv("SENTRY_URL")
-	return NewClient(baseURL, org, token)
+	return NewClient(http.DefaultClient, baseURL, org, token)
 }
 
 func TestE2E_ListMonitors(t *testing.T) {
@@ -68,5 +69,18 @@ func TestE2E_ListTeams(t *testing.T) {
 			t.Fatalf("ListTeamMembers(%s): %v", teams[0].Slug, err)
 		}
 		t.Logf("Team %q has %d members", teams[0].Slug, len(members))
+	}
+}
+
+func TestE2E_GetAuthProvider(t *testing.T) {
+	c := e2eClient(t)
+	provider, err := c.GetAuthProvider(context.Background())
+	if err != nil {
+		t.Fatalf("GetAuthProvider: %v", err)
+	}
+	if provider == nil {
+		t.Log("No auth provider configured")
+	} else {
+		t.Logf("Provider %q, require_link=%v, scim_enabled=%v", provider.ProviderName, provider.RequireLink, provider.ScimEnabled)
 	}
 }

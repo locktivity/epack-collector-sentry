@@ -1,0 +1,22 @@
+{
+  "/admins/admin_count": "Counts members with the owner or manager role.",
+  "/admins/admin_share_pct": "Counts members with the owner or manager role, as a percentage of all members, rounded up.",
+  "/admins/admins_present": "True when a member has the owner or manager role.",
+  "/admins/local_admin_count": "Counts owners and managers who can sign in without SSO. With Require SSO on, an owner or manager counts when not linked to the organization's SSO provider. With Require SSO off, every owner and manager counts, since one linked to SSO can still sign in with a password.",
+  "/admins/local_admin_mfa_coverage_pct": "Counts owners and managers who can sign in without SSO and have two-factor authentication on their Sentry account. Gives that count as a percentage of all owners and managers who can sign in without SSO, rounded down. With Require SSO on, an owner or manager counts when not linked to the organization's SSO provider. With Require SSO off, every owner and manager counts, since one linked to SSO can still sign in with a password.",
+  "/admins/local_admins_present": "True when an owner or manager can sign in without SSO. With Require SSO on, an owner or manager counts when not linked to the organization's SSO provider. With Require SSO off, every owner and manager counts, since one linked to SSO can still sign in with a password.",
+  "/admins/local_mfa_admin_count": "Counts owners and managers who can sign in without SSO and have two-factor authentication on their Sentry account. With Require SSO on, an owner or manager counts when not linked to the organization's SSO provider. With Require SSO off, every owner and manager counts, since one linked to SSO can still sign in with a password.",
+  "/connected_apps/app_count": "Counts the organization's active integrations and installed Sentry apps. Internal integrations count as Sentry apps.",
+  "/connected_apps/apps_present": "True when the organization has an active integration or an installed Sentry app.",
+  "/members/inactive_member_count": "Counts members whose Sentry account is deactivated or was last active more than 90 days before the run. A member with no last active time is counted too.",
+  "/members/inactive_pct": "Counts members whose Sentry account is deactivated or was last active more than 90 days before the run, or never. Gives that count as a percentage of all members, rounded up.",
+  "/members/local_member_count": "Counts members who can sign in without SSO. With Require SSO on, a member counts when not linked to the organization's SSO provider. With Require SSO off, every member counts, since a member linked to SSO can still sign in with a password.",
+  "/members/local_members_present": "True when a member can sign in without SSO. With Require SSO on, a member counts when not linked to the organization's SSO provider. With Require SSO off, every member counts, since a member linked to SSO can still sign in with a password.",
+  "/members/local_mfa_coverage_pct": "Counts members who can sign in without SSO and have two-factor authentication on their Sentry account. Gives that count as a percentage of all members who can sign in without SSO, rounded down. With Require SSO on, a member counts when not linked to the organization's SSO provider. With Require SSO off, every member counts, since a member linked to SSO can still sign in with a password.",
+  "/members/local_mfa_member_count": "Counts members who can sign in without SSO and have two-factor authentication on their Sentry account. With Require SSO on, a member counts when not linked to the organization's SSO provider. With Require SSO off, every member counts, since a member linked to SSO can still sign in with a password.",
+  "/members/member_count": "Counts the organization's members. Pending invitations are not counted.",
+  "/members/members_present": "True when the organization has a member. Pending invitations are not counted.",
+  "/members/sso_coverage_pct": "Counts members linked to the organization's SSO provider, as a percentage of all members, rounded down.",
+  "/members/sso_member_count": "Counts members linked to the organization's SSO provider.",
+  "/sign_in/mfa_required": "Copies the organization's require2FA setting. With it on, every member must set up two-factor authentication."
+}

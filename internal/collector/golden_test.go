@@ -61,6 +61,15 @@ func TestGolden_TrustLevel(t *testing.T) {
 		t.Error("monitoring_summary missing alerts_or_monitors_enabled")
 	}
 
+	// Auth posture is a trust-level surface
+	auth, ok := m["auth"].(map[string]any)
+	if !ok {
+		t.Fatal("auth missing or wrong type")
+	}
+	if auth["sso_configured"] != true || auth["sso_required"] != true || auth["sso_provider"] != "okta" || auth["scim_enabled"] != true {
+		t.Errorf("auth = %v", auth)
+	}
+
 	// Trust must NOT include counts or inventories
 	requireAbsent(t, summary, "total_monitoring_rules")
 	requireAbsent(t, summary, "cron_monitors")
@@ -202,6 +211,7 @@ func TestGolden_NoExtraTopLevelFields(t *testing.T) {
 		"collected_at":       true,
 		"collected_at_level": true,
 		"organization":       true,
+		"auth":               true,
 		"monitoring_summary": true,
 		"monitors":           true,
 		"alert_rules":        true,
@@ -233,6 +243,10 @@ func TestGolden_EmptyOrg_Trust(t *testing.T) {
 	summary := m["monitoring_summary"].(map[string]any)
 	if summary["alerts_or_monitors_enabled"] != false {
 		t.Error("empty org trust should have alerts_or_monitors_enabled=false")
+	}
+	auth := m["auth"].(map[string]any)
+	if auth["sso_configured"] != false || auth["sso_required"] != false {
+		t.Errorf("no provider should report sso_configured=false and sso_required=false, got %v", auth)
 	}
 	requireAbsent(t, m, "monitors")
 	requireAbsent(t, m, "alert_rules")

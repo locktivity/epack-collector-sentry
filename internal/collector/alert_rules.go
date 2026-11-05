@@ -7,29 +7,30 @@ import (
 )
 
 type AlertRuleMetrics struct {
-	TotalCount            int                   `json:"total_count"`
-	MetricAlertCount      int                   `json:"metric_alert_count"`
-	IssueAlertCount       int                   `json:"issue_alert_count"`
-	WithActionsCount      int                   `json:"with_actions_count"`
-	WithActionsPct        *int                  `json:"with_actions_pct"`
-	DenominatorAlertRules int                   `json:"denominator_alert_rules"`
-	Inventory             []AlertRuleInventory  `json:"inventory,omitempty"`
+	TotalCount            int                  `json:"total_count"`
+	MetricAlertCount      int                  `json:"metric_alert_count"`
+	IssueAlertCount       int                  `json:"issue_alert_count"`
+	WithActionsCount      int                  `json:"with_actions_count"`
+	WithActionsPct        *int                 `json:"with_actions_pct"`
+	DenominatorAlertRules int                  `json:"denominator_alert_rules"`
+	Inventory             []AlertRuleInventory `json:"inventory,omitzero"`
+	InventoryTruncated    bool                 `json:"inventory_truncated,omitempty"`
 }
 
 type AlertRuleInventory struct {
-	ID               string                   `json:"id"`
-	Name             string                   `json:"name"`
-	Type             string                   `json:"type"`
-	Status           any                      `json:"status"`
-	Aggregate        string                   `json:"aggregate,omitempty"`
+	ID                string                  `json:"id"`
+	Name              string                  `json:"name"`
+	Type              string                  `json:"type"`
+	Status            any                     `json:"status"`
+	Aggregate         string                  `json:"aggregate,omitempty"`
 	TimeWindowMinutes float64                 `json:"time_window_minutes,omitempty"`
-	ThresholdType    string                   `json:"threshold_type,omitempty"`
-	DetectionType    string                   `json:"detection_type,omitempty"`
-	Project          string                   `json:"project,omitempty"`
-	Environment      string                   `json:"environment,omitempty"`
-	Owner            string                   `json:"owner,omitempty"`
-	Triggers         []AlertTriggerInventory  `json:"triggers,omitempty"`
-	DateCreated      string                   `json:"date_created,omitempty"`
+	ThresholdType     string                  `json:"threshold_type,omitempty"`
+	DetectionType     string                  `json:"detection_type,omitempty"`
+	Project           string                  `json:"project,omitempty"`
+	Environment       string                  `json:"environment,omitempty"`
+	Owner             string                  `json:"owner,omitempty"`
+	Triggers          []AlertTriggerInventory `json:"triggers,omitempty"`
+	DateCreated       string                  `json:"date_created,omitempty"`
 }
 
 type AlertTriggerInventory struct {
@@ -75,6 +76,7 @@ func computeAlertRuleMetrics(rules []sentry.AlertRule, level Level) (AlertRuleMe
 			msg := fmt.Sprintf("alert_rules truncated from %d to %d", len(items), maxInventorySize)
 			truncationMsg = &msg
 			items = items[:maxInventorySize]
+			m.InventoryTruncated = true
 		}
 		inv := make([]AlertRuleInventory, 0, len(items))
 		for _, r := range items {

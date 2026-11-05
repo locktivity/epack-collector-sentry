@@ -9,49 +9,137 @@
   "properties": {
     "schema_version": {
       "type": "string",
-      "const": "1.0.0"
+      "const": "1.0.0",
+      "x-epack-label": "Schema version",
+      "x-epack-summary": "Identifies the output format version."
     },
     "collected_at": {
       "type": "string",
-      "format": "date-time"
+      "format": "date-time",
+      "x-epack-label": "Collected at",
+      "x-epack-summary": "When the collection ran."
     },
     "collected_at_level": {
       "type": "string",
-      "enum": ["trust", "audit", "internal"]
+      "enum": ["trust", "audit", "internal"],
+      "x-epack-label": "Collection level",
+      "x-epack-summary": "The level of detail the run collected, which is trust, audit, or internal."
     },
     "organization": {
-      "type": "string"
+      "type": "string",
+      "x-epack-label": "Organization",
+      "x-epack-summary": "The Sentry organization slug this collection covers."
+    },
+    "auth": {
+      "$ref": "#/$defs/auth",
+      "x-epack-label": "Single sign-on",
+      "x-epack-summary": "How members of the organization sign in."
     },
     "monitoring_summary": {
-      "$ref": "#/$defs/monitoring_summary"
+      "$ref": "#/$defs/monitoring_summary",
+      "x-epack-label": "Monitoring summary",
+      "x-epack-summary": "High-level monitoring posture for the organization."
     },
     "monitors": {
-      "$ref": "#/$defs/monitor_metrics"
+      "$ref": "#/$defs/monitor_metrics",
+      "x-epack-level": "audit",
+      "x-epack-label": "Monitors",
+      "x-epack-summary": "Cron monitor aggregates and inventory."
     },
     "alert_rules": {
-      "$ref": "#/$defs/alert_rule_metrics"
+      "$ref": "#/$defs/alert_rule_metrics",
+      "x-epack-level": "audit",
+      "x-epack-label": "Alert rules",
+      "x-epack-summary": "Alert rule aggregates and inventory."
     },
     "users": {
-      "$ref": "#/$defs/user_metrics"
+      "$ref": "#/$defs/user_metrics",
+      "x-epack-level": "audit",
+      "x-epack-label": "Users",
+      "x-epack-summary": "Organization member aggregates and inventory."
     },
     "teams": {
-      "$ref": "#/$defs/team_metrics"
+      "$ref": "#/$defs/team_metrics",
+      "x-epack-level": "audit",
+      "x-epack-label": "Teams",
+      "x-epack-summary": "Team aggregates and inventory."
     },
     "diagnostics": {
-      "$ref": "#/$defs/diagnostics"
+      "$ref": "#/$defs/diagnostics",
+      "x-epack-label": "Diagnostics",
+      "x-epack-summary": "Collection diagnostics including errors and warnings."
     }
   },
   "$defs": {
+    "auth": {
+      "type": "object",
+      "required": ["sso_configured", "sso_required", "scim_enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "sso_configured": {
+          "type": ["boolean", "null"],
+          "x-epack-label": "SSO configured",
+          "x-epack-summary": "Whether the organization has an SSO provider set up.",
+          "x-epack-goal": true,
+          "x-epack-method": "Checks whether the organization's auth-provider endpoint lists a provider."
+        },
+        "sso_provider": {
+          "type": "string",
+          "x-epack-label": "SSO provider",
+          "x-epack-summary": "The SSO provider the organization uses, such as okta or google."
+        },
+        "sso_required": {
+          "type": ["boolean", "null"],
+          "x-epack-label": "SSO required",
+          "x-epack-summary": "Whether members must sign in through the SSO provider. This is Sentry's Require SSO setting.",
+          "x-epack-goal": true,
+          "x-epack-method": "Copies the auth provider's require_link, or false when the organization has no auth provider."
+        },
+        "scim_enabled": {
+          "type": ["boolean", "null"],
+          "x-epack-label": "SCIM provisioning",
+          "x-epack-summary": "Whether members are added and removed through SCIM.",
+          "x-epack-goal": true,
+          "x-epack-method": "Copies the auth provider's scim_enabled, or false when the organization has no auth provider."
+        }
+      }
+    },
     "monitoring_summary": {
       "type": "object",
       "required": ["alerts_or_monitors_enabled"],
       "additionalProperties": false,
       "properties": {
-        "alerts_or_monitors_enabled": { "type": "boolean" },
-        "total_monitoring_rules": { "type": "integer" },
-        "cron_monitors": { "type": "integer" },
-        "alert_rules": { "type": "integer" },
-        "with_actions_pct": { "type": "integer" }
+        "alerts_or_monitors_enabled": {
+          "type": ["boolean", "null"],
+          "description": "Whether any cron monitor or alert rule exists. Null when neither list showed one and at least one could not be read.",
+          "x-epack-label": "Monitoring configured",
+          "x-epack-summary": "Whether any cron monitors or alert rules exist in the organization.",
+          "x-epack-goal": true,
+          "x-epack-method": "Checks every page of Sentry's cron monitors and detectors for a cron monitor or an alert rule. A project's default error and issue stream monitors count as alert rules only when an alert is connected to them."
+        },
+        "total_monitoring_rules": { "type": "integer", "x-epack-level": "audit", "x-epack-label": "Total monitoring rules", "x-epack-summary": "Combined count of cron monitors and alert rules." },
+        "cron_monitors": {
+          "type": "integer",
+          "x-epack-level": "audit",
+          "x-epack-rollup": { "rows": "/monitors/inventory", "as": "count", "truncated": "/monitors/inventory_truncated" },
+          "x-epack-label": "Cron monitors",
+          "x-epack-summary": "Count of cron monitors configured."
+        },
+        "alert_rules": {
+          "type": "integer",
+          "x-epack-level": "audit",
+          "x-epack-rollup": { "rows": "/alert_rules/inventory", "as": "count", "truncated": "/alert_rules/inventory_truncated" },
+          "x-epack-label": "Alert rules",
+          "x-epack-summary": "Count of alert rules configured."
+        },
+        "with_actions_pct": {
+          "type": ["integer", "null"],
+          "x-epack-level": "audit",
+          "x-epack-denominator": "total_monitoring_rules",
+          "x-epack-label": "Rules with actions",
+          "x-epack-summary": "Percent of all monitoring rules with at least one notification action.",
+          "x-epack-rounding": "floor"
+        }
       }
     },
     "monitor_metrics": {
@@ -59,16 +147,44 @@
       "required": ["total_count", "active_count", "disabled_count", "muted_count", "with_alert_targets_count", "denominator_monitors"],
       "additionalProperties": false,
       "properties": {
-        "total_count": { "type": "integer" },
-        "active_count": { "type": "integer" },
-        "disabled_count": { "type": "integer" },
-        "muted_count": { "type": "integer" },
-        "with_alert_targets_count": { "type": "integer" },
-        "with_alert_targets_pct": { "type": ["integer", "null"] },
-        "denominator_monitors": { "type": "integer" },
+        "total_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Total monitors",
+          "x-epack-summary": "Total cron monitors configured in the org."
+        },
+        "active_count": { "type": "integer", "x-epack-label": "Active monitors", "x-epack-summary": "Monitors currently active." },
+        "disabled_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "where": "/status", "equals": "disabled", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Disabled monitors",
+          "x-epack-summary": "Monitors that have been disabled."
+        },
+        "muted_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "where": "/is_muted", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Muted monitors",
+          "x-epack-summary": "Monitors silenced from creating incidents."
+        },
+        "with_alert_targets_count": { "type": "integer", "x-epack-label": "Monitors with targets", "x-epack-summary": "Monitors with at least one notification target configured." },
+        "with_alert_targets_pct": { "type": ["integer", "null"], "x-epack-denominator": "denominator_monitors", "x-epack-label": "Monitor target coverage", "x-epack-summary": "Percent of monitors with notification targets.", "x-epack-numerator": "with_alert_targets_count", "x-epack-rounding": "floor" },
+        "denominator_monitors": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Monitors counted",
+          "x-epack-summary": "Number of monitors the target coverage percentage is taken over."
+        },
         "inventory": {
           "type": "array",
-          "items": { "$ref": "#/$defs/monitor_inventory" }
+          "items": { "$ref": "#/$defs/monitor_inventory" },
+          "x-epack-label": "Monitor inventory",
+          "x-epack-summary": "Per-monitor detail rows."
+        },
+        "inventory_truncated": {
+          "type": "boolean",
+          "description": "Present and true when inventory holds only the first 10,000 monitors. The counts cover every monitor.",
+          "x-epack-label": "Monitor list cut short",
+          "x-epack-summary": "True when the inventory holds only the first 10,000 monitors. The counts cover every monitor."
         }
       }
     },
@@ -77,15 +193,22 @@
       "required": ["id", "name", "type", "status", "is_muted", "schedule_type", "schedule", "project", "connected_workflows", "environments"],
       "additionalProperties": false,
       "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "type": { "type": "string" },
-        "status": { "type": "string" },
-        "is_muted": { "type": "boolean" },
-        "schedule_type": { "type": "string" },
-        "schedule": {},
-        "project": { "type": "string" },
-        "owner": { "type": "string" },
+        "id": { "type": "string", "x-epack-label": "ID" },
+        "name": { "type": "string", "x-epack-label": "Name", "x-epack-summary": "Monitor name." },
+        "type": { "type": "string", "x-epack-label": "Type", "x-epack-summary": "Monitor type." },
+        "status": { "type": "string", "x-epack-label": "Status", "x-epack-summary": "Monitor status, such as active or disabled." },
+        "is_muted": { "type": "boolean", "x-epack-label": "Muted", "x-epack-summary": "Whether the monitor is muted.", "x-epack-goal": false },
+        "schedule_type": { "type": "string", "x-epack-label": "Schedule type" },
+        "schedule": {
+          "description": "A crontab expression, or for an interval schedule a number and a unit, such as [7, \"day\"].",
+          "x-epack-label": "Schedule",
+          "prefixItems": [
+            { "x-epack-label": "Interval", "x-epack-summary": "Number of units between the monitor's expected check-ins." },
+            { "x-epack-label": "Interval unit" }
+          ]
+        },
+        "project": { "type": "string", "x-epack-label": "Project", "x-epack-summary": "Project this monitor belongs to." },
+        "owner": { "type": "string", "x-epack-label": "Owner" },
         "connected_workflows": {
           "type": "array",
           "items": {
@@ -93,34 +216,38 @@
             "required": ["target_type", "target_identifier"],
             "additionalProperties": false,
             "properties": {
-              "target_type": { "type": "string" },
-              "target_identifier": { "type": "integer" }
+              "target_type": { "type": "string", "x-epack-label": "Target type" },
+              "target_identifier": { "type": "integer", "x-epack-label": "Target ID", "x-epack-summary": "Sentry's ID for the user or team that gets the monitor's alerts." }
             }
-          }
+          },
+          "x-epack-label": "Alert targets"
         },
         "latest_group": {
           "type": "object",
           "required": ["environment", "status"],
           "additionalProperties": false,
           "properties": {
-            "environment": { "type": "string" },
-            "status": { "type": "string" },
-            "last_check_in": { "type": ["string", "null"], "format": "date-time" },
-            "next_check_in": { "type": ["string", "null"], "format": "date-time" },
+            "environment": { "type": "string", "x-epack-label": "Environment" },
+            "status": { "type": "string", "x-epack-label": "Check-in status" },
+            "last_check_in": { "type": ["string", "null"], "format": "date-time", "x-epack-label": "Last check-in" },
+            "next_check_in": { "type": ["string", "null"], "format": "date-time", "x-epack-label": "Next check-in" },
             "active_incident": {
               "type": ["object", "null"],
               "properties": {
-                "starting_timestamp": { "type": "string", "format": "date-time" },
-                "resolving_timestamp": { "type": ["string", "null"], "format": "date-time" }
-              }
+                "starting_timestamp": { "type": "string", "format": "date-time", "x-epack-label": "Incident started" },
+                "resolving_timestamp": { "type": ["string", "null"], "format": "date-time", "x-epack-label": "Incident resolved" }
+              },
+              "x-epack-label": "Active incident"
             }
-          }
+          },
+          "x-epack-label": "Environment check-ins"
         },
         "environments": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": { "type": "string" },
+          "x-epack-label": "Environments"
         },
-        "open_alert_count": { "type": "integer" }
+        "open_alert_count": { "type": "integer", "x-epack-level": "internal", "x-epack-label": "Open incidents", "x-epack-summary": "Environments of the monitor with an incident that has not been resolved.", "x-epack-goal": "lower" }
       }
     },
     "alert_rule_metrics": {
@@ -128,15 +255,43 @@
       "required": ["total_count", "metric_alert_count", "issue_alert_count", "with_actions_count", "denominator_alert_rules"],
       "additionalProperties": false,
       "properties": {
-        "total_count": { "type": "integer" },
-        "metric_alert_count": { "type": "integer" },
-        "issue_alert_count": { "type": "integer" },
-        "with_actions_count": { "type": "integer" },
-        "with_actions_pct": { "type": ["integer", "null"] },
-        "denominator_alert_rules": { "type": "integer" },
+        "total_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Total alert rules",
+          "x-epack-summary": "Total alert rules in the org. A project's default error and issue stream monitors count only when an alert is connected to them."
+        },
+        "metric_alert_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "where": "/type", "equals": "metric", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Metric alerts",
+          "x-epack-summary": "Metric (threshold-based) alert rules."
+        },
+        "issue_alert_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "where": "/type", "equals": "issue", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Issue alerts",
+          "x-epack-summary": "Issue (event-driven) alert rules. Each one is a project's default error or issue stream monitor with an alert connected to it."
+        },
+        "with_actions_count": { "type": "integer", "x-epack-label": "With actions", "x-epack-summary": "Alert rules with at least one notification action." },
+        "with_actions_pct": { "type": ["integer", "null"], "x-epack-denominator": "denominator_alert_rules", "x-epack-label": "Action coverage", "x-epack-summary": "Percent of alert rules with actions.", "x-epack-numerator": "with_actions_count", "x-epack-rounding": "floor" },
+        "denominator_alert_rules": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Alert rules counted",
+          "x-epack-summary": "Number of alert rules the action coverage percentage is taken over."
+        },
         "inventory": {
           "type": "array",
-          "items": { "$ref": "#/$defs/alert_rule_inventory" }
+          "items": { "$ref": "#/$defs/alert_rule_inventory" },
+          "x-epack-label": "Alert rule inventory",
+          "x-epack-summary": "Per-rule detail rows."
+        },
+        "inventory_truncated": {
+          "type": "boolean",
+          "description": "Present and true when inventory holds only the first 10,000 alert rules. The counts cover every alert rule.",
+          "x-epack-label": "Alert rule list cut short",
+          "x-epack-summary": "True when the inventory holds only the first 10,000 alert rules. The counts cover every alert rule."
         }
       }
     },
@@ -145,17 +300,17 @@
       "required": ["id", "name", "type", "status"],
       "additionalProperties": false,
       "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "type": { "type": "string" },
-        "status": {},
-        "aggregate": { "type": "string" },
-        "time_window_minutes": { "type": "number" },
-        "threshold_type": { "type": "string" },
-        "detection_type": { "type": "string" },
-        "project": { "type": "string" },
-        "environment": { "type": "string" },
-        "owner": { "type": "string" },
+        "id": { "type": "string", "x-epack-label": "ID" },
+        "name": { "type": "string", "x-epack-label": "Name", "x-epack-summary": "Alert rule name." },
+        "type": { "type": "string", "x-epack-label": "Type", "x-epack-summary": "Whether the rule is a metric alert or an issue alert." },
+        "status": { "x-epack-label": "Status", "x-epack-summary": "Alert rule status." },
+        "aggregate": { "type": "string", "x-epack-label": "Aggregate" },
+        "time_window_minutes": { "type": "number", "x-epack-label": "Time window", "x-epack-summary": "Length of the window the metric alert's aggregate covers." },
+        "threshold_type": { "type": "string", "x-epack-label": "Threshold direction" },
+        "detection_type": { "type": "string", "x-epack-label": "Detection type" },
+        "project": { "type": "string", "x-epack-label": "Project", "x-epack-summary": "Project this alert rule belongs to." },
+        "environment": { "type": "string", "x-epack-label": "Environment" },
+        "owner": { "type": "string", "x-epack-label": "Owner" },
         "triggers": {
           "type": "array",
           "items": {
@@ -163,8 +318,8 @@
             "required": ["label", "actions"],
             "additionalProperties": false,
             "properties": {
-              "label": { "type": "string" },
-              "alert_threshold": { "type": "number" },
+              "label": { "type": "string", "x-epack-label": "Trigger name" },
+              "alert_threshold": { "type": "number", "x-epack-label": "Alert threshold", "x-epack-summary": "Metric value that sets off the trigger." },
               "actions": {
                 "type": "array",
                 "items": {
@@ -172,16 +327,18 @@
                   "required": ["type", "target_type"],
                   "additionalProperties": false,
                   "properties": {
-                    "type": { "type": "string" },
-                    "target_type": { "type": "string" },
-                    "integration_id": { "type": "string" }
+                    "type": { "type": "string", "x-epack-label": "Action type" },
+                    "target_type": { "type": "string", "x-epack-label": "Target type" },
+                    "integration_id": { "type": "string", "x-epack-level": "internal", "x-epack-label": "Integration ID" }
                   }
-                }
+                },
+                "x-epack-label": "Actions"
               }
             }
-          }
+          },
+          "x-epack-label": "Triggers"
         },
-        "date_created": { "type": "string" }
+        "date_created": { "type": "string", "x-epack-label": "Created" }
       }
     },
     "user_metrics": {
@@ -189,17 +346,61 @@
       "required": ["total_count", "active_count", "pending_count", "has_2fa_count", "sso_linked_count", "denominator_active_users"],
       "additionalProperties": false,
       "properties": {
-        "total_count": { "type": "integer" },
-        "active_count": { "type": "integer" },
-        "pending_count": { "type": "integer" },
-        "has_2fa_count": { "type": "integer" },
-        "has_2fa_pct": { "type": ["integer", "null"] },
-        "sso_linked_count": { "type": "integer" },
-        "sso_linked_pct": { "type": ["integer", "null"] },
-        "denominator_active_users": { "type": "integer" },
+        "total_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Total members",
+          "x-epack-summary": "Members in the organization, including pending invitations."
+        },
+        "active_count": { "type": "integer", "x-epack-label": "Active members", "x-epack-summary": "Active, non-pending members." },
+        "pending_count": { "type": "integer", "x-epack-label": "Pending invitations", "x-epack-summary": "Pending invitations." },
+        "has_2fa_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "where": "/has_2fa", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "2FA enabled",
+          "x-epack-summary": "Members with two-factor authentication enabled."
+        },
+        "has_2fa_pct": {
+          "type": ["integer", "null"],
+          "x-epack-denominator": "denominator_active_users",
+          "x-epack-rollup": { "rows": "inventory", "where": "/has_2fa", "as": "pct", "truncated": "inventory_truncated" },
+          "x-epack-label": "2FA coverage",
+          "x-epack-summary": "Percent of members with 2FA enabled. Pending invitations are counted as members.",
+          "x-epack-numerator": "has_2fa_count",
+          "x-epack-rounding": "floor"
+        },
+        "sso_linked_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "where": "/sso_linked", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "SSO linked",
+          "x-epack-summary": "Members with SSO linked."
+        },
+        "sso_linked_pct": {
+          "type": ["integer", "null"],
+          "x-epack-denominator": "denominator_active_users",
+          "x-epack-rollup": { "rows": "inventory", "where": "/sso_linked", "as": "pct", "truncated": "inventory_truncated" },
+          "x-epack-label": "SSO coverage",
+          "x-epack-summary": "Percent of members with SSO linked. Pending invitations are counted as members.",
+          "x-epack-numerator": "sso_linked_count",
+          "x-epack-rounding": "floor"
+        },
+        "denominator_active_users": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Members counted",
+          "x-epack-summary": "Number of members the 2FA and SSO percentages are taken over. Pending invitations are included."
+        },
         "inventory": {
           "type": "array",
-          "items": { "$ref": "#/$defs/user_inventory" }
+          "items": { "$ref": "#/$defs/user_inventory" },
+          "x-epack-label": "Member inventory",
+          "x-epack-summary": "Per-member detail rows."
+        },
+        "inventory_truncated": {
+          "type": "boolean",
+          "description": "Present and true when inventory holds only the first 10,000 members. The counts cover every member.",
+          "x-epack-label": "Member list cut short",
+          "x-epack-summary": "True when the inventory holds only the first 10,000 members. The counts cover every member."
         }
       }
     },
@@ -208,26 +409,28 @@
       "required": ["id", "email", "name", "org_role", "has_2fa", "sso_linked", "is_active"],
       "additionalProperties": false,
       "properties": {
-        "id": { "type": "string" },
-        "email": { "type": "string" },
-        "name": { "type": "string" },
-        "org_role": { "type": "string" },
-        "has_2fa": { "type": "boolean" },
-        "sso_linked": { "type": "boolean" },
-        "is_active": { "type": "boolean" },
-        "date_created": { "type": "string" },
-        "last_active": { "type": "string" },
+        "id": { "type": "string", "x-epack-label": "ID" },
+        "email": { "type": "string", "x-epack-label": "Email", "x-epack-summary": "Member email address." },
+        "name": { "type": "string", "x-epack-label": "Name" },
+        "org_role": { "type": "string", "x-epack-label": "Org role", "x-epack-summary": "Organization-level role." },
+        "has_2fa": { "type": "boolean", "x-epack-label": "2FA", "x-epack-summary": "Whether two-factor authentication is enabled.", "x-epack-goal": true },
+        "sso_linked": { "type": "boolean", "x-epack-label": "SSO", "x-epack-summary": "Whether SSO is linked.", "x-epack-goal": true },
+        "is_active": { "type": "boolean", "x-epack-label": "Active", "x-epack-summary": "Whether the member's Sentry account is active." },
+        "date_created": { "type": "string", "x-epack-label": "Joined" },
+        "last_active": { "type": "string", "x-epack-label": "Last active" },
         "team_memberships": {
           "type": "array",
+          "x-epack-level": "internal",
           "items": {
             "type": "object",
             "required": ["team_slug", "team_role"],
             "additionalProperties": false,
             "properties": {
-              "team_slug": { "type": "string" },
-              "team_role": { "type": "string" }
+              "team_slug": { "type": "string", "x-epack-label": "Team" },
+              "team_role": { "type": "string", "x-epack-label": "Team role" }
             }
-          }
+          },
+          "x-epack-label": "Teams"
         }
       }
     },
@@ -236,11 +439,24 @@
       "required": ["total_count", "with_members_count"],
       "additionalProperties": false,
       "properties": {
-        "total_count": { "type": "integer" },
-        "with_members_count": { "type": "integer" },
+        "total_count": {
+          "type": "integer",
+          "x-epack-rollup": { "rows": "inventory", "as": "count", "truncated": "inventory_truncated" },
+          "x-epack-label": "Total teams",
+          "x-epack-summary": "Total teams in the org."
+        },
+        "with_members_count": { "type": "integer", "x-epack-label": "Teams with members", "x-epack-summary": "Teams with at least one member." },
         "inventory": {
           "type": "array",
-          "items": { "$ref": "#/$defs/team_inventory" }
+          "items": { "$ref": "#/$defs/team_inventory" },
+          "x-epack-label": "Team inventory",
+          "x-epack-summary": "Per-team detail rows."
+        },
+        "inventory_truncated": {
+          "type": "boolean",
+          "description": "Present and true when inventory holds only the first 10,000 teams. The counts cover every team.",
+          "x-epack-label": "Team list cut short",
+          "x-epack-summary": "True when the inventory holds only the first 10,000 teams. The counts cover every team."
         }
       }
     },
@@ -249,24 +465,31 @@
       "required": ["id", "slug", "name", "member_count", "project_count"],
       "additionalProperties": false,
       "properties": {
-        "id": { "type": "string" },
-        "slug": { "type": "string" },
-        "name": { "type": "string" },
-        "member_count": { "type": "integer" },
-        "project_count": { "type": "integer" },
-        "date_created": { "type": "string" },
+        "id": { "type": "string", "x-epack-label": "ID" },
+        "slug": { "type": "string", "x-epack-label": "Slug", "x-epack-summary": "Team slug." },
+        "name": { "type": "string", "x-epack-label": "Name", "x-epack-summary": "Team display name." },
+        "member_count": { "type": "integer", "x-epack-label": "Members", "x-epack-summary": "Number of members in the team." },
+        "project_count": { "type": "integer", "x-epack-label": "Projects", "x-epack-summary": "Number of projects the team is assigned to." },
+        "date_created": { "type": "string", "x-epack-label": "Created" },
         "members": {
           "type": "array",
+          "x-epack-level": "internal",
           "items": {
             "type": "object",
             "required": ["user_id", "email", "team_role"],
             "additionalProperties": false,
             "properties": {
-              "user_id": { "type": "string" },
-              "email": { "type": "string" },
-              "team_role": { "type": "string" }
+              "user_id": {
+                "type": ["string", "null"],
+                "x-epack-label": "User ID",
+                "x-epack-summary": "The ID of the member's Sentry user.",
+                "x-epack-null": "The member was invited and has not joined yet, so the member has no Sentry user"
+              },
+              "email": { "type": "string", "x-epack-label": "Email" },
+              "team_role": { "type": "string", "x-epack-label": "Team role" }
             }
-          }
+          },
+          "x-epack-label": "Members"
         }
       }
     },
@@ -277,15 +500,20 @@
       "properties": {
         "errors": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": { "type": "string" },
+          "x-epack-label": "Errors",
+          "x-epack-summary": "Errors encountered during collection."
         },
         "warnings": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": { "type": "string" },
+          "x-epack-label": "Warnings",
+          "x-epack-summary": "Non-fatal warnings raised during collection."
         },
         "truncation": {
           "type": "object",
-          "additionalProperties": { "type": "string" }
+          "additionalProperties": { "type": "string", "x-epack-label": "Truncation note" },
+          "x-epack-label": "Truncation notes"
         }
       }
     }

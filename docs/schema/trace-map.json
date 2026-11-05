@@ -1,0 +1,5516 @@
+{
+  "artifacts": {
+    "artifacts/sentry.access-posture.json": {
+      "/admins": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:133"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:137"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:138"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:139"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:237",
+            "end": 258
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:16"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:22"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:23"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:24"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:30"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:100"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:194"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:199"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:209"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/client.go:212"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:135"
+        ]
+      },
+      "/admins/admin_count": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:192"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:194"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:195"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:251"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:255"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:338"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:135"
+        ]
+      },
+      "/admins/admin_share_pct": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:94",
+            "end": 96
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:95"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:191"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:192"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:194"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:195"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:247"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:135"
+        ]
+      },
+      "/admins/admins_present": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:192"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:194"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:195"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:246"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:336"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:135"
+        ]
+      },
+      "/admins/local_admin_count": {
+        "operations": [
+          "sentry.auth_provider.get",
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:192"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:199"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:203"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:208"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:209"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:251"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:255"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:278"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:279"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:338"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:135",
+          "internal/collector/access_posture.go:290"
+        ]
+      },
+      "/admins/local_admin_mfa_coverage_pct": {
+        "operations": [
+          "sentry.auth_provider.get"
+        ],
+        "code": [
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:94",
+            "end": 96
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:95"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:192"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:193"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:199"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:203"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:208"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:209"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:210"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:211"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:249"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:278"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:279"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:135",
+          "internal/collector/access_posture.go:290"
+        ]
+      },
+      "/admins/local_admins_present": {
+        "operations": [
+          "sentry.auth_provider.get",
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:192"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:194"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:195"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:199"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:203"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:208"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:209"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:248"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:278"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:284"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:285"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:336"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:135",
+          "internal/collector/access_posture.go:290"
+        ]
+      },
+      "/admins/local_mfa_admin_count": {
+        "operations": [
+          "sentry.auth_provider.get",
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:192"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:193"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:199"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:203"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:208"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:210"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:211"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:251"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:255"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:278"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:279"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:338"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:135",
+          "internal/collector/access_posture.go:290"
+        ]
+      },
+      "/collected_at": {
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:128"
+          }
+        ]
+      },
+      "/connected_apps": {
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:144"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:297",
+            "end": 330
+          }
+        ]
+      },
+      "/connected_apps/app_count": {
+        "operations": [
+          "sentry.integrations.list",
+          "sentry.sentry_app_installations.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:298"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:299"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:300"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:301"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:302"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:303"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:306"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:307"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:308"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:312"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:313"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:314"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:316"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:317"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:338"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:327"
+        ]
+      },
+      "/connected_apps/apps_present": {
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:298"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:299"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:300"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:301"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:302"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:303"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:306"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:307"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:308"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:313"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:314"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:315"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:321"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:322"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:336"
+          }
+        ]
+      },
+      "/credentials": {
+        "gaps": [
+          "internal/collector/access_posture.go:149"
+        ]
+      },
+      "/members": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:133"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:137"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:138"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:139"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:237",
+            "end": 258
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:16"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:22"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:23"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:24"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:30"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:100"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:194"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:199"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:209"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/client.go:212"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134"
+        ]
+      },
+      "/members/external_member_count": {
+        "gaps": [
+          "internal/collector/access_posture.go:149"
+        ]
+      },
+      "/members/external_members_present": {
+        "gaps": [
+          "internal/collector/access_posture.go:149"
+        ]
+      },
+      "/members/inactive_member_count": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:215"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:216"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:251"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:254"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:338"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134"
+        ]
+      },
+      "/members/inactive_pct": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:94",
+            "end": 96
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:95"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:191"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:215"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:216"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:243"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134"
+        ]
+      },
+      "/members/local_member_count": {
+        "operations": [
+          "sentry.auth_provider.get",
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:198"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:203"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:204"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:251"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:253"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:267"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:268"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:338"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134",
+          "internal/collector/access_posture.go:290"
+        ]
+      },
+      "/members/local_members_present": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:191"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:198"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:203"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:204"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:241"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:267"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:273"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:274"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:336"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134"
+        ]
+      },
+      "/members/local_mfa_coverage_pct": {
+        "operations": [
+          "sentry.auth_provider.get",
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:94",
+            "end": 96
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:95"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:193"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:198"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:203"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:204"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:205"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:206"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:242"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:267"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:268"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134",
+          "internal/collector/access_posture.go:290"
+        ]
+      },
+      "/members/local_mfa_member_count": {
+        "operations": [
+          "sentry.auth_provider.get",
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:193"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:198"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:203"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:205"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:251"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:253"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:267"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:268"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:338"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134",
+          "internal/collector/access_posture.go:290"
+        ]
+      },
+      "/members/member_count": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:191"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:251"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:252"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:338"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134"
+        ]
+      },
+      "/members/members_present": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:191"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:239"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:336"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134"
+        ]
+      },
+      "/members/sso_coverage_pct": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:94",
+            "end": 96
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:95"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:191"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:198"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:240"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134"
+        ]
+      },
+      "/members/sso_member_count": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:187"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:188"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:197"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/access_posture.go:198"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/access_posture.go:251"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:252"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/access_posture.go:338"
+          }
+        ],
+        "gaps": [
+          "internal/collector/access_posture.go:134"
+        ]
+      },
+      "/provider": {
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:129"
+          }
+        ]
+      },
+      "/root": {
+        "gaps": [
+          "internal/collector/access_posture.go:149"
+        ]
+      },
+      "/schema_version": {
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:127"
+          }
+        ]
+      },
+      "/sign_in/mfa_required": {
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:166"
+          }
+        ]
+      },
+      "/sign_in/scim_enabled": {
+        "operations": [
+          "sentry.auth_provider.get"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:167"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:16"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:22"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:23"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:25"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:31"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:194"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:199"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:209"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/client.go:212"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ],
+        "copies": [
+          {
+            "path": "artifacts/sentry.details.json",
+            "pointer": "/auth/scim_enabled"
+          }
+        ]
+      },
+      "/sign_in/sso_configured": {
+        "operations": [
+          "sentry.auth_provider.get"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:164"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:16"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:20"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:21"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ],
+        "copies": [
+          {
+            "path": "artifacts/sentry.details.json",
+            "pointer": "/auth/sso_configured"
+          }
+        ]
+      },
+      "/sign_in/sso_required": {
+        "operations": [
+          "sentry.auth_provider.get"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:165"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:16"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:22"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:23"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:24"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:30"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:194"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:199"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:209"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/client.go:212"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ],
+        "copies": [
+          {
+            "path": "artifacts/sentry.details.json",
+            "pointer": "/auth/sso_required"
+          }
+        ]
+      },
+      "/system_type": {
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/access_posture.go:130"
+          }
+        ]
+      }
+    },
+    "artifacts/sentry.details.json": {
+      "/alert_rules": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:100"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:118"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:153"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:163"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:166"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:167"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:19"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:28"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:47"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/config.go:48"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/denominator_alert_rules": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:51"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:73"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:74"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:75"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:78"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:81"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:82"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:83"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:85"
+          }
+        ]
+      },
+      "/alert_rules/inventory/*/aggregate": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:92"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:93"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:94"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:105"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:106"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:75"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:77"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/date_created": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:102"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:25"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/detection_type": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:92"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:93"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:94"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:105"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:108"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:26"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/environment": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:120"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:121"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:45"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:49"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:121"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:122"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/id": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:98"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:22"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/name": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:99"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:23"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/owner": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:123"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:124"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:41"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:42"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:84"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/types.go:85"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:86"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:90"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/types.go:91"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:92"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/types.go:93"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:94"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:96"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/project": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:117"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:118"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:35"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:36"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:37"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:38"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/status": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:101"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:29"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:30"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:32"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/threshold_type": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:92"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:93"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:94"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:105"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:109"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:110"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:111"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:112"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:113"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:82"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:83"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/time_window_minutes": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:92"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:93"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:94"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:105"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:107"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:75"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:79"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/triggers/*/actions/*/integration_id": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:128"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:130"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:135"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:136"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:153"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:157"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:158"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:159"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:163"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:164"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:168"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:169"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:171"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:173"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:210"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:211"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/types.go:60"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:63"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/types.go:64"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:65"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:68"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/types.go:69"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:70"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/triggers/*/actions/*/target_type": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:128"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:130"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:133"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:153"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:157"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:158"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:159"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:163"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:164"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:168"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:169"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:171"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:173"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:208"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/triggers/*/actions/*/type": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:128"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:130"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:132"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:153"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:157"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:158"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:159"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:163"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:164"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:168"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:169"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:171"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:173"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:207"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/triggers/*/label": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:128"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:141"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:153"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:157"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:158"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:159"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:163"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:164"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/mapping.go:168"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:169"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:170"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:173"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/inventory/*/type": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:92"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:93"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:94"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:100"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/issue_alert_count": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:55"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:58"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:59"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/metric_alert_count": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:55"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:56"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:57"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/mapping.go:24"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/total_count": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:50"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/with_actions_count": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:62"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:63"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/alert_rules/with_actions_pct": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:62"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:63"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/alert_rules.go:67"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/alert_rules.go:68"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/alert_rules.go:69"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/auth/scim_enabled": {
+        "operations": [
+          "sentry.auth_provider.get"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:16"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:22"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:23"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/auth.go:25"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/auth.go:31"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:194"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:199"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:209"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/client.go:212"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/auth/sso_configured": {
+        "operations": [
+          "sentry.auth_provider.get"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:16"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:20"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/auth.go:21"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/auth/sso_provider": {
+        "operations": [
+          "sentry.auth_provider.get"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:16"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:22"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/auth.go:29"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:194"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:199"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:209"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/client.go:212"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/auth/sso_required": {
+        "operations": [
+          "sentry.auth_provider.get"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:16"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/auth.go:22"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/auth.go:23"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/auth.go:24"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/auth.go:30"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:194"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:199"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:200"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/client.go:209"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/client.go:212"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/collected_at": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:146"
+          }
+        ]
+      },
+      "/collected_at_level": {
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:100"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:147"
+          }
+        ]
+      },
+      "/diagnostics/errors": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:121"
+          }
+        ]
+      },
+      "/diagnostics/truncation": {
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:100"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:117"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:118"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:123"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:153"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:154"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:157"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:159"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:160"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:163"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:166"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:168"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:169"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:230"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:238"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:239"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:242"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:243"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:245"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:247"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:258"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:264"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:265"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:266"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:269"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:270"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:272"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:273"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:287"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:288"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:290"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:291"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:19"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:28"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:47"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/config.go:48"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/config.go:52"
+          }
+        ]
+      },
+      "/diagnostics/warnings": {
+        "operations": [
+          "sentry.auth_provider.get",
+          "sentry.members.list",
+          "sentry.teams.list",
+          "sentry.teams.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:122"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:128"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:129"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:130"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:223"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:224"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:225"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:230"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:231"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:232"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:233"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:238"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:242"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:244"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:245"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:246"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:247"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:248"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:249"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:250"
+          }
+        ]
+      },
+      "/diagnostics/warnings/*": {
+        "operations": [
+          "sentry.auth_provider.get",
+          "sentry.members.list",
+          "sentry.teams.list",
+          "sentry.teams.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:122"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:128"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:129"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:130"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:223"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:224"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:225"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:230"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:231"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:232"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:233"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:238"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:242"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:244"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:245"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:246"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:247"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:248"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:249"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:250"
+          }
+        ]
+      },
+      "/monitoring_summary/alert_rules": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:196"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:203"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:212"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:213"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/posture.go:12"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:14"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/posture.go:17"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitoring_summary/alerts_or_monitors_enabled": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:196"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:199"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:200"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:6"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/posture.go:9"
+          }
+        ]
+      },
+      "/monitoring_summary/cron_monitors": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:196"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:203"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:208"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:209"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/posture.go:12"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:13"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/posture.go:16"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitoring_summary/total_monitoring_rules": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.monitors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:196"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:203"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/posture.go:12"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:13"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:14"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:15"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/posture.go:18"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitoring_summary/with_actions_pct": {
+        "operations": [
+          "sentry.detectors.list",
+          "sentry.monitors.list",
+          "sentry.projects.list",
+          "sentry.workflows.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:196"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:203"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:206"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/posture.go:12"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:13"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:14"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:15"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/posture.go:20"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:21"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/posture.go:22"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/posture.go:23"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:100"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:117"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:153"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:154"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:157"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:158"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:19"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:24"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:28"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:47"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/config.go:48"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/config.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/config.go:52"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/active_count": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:62"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:63"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:64"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:65"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/denominator_monitors": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:59"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/disabled_count": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:62"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:63"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:66"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:67"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:85"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:86"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:87"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:90"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:93"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:94"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:95"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:97"
+          }
+        ]
+      },
+      "/monitors/inventory/*/connected_workflows": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:113"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/monitors.go:140",
+            "end": 159
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/connected_workflows/*/target_identifier": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:141"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:145"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:155"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/connected_workflows/*/target_type": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:141"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:145"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:146"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:147"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:148"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:149"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:150"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:151"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:154"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/environments": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:115"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/monitors.go:181",
+            "end": 187
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/environments/*": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:115"
+          },
+          {
+            "role": "helper",
+            "line": "internal/collector/monitors.go:181",
+            "end": 187
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/id": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:105"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/is_muted": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:109"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/latest_group/active_incident": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:162"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:172"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:173"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/latest_group/active_incident/resolving_timestamp": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:162"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:172"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:175"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/latest_group/active_incident/starting_timestamp": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:162"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:172"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:174"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/latest_group/environment": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:162"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:167"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/latest_group/last_check_in": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:162"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:169"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/latest_group/next_check_in": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:162"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:170"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/latest_group/status": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:162"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:168"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/name": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:106"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/open_alert_count": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:122"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:123"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:124"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/owner": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:118"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:119"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/types.go:85"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:90"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/types.go:91"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:92"
+          },
+          {
+            "role": "condition",
+            "line": "internal/sentry/types.go:93"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:94"
+          },
+          {
+            "role": "input",
+            "line": "internal/sentry/types.go:96"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/project": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:112"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/schedule": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:111"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/schedule/*": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/schedule_type": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:110"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/status": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:108"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/inventory/*/type": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:107"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/muted_count": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:62"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:70"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:71"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/total_count": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:58"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/with_alert_targets_count": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:62"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:74"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:75"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/monitors/with_alert_targets_pct": {
+        "operations": [
+          "sentry.monitors.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:58"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:62"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:74"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:75"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/monitors.go:79"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/monitors.go:80"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/monitors.go:81"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/organization": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:148"
+          }
+        ]
+      },
+      "/schema_version": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:112"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:145"
+          }
+        ]
+      },
+      "/teams": {
+        "operations": [
+          "sentry.teams.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:100"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:230"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:238"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:239"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:242"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:243"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:245"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:246"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:247"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:258"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:287"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:288"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:289"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:57"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:59"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:81"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:83"
+          }
+        ]
+      },
+      "/teams/inventory/*/date_created": {
+        "operations": [
+          "sentry.teams.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:65"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory/*/id": {
+        "operations": [
+          "sentry.teams.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:60"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory/*/member_count": {
+        "operations": [
+          "sentry.teams.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:63"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory/*/members": {
+        "operations": [
+          "sentry.teams.list",
+          "sentry.teams.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:67"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:68"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:69"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:70"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:71"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:76"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:78"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory/*/members/*/email": {
+        "operations": [
+          "sentry.teams.list",
+          "sentry.teams.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:67"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:68"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:70"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:71"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory/*/members/*/team_role": {
+        "operations": [
+          "sentry.teams.list",
+          "sentry.teams.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:67"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:68"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:70"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:71"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory/*/members/*/user_id": {
+        "operations": [
+          "sentry.teams.list",
+          "sentry.teams.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:67"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:68"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:70"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:72"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:73"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:74"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory/*/name": {
+        "operations": [
+          "sentry.teams.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:62"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory/*/project_count": {
+        "operations": [
+          "sentry.teams.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:64"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/inventory/*/slug": {
+        "operations": [
+          "sentry.teams.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:49"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:50"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:51"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/teams.go:54"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:58"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:61"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/total_count": {
+        "operations": [
+          "sentry.teams.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:39"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/teams/with_members_count": {
+        "operations": [
+          "sentry.teams.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:42"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/teams.go:43"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/teams.go:44"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:100"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:230"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:238"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:239"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:240"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:242"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:243"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:245"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:246"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:247"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:252"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:258"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:264"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:265"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:266"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:269"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/collector.go:270"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:271"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/active_count": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:48"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:49"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:51"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:52"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/denominator_active_users": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:45"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/has_2fa_count": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:48"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:55"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:56"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/has_2fa_pct": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:44"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:48"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:55"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:56"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:64"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:65"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:66"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory": {
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:72"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:73"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:74"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:77"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:80"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:81"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:82"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:86"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:88"
+          }
+        ]
+      },
+      "/users/inventory/*/date_created": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:101"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/email": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:97"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/has_2fa": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:104"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:105"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/id": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:96"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/is_active": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:104"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:106"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/last_active": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:104"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:107"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/name": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:98"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/org_role": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:99"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/sso_linked": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:100"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/team_memberships": {
+        "operations": [
+          "sentry.members.list",
+          "sentry.teams.list",
+          "sentry.teams.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:72"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:73"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:74"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:77"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:81"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:83"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:84"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:281",
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/team_memberships/*/team_role": {
+        "operations": [
+          "sentry.members.list",
+          "sentry.teams.list",
+          "sentry.teams.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:303"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:304"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:307"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:281",
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/inventory/*/team_memberships/*/team_slug": {
+        "operations": [
+          "sentry.members.list",
+          "sentry.teams.list",
+          "sentry.teams.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:303"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/collector.go:304"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/collector.go:306"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:281",
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/pending_count": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:48"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:49"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:50"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/sso_linked_count": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:48"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:59"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:60"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/sso_linked_pct": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:44"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:48"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:59"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:60"
+          },
+          {
+            "role": "condition",
+            "line": "internal/collector/users.go:64"
+          },
+          {
+            "role": "input",
+            "line": "internal/collector/users.go:67"
+          },
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:68"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      },
+      "/users/total_count": {
+        "operations": [
+          "sentry.members.list"
+        ],
+        "code": [
+          {
+            "role": "assign",
+            "line": "internal/collector/users.go:44"
+          }
+        ],
+        "gaps": [
+          "internal/collector/collector.go:317"
+        ]
+      }
+    }
+  },
+  "lines": {
+    "internal/collector/access_posture.go:94": "func percent(count, total int, rounding componentsdk.Rounding) Percentage {",
+    "internal/collector/access_posture.go:95": "\treturn Percentage{Value: componentsdk.Percent(count, total, rounding), Read: true}",
+    "internal/collector/access_posture.go:96": "}",
+    "internal/collector/access_posture.go:127": "\t\tSchemaVersion: \"1.0.0\",",
+    "internal/collector/access_posture.go:128": "\t\tCollectedAt:   collectedAt,",
+    "internal/collector/access_posture.go:129": "\t\tProvider:      \"sentry\",",
+    "internal/collector/access_posture.go:130": "\t\tSystemType:    \"monitoring\",",
+    "internal/collector/access_posture.go:133": "\tif membersErr != nil {",
+    "internal/collector/access_posture.go:134": "\t\tc.rec.NotCollected(accessLocation(\"/members\"), membersErr)",
+    "internal/collector/access_posture.go:135": "\t\tc.rec.NotCollected(accessLocation(\"/admins\"), membersErr)",
+    "internal/collector/access_posture.go:137": "\t\trequired := auth.SSORequired != nil \u0026\u0026 *auth.SSORequired",
+    "internal/collector/access_posture.go:138": "\t\tt := tallyMembers(members, required, c.clock.Now())",
+    "internal/collector/access_posture.go:139": "\t\ta.Members, a.Admins = accessPeople(t, c.level)",
+    "internal/collector/access_posture.go:144": "\ta.ConnectedApps = c.connectedApps(ctx)",
+    "internal/collector/access_posture.go:149": "\t\tc.rec.NotCollectedCode(accessLocation(u.pointer), u.code, u.reason)",
+    "internal/collector/access_posture.go:164": "\t\tSSOConfigured: auth.SSOConfigured,",
+    "internal/collector/access_posture.go:165": "\t\tSSORequired:   auth.SSORequired,",
+    "internal/collector/access_posture.go:166": "\t\tMFARequired:   org.Require2FA,",
+    "internal/collector/access_posture.go:167": "\t\tSCIMEnabled:   auth.SCIMEnabled,",
+    "internal/collector/access_posture.go:187": "\tfor _, m := range members {",
+    "internal/collector/access_posture.go:188": "\t\tif m.Pending {",
+    "internal/collector/access_posture.go:191": "\t\tt.members++",
+    "internal/collector/access_posture.go:192": "\t\tadmin := m.OrgRole == \"owner\" || m.OrgRole == \"manager\"",
+    "internal/collector/access_posture.go:193": "\t\tmfa := m.User != nil \u0026\u0026 m.User.Has2fa",
+    "internal/collector/access_posture.go:194": "\t\tif admin {",
+    "internal/collector/access_posture.go:195": "\t\t\tt.admins++",
+    "internal/collector/access_posture.go:197": "\t\tif m.Flags.SSOLinked {",
+    "internal/collector/access_posture.go:198": "\t\t\tt.sso++",
+    "internal/collector/access_posture.go:199": "\t\t\tif admin {",
+    "internal/collector/access_posture.go:200": "\t\t\t\tt.ssoAdmins++",
+    "internal/collector/access_posture.go:203": "\t\tif !m.Flags.SSOLinked || !ssoRequired {",
+    "internal/collector/access_posture.go:204": "\t\t\tt.local++",
+    "internal/collector/access_posture.go:205": "\t\t\tif mfa {",
+    "internal/collector/access_posture.go:206": "\t\t\t\tt.localMFA++",
+    "internal/collector/access_posture.go:208": "\t\t\tif admin {",
+    "internal/collector/access_posture.go:209": "\t\t\t\tt.localAdmins++",
+    "internal/collector/access_posture.go:210": "\t\t\t\tif mfa {",
+    "internal/collector/access_posture.go:211": "\t\t\t\t\tt.localMFAAdmins++",
+    "internal/collector/access_posture.go:215": "\t\tif inactive(m.User, now) {",
+    "internal/collector/access_posture.go:216": "\t\t\tt.inactive++",
+    "internal/collector/access_posture.go:237": "func accessPeople(t memberTally, level Level) (*AccessMembers, *AccessAdmins) {",
+    "internal/collector/access_posture.go:238": "\tm := \u0026AccessMembers{",
+    "internal/collector/access_posture.go:239": "\t\tMembersPresent:      boolPtr(t.members \u003e 0),",
+    "internal/collector/access_posture.go:240": "\t\tSSOCoveragePct:      percent(t.sso, t.members, componentsdk.RoundDown),",
+    "internal/collector/access_posture.go:241": "\t\tLocalMembersPresent: boolPtr(t.local \u003e 0),",
+    "internal/collector/access_posture.go:242": "\t\tLocalMFACoveragePct: percent(t.localMFA, t.local, componentsdk.RoundDown),",
+    "internal/collector/access_posture.go:243": "\t\tInactivePct:         percent(t.inactive, t.members, componentsdk.RoundUp),",
+    "internal/collector/access_posture.go:244": "\t}",
+    "internal/collector/access_posture.go:245": "\ta := \u0026AccessAdmins{",
+    "internal/collector/access_posture.go:246": "\t\tAdminsPresent:            boolPtr(t.admins \u003e 0),",
+    "internal/collector/access_posture.go:247": "\t\tAdminSharePct:            percent(t.admins, t.members, componentsdk.RoundUp),",
+    "internal/collector/access_posture.go:248": "\t\tLocalAdminsPresent:       boolPtr(t.localAdmins \u003e 0),",
+    "internal/collector/access_posture.go:249": "\t\tLocalAdminMFACoveragePct: percent(t.localMFAAdmins, t.localAdmins, componentsdk.RoundDown),",
+    "internal/collector/access_posture.go:250": "\t}",
+    "internal/collector/access_posture.go:251": "\tif level.AtLeast(LevelAudit) {",
+    "internal/collector/access_posture.go:252": "\t\tm.MemberCount, m.SSOMemberCount = intPtr(t.members), intPtr(t.sso)",
+    "internal/collector/access_posture.go:253": "\t\tm.LocalMemberCount, m.LocalMFAMemberCount = intPtr(t.local), intPtr(t.localMFA)",
+    "internal/collector/access_posture.go:254": "\t\tm.InactiveMemberCount = intPtr(t.inactive)",
+    "internal/collector/access_posture.go:255": "\t\ta.AdminCount, a.LocalAdminCount, a.LocalMFAAdminCount = intPtr(t.admins), intPtr(t.localAdmins), intPtr(t.localMFAAdmins)",
+    "internal/collector/access_posture.go:256": "\t}",
+    "internal/collector/access_posture.go:257": "\treturn m, a",
+    "internal/collector/access_posture.go:258": "}",
+    "internal/collector/access_posture.go:267": "\tif t.sso \u003e 0 {",
+    "internal/collector/access_posture.go:268": "\t\tm.LocalMemberCount, m.LocalMFAMemberCount, m.LocalMFACoveragePct = nil, nil, Percentage{}",
+    "internal/collector/access_posture.go:273": "\t\tif t.members == t.sso {",
+    "internal/collector/access_posture.go:274": "\t\t\tm.LocalMembersPresent = nil",
+    "internal/collector/access_posture.go:278": "\tif t.ssoAdmins \u003e 0 {",
+    "internal/collector/access_posture.go:279": "\t\ta.LocalAdminCount, a.LocalMFAAdminCount, a.LocalAdminMFACoveragePct = nil, nil, Percentage{}",
+    "internal/collector/access_posture.go:284": "\t\tif t.admins == t.ssoAdmins {",
+    "internal/collector/access_posture.go:285": "\t\t\ta.LocalAdminsPresent = nil",
+    "internal/collector/access_posture.go:290": "\t\tc.rec.NotCollected(accessLocation(pointer), err)",
+    "internal/collector/access_posture.go:297": "func (c *Collector) connectedApps(ctx context.Context) *AccessConnectedApps {",
+    "internal/collector/access_posture.go:298": "\tintegrations, integrationsErr := c.client.ListIntegrations(ctx)",
+    "internal/collector/access_posture.go:299": "\tinstallations, installationsErr := c.client.ListSentryAppInstallations(ctx)",
+    "internal/collector/access_posture.go:300": "\tcount := 0",
+    "internal/collector/access_posture.go:301": "\tfor _, i := range integrations {",
+    "internal/collector/access_posture.go:302": "\t\tif i.OrganizationIntegrationStatus == \"active\" {",
+    "internal/collector/access_posture.go:303": "\t\t\tcount++",
+    "internal/collector/access_posture.go:304": "\t\t}",
+    "internal/collector/access_posture.go:305": "\t}",
+    "internal/collector/access_posture.go:306": "\tfor _, i := range installations {",
+    "internal/collector/access_posture.go:307": "\t\tif i.Status == \"installed\" {",
+    "internal/collector/access_posture.go:308": "\t\t\tcount++",
+    "internal/collector/access_posture.go:309": "\t\t}",
+    "internal/collector/access_posture.go:310": "\t}",
+    "internal/collector/access_posture.go:311": "\tapps := \u0026AccessConnectedApps{}",
+    "internal/collector/access_posture.go:312": "\taudit := c.level.AtLeast(LevelAudit)",
+    "internal/collector/access_posture.go:313": "\terr := firstError(integrationsErr, installationsErr)",
+    "internal/collector/access_posture.go:314": "\tif err == nil {",
+    "internal/collector/access_posture.go:315": "\t\tapps.AppsPresent = boolPtr(count \u003e 0)",
+    "internal/collector/access_posture.go:316": "\t\tif audit {",
+    "internal/collector/access_posture.go:317": "\t\t\tapps.AppCount = intPtr(count)",
+    "internal/collector/access_posture.go:318": "\t\t}",
+    "internal/collector/access_posture.go:319": "\t\treturn apps",
+    "internal/collector/access_posture.go:320": "\t}",
+    "internal/collector/access_posture.go:321": "\tif count \u003e 0 {",
+    "internal/collector/access_posture.go:322": "\t\tapps.AppsPresent = boolPtr(true)",
+    "internal/collector/access_posture.go:323": "\t} else {",
+    "internal/collector/access_posture.go:324": "\t\tc.rec.NotCollected(accessLocation(\"/connected_apps/apps_present\"), err)",
+    "internal/collector/access_posture.go:325": "\t}",
+    "internal/collector/access_posture.go:326": "\tif audit {",
+    "internal/collector/access_posture.go:327": "\t\tc.rec.NotCollected(accessLocation(\"/connected_apps/app_count\"), err)",
+    "internal/collector/access_posture.go:328": "\t}",
+    "internal/collector/access_posture.go:329": "\treturn apps",
+    "internal/collector/access_posture.go:330": "}",
+    "internal/collector/access_posture.go:336": "func boolPtr(b bool) *bool { return \u0026b }",
+    "internal/collector/access_posture.go:338": "func intPtr(n int) *int { return \u0026n }",
+    "internal/collector/alert_rules.go:50": "\t\tTotalCount:            len(rules),",
+    "internal/collector/alert_rules.go:51": "\t\tDenominatorAlertRules: len(rules),",
+    "internal/collector/alert_rules.go:54": "\tfor _, r := range rules {",
+    "internal/collector/alert_rules.go:55": "\t\tswitch r.Type {",
+    "internal/collector/alert_rules.go:56": "\t\tcase \"alert_rule\":",
+    "internal/collector/alert_rules.go:57": "\t\t\tm.MetricAlertCount++",
+    "internal/collector/alert_rules.go:58": "\t\tcase \"rule\":",
+    "internal/collector/alert_rules.go:59": "\t\t\tm.IssueAlertCount++",
+    "internal/collector/alert_rules.go:62": "\t\tif hasActions(r) {",
+    "internal/collector/alert_rules.go:63": "\t\t\tm.WithActionsCount++",
+    "internal/collector/alert_rules.go:67": "\tif m.TotalCount \u003e 0 {",
+    "internal/collector/alert_rules.go:68": "\t\tpct := (m.WithActionsCount * 100) / m.TotalCount",
+    "internal/collector/alert_rules.go:69": "\t\tm.WithActionsPct = \u0026pct",
+    "internal/collector/alert_rules.go:73": "\tif level.AtLeast(LevelAudit) {",
+    "internal/collector/alert_rules.go:74": "\t\titems := rules",
+    "internal/collector/alert_rules.go:75": "\t\tif len(items) \u003e maxInventorySize {",
+    "internal/collector/alert_rules.go:78": "\t\t\titems = items[:maxInventorySize]",
+    "internal/collector/alert_rules.go:81": "\t\tinv := make([]AlertRuleInventory, 0, len(items))",
+    "internal/collector/alert_rules.go:82": "\t\tfor _, r := range items {",
+    "internal/collector/alert_rules.go:83": "\t\t\tinv = append(inv, buildAlertRuleInventory(r, level))",
+    "internal/collector/alert_rules.go:85": "\t\tm.Inventory = inv",
+    "internal/collector/alert_rules.go:92": "\truleType := \"issue\"",
+    "internal/collector/alert_rules.go:93": "\tif r.Type == \"alert_rule\" {",
+    "internal/collector/alert_rules.go:94": "\t\truleType = \"metric\"",
+    "internal/collector/alert_rules.go:98": "\t\tID:          r.ID,",
+    "internal/collector/alert_rules.go:99": "\t\tName:        r.Name,",
+    "internal/collector/alert_rules.go:100": "\t\tType:        ruleType,",
+    "internal/collector/alert_rules.go:101": "\t\tStatus:      r.Status,",
+    "internal/collector/alert_rules.go:102": "\t\tDateCreated: r.DateCreated,",
+    "internal/collector/alert_rules.go:105": "\tif ruleType == \"metric\" {",
+    "internal/collector/alert_rules.go:106": "\t\titem.Aggregate = r.Aggregate",
+    "internal/collector/alert_rules.go:107": "\t\titem.TimeWindowMinutes = r.TimeWindow",
+    "internal/collector/alert_rules.go:108": "\t\titem.DetectionType = r.DetectionType",
+    "internal/collector/alert_rules.go:109": "\t\tswitch r.ThresholdType {",
+    "internal/collector/alert_rules.go:110": "\t\tcase 0:",
+    "internal/collector/alert_rules.go:111": "\t\t\titem.ThresholdType = \"above\"",
+    "internal/collector/alert_rules.go:112": "\t\tcase 1:",
+    "internal/collector/alert_rules.go:113": "\t\t\titem.ThresholdType = \"below\"",
+    "internal/collector/alert_rules.go:117": "\tif len(r.Projects) \u003e 0 {",
+    "internal/collector/alert_rules.go:118": "\t\titem.Project = r.Projects[0]",
+    "internal/collector/alert_rules.go:120": "\tif r.Environment != nil {",
+    "internal/collector/alert_rules.go:121": "\t\titem.Environment = *r.Environment",
+    "internal/collector/alert_rules.go:123": "\tif r.Owner != nil \u0026\u0026 r.Owner.MonitorOwner != nil {",
+    "internal/collector/alert_rules.go:124": "\t\titem.Owner = r.Owner.Type + \":\" + r.Owner.Name",
+    "internal/collector/alert_rules.go:128": "\tfor _, t := range r.Triggers {",
+    "internal/collector/alert_rules.go:130": "\t\tfor _, a := range t.Actions {",
+    "internal/collector/alert_rules.go:132": "\t\t\t\tType:       a.Type,",
+    "internal/collector/alert_rules.go:133": "\t\t\t\tTargetType: a.TargetType,",
+    "internal/collector/alert_rules.go:135": "\t\t\tif level.AtLeast(LevelInternal) \u0026\u0026 a.IntegrationID != nil {",
+    "internal/collector/alert_rules.go:136": "\t\t\t\tai.IntegrationID = fmt.Sprintf(\"%v\", a.IntegrationID)",
+    "internal/collector/alert_rules.go:141": "\t\t\tLabel:          t.Label,",
+    "internal/collector/auth.go:16": "\tif err != nil {",
+    "internal/collector/auth.go:20": "\tconfigured := provider != nil",
+    "internal/collector/auth.go:21": "\ts := AuthSummary{SSOConfigured: \u0026configured}",
+    "internal/collector/auth.go:22": "\tif provider == nil {",
+    "internal/collector/auth.go:23": "\t\tf := false",
+    "internal/collector/auth.go:24": "\t\ts.SSORequired = \u0026f",
+    "internal/collector/auth.go:25": "\t\ts.SCIMEnabled = \u0026f",
+    "internal/collector/auth.go:29": "\ts.SSOProvider = provider.ProviderName",
+    "internal/collector/auth.go:30": "\ts.SSORequired = \u0026provider.RequireLink",
+    "internal/collector/auth.go:31": "\ts.SCIMEnabled = \u0026provider.ScimEnabled",
+    "internal/collector/collector.go:100": "\t\tlevel:  level,",
+    "internal/collector/collector.go:112": "\tif err != nil {",
+    "internal/collector/collector.go:117": "\tmonitors, monitorsErr := c.client.ListMonitors(ctx, c.cfg.Projects, c.cfg.Environments)",
+    "internal/collector/collector.go:118": "\talertRules, alertRulesErr := c.client.ListAlertRules(ctx, c.cfg.Projects)",
+    "internal/collector/collector.go:121": "\t\tErrors:     []string{},",
+    "internal/collector/collector.go:122": "\t\tWarnings:   []string{},",
+    "internal/collector/collector.go:123": "\t\tTruncation: map[string]string{},",
+    "internal/collector/collector.go:128": "\tauthProvider, authErr := c.client.GetAuthProvider(ctx)",
+    "internal/collector/collector.go:129": "\tif authErr != nil {",
+    "internal/collector/collector.go:130": "\t\tdiag.Warnings = append(diag.Warnings, \"auth-provider lookup failed; sso settings unknown\")",
+    "internal/collector/collector.go:145": "\t\tSchemaVersion:     \"1.0.0\",",
+    "internal/collector/collector.go:146": "\t\tCollectedAt:       c.clock.Now().UTC().Format(time.RFC3339),",
+    "internal/collector/collector.go:147": "\t\tCollectedAtLevel:  string(c.level),",
+    "internal/collector/collector.go:148": "\t\tOrganization:      org.Slug,",
+    "internal/collector/collector.go:153": "\tif c.level.AtLeast(LevelAudit) {",
+    "internal/collector/collector.go:154": "\t\tif monitorsErr != nil {",
+    "internal/collector/collector.go:157": "\t\t\tmonitorMetrics, monTrunc := computeMonitorMetrics(monitors, c.level)",
+    "internal/collector/collector.go:158": "\t\t\tout.Monitors = \u0026monitorMetrics",
+    "internal/collector/collector.go:159": "\t\t\tif monTrunc != nil {",
+    "internal/collector/collector.go:160": "\t\t\t\tdiag.Truncation[\"monitors\"] = *monTrunc",
+    "internal/collector/collector.go:163": "\t\tif alertRulesErr != nil {",
+    "internal/collector/collector.go:166": "\t\t\talertRuleMetrics, arTrunc := computeAlertRuleMetrics(alertRules, c.level)",
+    "internal/collector/collector.go:167": "\t\t\tout.AlertRules = \u0026alertRuleMetrics",
+    "internal/collector/collector.go:168": "\t\t\tif arTrunc != nil {",
+    "internal/collector/collector.go:169": "\t\t\t\tdiag.Truncation[\"alert_rules\"] = *arTrunc",
+    "internal/collector/collector.go:196": "\tif err == nil {",
+    "internal/collector/collector.go:199": "\tif (monitorsErr != nil || len(monitors) == 0) \u0026\u0026 (alertRulesErr != nil || len(alertRules) == 0) {",
+    "internal/collector/collector.go:200": "\t\ts.AlertsOrMonitorsEnabled = nil",
+    "internal/collector/collector.go:203": "\tif !c.level.AtLeast(LevelAudit) {",
+    "internal/collector/collector.go:206": "\ts.TotalMonitoringRules, s.WithActionsPct = nil, nil",
+    "internal/collector/collector.go:208": "\tif monitorsErr != nil {",
+    "internal/collector/collector.go:209": "\t\ts.CronMonitors = nil",
+    "internal/collector/collector.go:212": "\tif alertRulesErr != nil {",
+    "internal/collector/collector.go:213": "\t\ts.AlertRules = nil",
+    "internal/collector/collector.go:223": "\tif membersErr != nil {",
+    "internal/collector/collector.go:224": "\t\tif isPermissionError(membersErr) {",
+    "internal/collector/collector.go:225": "\t\t\tdiag.Warnings = append(diag.Warnings, \"member:read scope missing; user metrics unavailable\")",
+    "internal/collector/collector.go:230": "\tteams, teamsErr := c.client.ListTeams(ctx)",
+    "internal/collector/collector.go:231": "\tif teamsErr != nil {",
+    "internal/collector/collector.go:232": "\t\tif isPermissionError(teamsErr) {",
+    "internal/collector/collector.go:233": "\t\t\tdiag.Warnings = append(diag.Warnings, \"org:read scope missing; team metrics unavailable\")",
+    "internal/collector/collector.go:238": "\tinternal := c.level.AtLeast(LevelInternal)",
+    "internal/collector/collector.go:239": "\tvar teamMembersMap TeamMembersMap",
+    "internal/collector/collector.go:240": "\trosterErrs := map[string]error{}",
+    "internal/collector/collector.go:242": "\tif internal \u0026\u0026 teamsErr == nil {",
+    "internal/collector/collector.go:243": "\t\tteamMembersMap = make(TeamMembersMap)",
+    "internal/collector/collector.go:244": "\t\twarned := false",
+    "internal/collector/collector.go:245": "\t\tfor _, team := range teams {",
+    "internal/collector/collector.go:246": "\t\t\ttmembers, tmErr := c.client.ListTeamMembers(ctx, team.Slug)",
+    "internal/collector/collector.go:247": "\t\t\tif tmErr != nil {",
+    "internal/collector/collector.go:248": "\t\t\t\tif isPermissionError(tmErr) \u0026\u0026 !warned {",
+    "internal/collector/collector.go:249": "\t\t\t\t\tdiag.Warnings = append(diag.Warnings, \"team:read scope missing; team member details unavailable\")",
+    "internal/collector/collector.go:250": "\t\t\t\t\twarned = true",
+    "internal/collector/collector.go:252": "\t\t\t\trosterErrs[team.Slug] = tmErr",
+    "internal/collector/collector.go:258": "\t\t\tteamMembersMap[team.Slug] = tmembers",
+    "internal/collector/collector.go:264": "\tvar teamMemberships TeamMembershipMap",
+    "internal/collector/collector.go:265": "\tif internal \u0026\u0026 teamsErr == nil \u0026\u0026 len(rosterErrs) == 0 {",
+    "internal/collector/collector.go:266": "\t\tteamMemberships = membershipsByUser(teams, teamMembersMap)",
+    "internal/collector/collector.go:269": "\tif membersErr == nil {",
+    "internal/collector/collector.go:270": "\t\tuserMetrics, userTrunc := computeUserMetrics(members, c.level, teamMemberships)",
+    "internal/collector/collector.go:271": "\t\tout.Users = \u0026userMetrics",
+    "internal/collector/collector.go:272": "\t\tif userTrunc != nil {",
+    "internal/collector/collector.go:273": "\t\t\tdiag.Truncation[\"users\"] = *userTrunc",
+    "internal/collector/collector.go:281": "\t\t\t\t\tc.rec.Partial(location(pointer), len(rosterErrs), firstRosterErr)",
+    "internal/collector/collector.go:287": "\tif teamsErr == nil {",
+    "internal/collector/collector.go:288": "\t\tteamMetrics, teamTrunc := computeTeamMetrics(teams, c.level, teamMembersMap)",
+    "internal/collector/collector.go:289": "\t\tout.Teams = \u0026teamMetrics",
+    "internal/collector/collector.go:290": "\t\tif teamTrunc != nil {",
+    "internal/collector/collector.go:291": "\t\t\tdiag.Truncation[\"teams\"] = *teamTrunc",
+    "internal/collector/collector.go:303": "\tfor _, team := range teams {",
+    "internal/collector/collector.go:304": "\t\tfor _, tm := range teamMembers[team.Slug] {",
+    "internal/collector/collector.go:306": "\t\t\t\tTeamSlug: team.Slug,",
+    "internal/collector/collector.go:307": "\t\t\t\tTeamRole: tm.TeamRole,",
+    "internal/collector/collector.go:317": "\t\tc.rec.NotCollected(location(pointer), err)",
+    "internal/collector/config.go:19": "\tif raw == nil {",
+    "internal/collector/config.go:24": "\tif !ok {",
+    "internal/collector/config.go:28": "\tif !ok || orgStr == \"\" {",
+    "internal/collector/config.go:47": "\tif v, ok := raw[\"projects\"]; ok {",
+    "internal/collector/config.go:48": "\t\tcfg.Projects = toStringSlice(v)",
+    "internal/collector/config.go:51": "\tif v, ok := raw[\"environments\"]; ok {",
+    "internal/collector/config.go:52": "\t\tcfg.Environments = toStringSlice(v)",
+    "internal/collector/monitors.go:58": "\t\tTotalCount:          len(monitors),",
+    "internal/collector/monitors.go:59": "\t\tDenominatorMonitors: len(monitors),",
+    "internal/collector/monitors.go:62": "\tfor _, mon := range monitors {",
+    "internal/collector/monitors.go:63": "\t\tswitch mon.Status {",
+    "internal/collector/monitors.go:64": "\t\tcase \"active\", \"ok\", \"error\", \"missed_checkin\":",
+    "internal/collector/monitors.go:65": "\t\t\tm.ActiveCount++",
+    "internal/collector/monitors.go:66": "\t\tcase \"disabled\":",
+    "internal/collector/monitors.go:67": "\t\t\tm.DisabledCount++",
+    "internal/collector/monitors.go:70": "\t\tif mon.IsMuted {",
+    "internal/collector/monitors.go:71": "\t\t\tm.MutedCount++",
+    "internal/collector/monitors.go:74": "\t\tif mon.AlertRule != nil \u0026\u0026 len(mon.AlertRule.Targets) \u003e 0 {",
+    "internal/collector/monitors.go:75": "\t\t\tm.WithAlertTargetsCount++",
+    "internal/collector/monitors.go:79": "\tif m.TotalCount \u003e 0 {",
+    "internal/collector/monitors.go:80": "\t\tpct := (m.WithAlertTargetsCount * 100) / m.TotalCount",
+    "internal/collector/monitors.go:81": "\t\tm.WithAlertTargetsPct = \u0026pct",
+    "internal/collector/monitors.go:85": "\tif level.AtLeast(LevelAudit) {",
+    "internal/collector/monitors.go:86": "\t\titems := monitors",
+    "internal/collector/monitors.go:87": "\t\tif len(items) \u003e maxInventorySize {",
+    "internal/collector/monitors.go:90": "\t\t\titems = items[:maxInventorySize]",
+    "internal/collector/monitors.go:93": "\t\tinv := make([]MonitorInventory, 0, len(items))",
+    "internal/collector/monitors.go:94": "\t\tfor _, mon := range items {",
+    "internal/collector/monitors.go:95": "\t\t\tinv = append(inv, buildMonitorInventory(mon, level))",
+    "internal/collector/monitors.go:97": "\t\tm.Inventory = inv",
+    "internal/collector/monitors.go:105": "\t\tID:                 mon.ID,",
+    "internal/collector/monitors.go:106": "\t\tName:               mon.Name,",
+    "internal/collector/monitors.go:107": "\t\tType:               mon.Type,",
+    "internal/collector/monitors.go:108": "\t\tStatus:             mon.Status,",
+    "internal/collector/monitors.go:109": "\t\tIsMuted:            mon.IsMuted,",
+    "internal/collector/monitors.go:110": "\t\tScheduleType:       mon.Config.ScheduleType,",
+    "internal/collector/monitors.go:111": "\t\tSchedule:           mon.Config.Schedule,",
+    "internal/collector/monitors.go:112": "\t\tProject:            mon.Project.Slug,",
+    "internal/collector/monitors.go:113": "\t\tConnectedWorkflows: buildConnectedWorkflows(mon),",
+    "internal/collector/monitors.go:115": "\t\tEnvironments:       buildEnvironmentNames(mon),",
+    "internal/collector/monitors.go:118": "\tif mon.Owner != nil {",
+    "internal/collector/monitors.go:119": "\t\titem.Owner = mon.Owner.Type + \":\" + mon.Owner.Name",
+    "internal/collector/monitors.go:122": "\tif level.AtLeast(LevelInternal) {",
+    "internal/collector/monitors.go:123": "\t\tcount := countOpenAlerts(mon)",
+    "internal/collector/monitors.go:124": "\t\titem.OpenAlertCount = \u0026count",
+    "internal/collector/monitors.go:140": "func buildConnectedWorkflows(mon sentry.Monitor) []ConnectedWorkflow {",
+    "internal/collector/monitors.go:141": "\tif mon.AlertRule == nil {",
+    "internal/collector/monitors.go:142": "\t\treturn []ConnectedWorkflow{}",
+    "internal/collector/monitors.go:143": "\t}",
+    "internal/collector/monitors.go:144": "\tworkflows := make([]ConnectedWorkflow, 0, len(mon.AlertRule.Targets))",
+    "internal/collector/monitors.go:145": "\tfor _, t := range mon.AlertRule.Targets {",
+    "internal/collector/monitors.go:146": "\t\ttargetType := \"unknown\"",
+    "internal/collector/monitors.go:147": "\t\tswitch t.TargetType {",
+    "internal/collector/monitors.go:148": "\t\tcase 1:",
+    "internal/collector/monitors.go:149": "\t\t\ttargetType = \"user\"",
+    "internal/collector/monitors.go:150": "\t\tcase 2:",
+    "internal/collector/monitors.go:151": "\t\t\ttargetType = \"team\"",
+    "internal/collector/monitors.go:152": "\t\t}",
+    "internal/collector/monitors.go:153": "\t\tworkflows = append(workflows, ConnectedWorkflow{",
+    "internal/collector/monitors.go:154": "\t\t\tTargetType:       targetType,",
+    "internal/collector/monitors.go:155": "\t\t\tTargetIdentifier: t.TargetIdentifier,",
+    "internal/collector/monitors.go:156": "\t\t})",
+    "internal/collector/monitors.go:157": "\t}",
+    "internal/collector/monitors.go:158": "\treturn workflows",
+    "internal/collector/monitors.go:159": "}",
+    "internal/collector/monitors.go:162": "\tif len(mon.Environments) == 0 {",
+    "internal/collector/monitors.go:167": "\t\tEnvironment: env.Name,",
+    "internal/collector/monitors.go:168": "\t\tStatus:      env.Status,",
+    "internal/collector/monitors.go:169": "\t\tLastCheckIn: env.LastCheckIn,",
+    "internal/collector/monitors.go:170": "\t\tNextCheckIn: env.NextCheckIn,",
+    "internal/collector/monitors.go:172": "\tif env.ActiveIncident != nil {",
+    "internal/collector/monitors.go:173": "\t\tlg.ActiveIncident = \u0026IncidentEntry{",
+    "internal/collector/monitors.go:174": "\t\t\tStartingTimestamp:  env.ActiveIncident.StartingTimestamp,",
+    "internal/collector/monitors.go:175": "\t\t\tResolvingTimestamp: env.ActiveIncident.ResolvingTimestamp,",
+    "internal/collector/monitors.go:181": "func buildEnvironmentNames(mon sentry.Monitor) []string {",
+    "internal/collector/monitors.go:182": "\tnames := make([]string, 0, len(mon.Environments))",
+    "internal/collector/monitors.go:183": "\tfor _, e := range mon.Environments {",
+    "internal/collector/monitors.go:184": "\t\tnames = append(names, e.Name)",
+    "internal/collector/monitors.go:185": "\t}",
+    "internal/collector/monitors.go:186": "\treturn names",
+    "internal/collector/monitors.go:187": "}",
+    "internal/collector/posture.go:6": "\tenabled := len(monitors) \u003e 0 || len(alertRules) \u003e 0",
+    "internal/collector/posture.go:9": "\t\tAlertsOrMonitorsEnabled: \u0026enabled,",
+    "internal/collector/posture.go:12": "\tif level.AtLeast(LevelAudit) {",
+    "internal/collector/posture.go:13": "\t\ttotalMonitors := len(monitors)",
+    "internal/collector/posture.go:14": "\t\ttotalAlertRules := len(alertRules)",
+    "internal/collector/posture.go:15": "\t\ttotal := totalMonitors + totalAlertRules",
+    "internal/collector/posture.go:16": "\t\ts.CronMonitors = \u0026totalMonitors",
+    "internal/collector/posture.go:17": "\t\ts.AlertRules = \u0026totalAlertRules",
+    "internal/collector/posture.go:18": "\t\ts.TotalMonitoringRules = \u0026total",
+    "internal/collector/posture.go:20": "\t\tif total \u003e 0 {",
+    "internal/collector/posture.go:21": "\t\t\twithActions := countMonitorsWithTargets(monitors) + countAlertRulesWithActions(alertRules)",
+    "internal/collector/posture.go:22": "\t\t\tpct := (withActions * 100) / total",
+    "internal/collector/posture.go:23": "\t\t\ts.WithActionsPct = \u0026pct",
+    "internal/collector/teams.go:39": "\t\tTotalCount: len(teams),",
+    "internal/collector/teams.go:42": "\tfor _, t := range teams {",
+    "internal/collector/teams.go:43": "\t\tif t.MemberCount \u003e 0 {",
+    "internal/collector/teams.go:44": "\t\t\tm.WithMembersCount++",
+    "internal/collector/teams.go:49": "\tif level.AtLeast(LevelAudit) {",
+    "internal/collector/teams.go:50": "\t\titems := teams",
+    "internal/collector/teams.go:51": "\t\tif len(items) \u003e maxInventorySize {",
+    "internal/collector/teams.go:54": "\t\t\titems = items[:maxInventorySize]",
+    "internal/collector/teams.go:57": "\t\tinv := make([]TeamInventory, 0, len(items))",
+    "internal/collector/teams.go:58": "\t\tfor _, t := range items {",
+    "internal/collector/teams.go:59": "\t\t\tti := TeamInventory{",
+    "internal/collector/teams.go:60": "\t\t\t\tID:           t.ID,",
+    "internal/collector/teams.go:61": "\t\t\t\tSlug:         t.Slug,",
+    "internal/collector/teams.go:62": "\t\t\t\tName:         t.Name,",
+    "internal/collector/teams.go:63": "\t\t\t\tMemberCount:  t.MemberCount,",
+    "internal/collector/teams.go:64": "\t\t\t\tProjectCount: len(t.Projects),",
+    "internal/collector/teams.go:65": "\t\t\t\tDateCreated:  t.DateCreated,",
+    "internal/collector/teams.go:67": "\t\t\tif level.AtLeast(LevelInternal) \u0026\u0026 teamMembers != nil {",
+    "internal/collector/teams.go:68": "\t\t\t\tif members, ok := teamMembers[t.Slug]; ok {",
+    "internal/collector/teams.go:69": "\t\t\t\t\tdetails := make([]TeamMemberDetail, 0, len(members))",
+    "internal/collector/teams.go:70": "\t\t\t\t\tfor _, tm := range members {",
+    "internal/collector/teams.go:71": "\t\t\t\t\t\tdetail := TeamMemberDetail{Email: tm.Email, TeamRole: tm.TeamRole}",
+    "internal/collector/teams.go:72": "\t\t\t\t\t\tif tm.User != nil {",
+    "internal/collector/teams.go:73": "\t\t\t\t\t\t\tid := tm.User.ID",
+    "internal/collector/teams.go:74": "\t\t\t\t\t\t\tdetail.UserID = \u0026id",
+    "internal/collector/teams.go:76": "\t\t\t\t\t\tdetails = append(details, detail)",
+    "internal/collector/teams.go:78": "\t\t\t\t\tti.Members = details",
+    "internal/collector/teams.go:81": "\t\t\tinv = append(inv, ti)",
+    "internal/collector/teams.go:83": "\t\tm.Inventory = inv",
+    "internal/collector/users.go:44": "\t\tTotalCount:             len(members),",
+    "internal/collector/users.go:45": "\t\tDenominatorActiveUsers: len(members),",
+    "internal/collector/users.go:48": "\tfor _, mem := range members {",
+    "internal/collector/users.go:49": "\t\tif mem.Pending {",
+    "internal/collector/users.go:50": "\t\t\tm.PendingCount++",
+    "internal/collector/users.go:51": "\t\t} else if mem.User != nil \u0026\u0026 mem.User.IsActive {",
+    "internal/collector/users.go:52": "\t\t\tm.ActiveCount++",
+    "internal/collector/users.go:55": "\t\tif mem.User != nil \u0026\u0026 mem.User.Has2fa {",
+    "internal/collector/users.go:56": "\t\t\tm.Has2FACount++",
+    "internal/collector/users.go:59": "\t\tif mem.Flags.SSOLinked {",
+    "internal/collector/users.go:60": "\t\t\tm.SSOLinkedCount++",
+    "internal/collector/users.go:64": "\tif m.TotalCount \u003e 0 {",
+    "internal/collector/users.go:65": "\t\tpct2fa := (m.Has2FACount * 100) / m.TotalCount",
+    "internal/collector/users.go:66": "\t\tm.Has2FAPct = \u0026pct2fa",
+    "internal/collector/users.go:67": "\t\tpctSSO := (m.SSOLinkedCount * 100) / m.TotalCount",
+    "internal/collector/users.go:68": "\t\tm.SSOLinkedPct = \u0026pctSSO",
+    "internal/collector/users.go:72": "\tif level.AtLeast(LevelAudit) {",
+    "internal/collector/users.go:73": "\t\titems := members",
+    "internal/collector/users.go:74": "\t\tif len(items) \u003e maxInventorySize {",
+    "internal/collector/users.go:77": "\t\t\titems = items[:maxInventorySize]",
+    "internal/collector/users.go:80": "\t\tinv := make([]UserInventory, 0, len(items))",
+    "internal/collector/users.go:81": "\t\tfor _, mem := range items {",
+    "internal/collector/users.go:82": "\t\t\titem := buildUserInventory(mem)",
+    "internal/collector/users.go:83": "\t\t\tif level.AtLeast(LevelInternal) \u0026\u0026 teamMemberships != nil {",
+    "internal/collector/users.go:84": "\t\t\t\titem.TeamMemberships = append([]TeamMembership{}, teamMemberships[mem.ID]...)",
+    "internal/collector/users.go:86": "\t\t\tinv = append(inv, item)",
+    "internal/collector/users.go:88": "\t\tm.Inventory = inv",
+    "internal/collector/users.go:96": "\t\tID:          mem.ID,",
+    "internal/collector/users.go:97": "\t\tEmail:       mem.Email,",
+    "internal/collector/users.go:98": "\t\tName:        mem.Name,",
+    "internal/collector/users.go:99": "\t\tOrgRole:     mem.OrgRole,",
+    "internal/collector/users.go:100": "\t\tSSOLinked:   mem.Flags.SSOLinked,",
+    "internal/collector/users.go:101": "\t\tDateCreated: mem.DateCreated,",
+    "internal/collector/users.go:104": "\tif mem.User != nil {",
+    "internal/collector/users.go:105": "\t\titem.Has2FA = mem.User.Has2fa",
+    "internal/collector/users.go:106": "\t\titem.IsActive = mem.User.IsActive",
+    "internal/collector/users.go:107": "\t\titem.LastActive = mem.User.LastActive",
+    "internal/sentry/client.go:194": "\tif err != nil {",
+    "internal/sentry/client.go:199": "\tswitch resp.StatusCode {",
+    "internal/sentry/client.go:200": "\tcase http.StatusOK:",
+    "internal/sentry/client.go:206": "\t\tif err := json.NewDecoder(resp.Body).Decode(\u0026provider); err != nil {",
+    "internal/sentry/client.go:209": "\t\tif provider.ProviderName == nil || *provider.ProviderName == \"\" || provider.RequireLink == nil || provider.ScimEnabled == nil {",
+    "internal/sentry/client.go:212": "\t\treturn \u0026AuthProvider{ProviderName: *provider.ProviderName, RequireLink: *provider.RequireLink, ScimEnabled: *provider.ScimEnabled}, nil",
+    "internal/sentry/mapping.go:22": "\t\tID:            d.ID,",
+    "internal/sentry/mapping.go:23": "\t\tName:          d.Name,",
+    "internal/sentry/mapping.go:24": "\t\tType:          ruleType,",
+    "internal/sentry/mapping.go:25": "\t\tDateCreated:   d.DateCreated,",
+    "internal/sentry/mapping.go:26": "\t\tDetectionType: d.Config.DetectionType,",
+    "internal/sentry/mapping.go:29": "\tif d.Enabled {",
+    "internal/sentry/mapping.go:30": "\t\trule.Status = \"active\"",
+    "internal/sentry/mapping.go:32": "\t\trule.Status = \"disabled\"",
+    "internal/sentry/mapping.go:35": "\tif slug, ok := projectMap[d.ProjectID]; ok {",
+    "internal/sentry/mapping.go:36": "\t\trule.Projects = []string{slug}",
+    "internal/sentry/mapping.go:37": "\t} else if d.ProjectID != \"\" {",
+    "internal/sentry/mapping.go:38": "\t\trule.Projects = []string{d.ProjectID}",
+    "internal/sentry/mapping.go:41": "\tif d.Owner != nil {",
+    "internal/sentry/mapping.go:42": "\t\trule.Owner = d.Owner",
+    "internal/sentry/mapping.go:45": "\tif ruleType == \"alert_rule\" {",
+    "internal/sentry/mapping.go:49": "\t\trule.Environment = workflowEnvironment(d.WorkflowIds, workflowMap)",
+    "internal/sentry/mapping.go:75": "\tif len(d.DataSources) \u003e 0 \u0026\u0026 d.DataSources[0].QueryObj != nil \u0026\u0026 d.DataSources[0].QueryObj.SnubaQuery != nil {",
+    "internal/sentry/mapping.go:77": "\t\trule.Aggregate = sq.Aggregate",
+    "internal/sentry/mapping.go:79": "\t\trule.TimeWindow = sq.TimeWindow / 60",
+    "internal/sentry/mapping.go:82": "\tif c, ok := issueCondition(d.ConditionGroup); ok {",
+    "internal/sentry/mapping.go:83": "\t\trule.ThresholdType = thresholdType(c)",
+    "internal/sentry/mapping.go:121": "\tif len(d.DataSources) \u003e 0 \u0026\u0026 d.DataSources[0].QueryObj != nil \u0026\u0026 d.DataSources[0].QueryObj.SnubaQuery != nil {",
+    "internal/sentry/mapping.go:122": "\t\trule.Environment = d.DataSources[0].QueryObj.SnubaQuery.Environment",
+    "internal/sentry/mapping.go:153": "\tif len(workflowIds) == 0 {",
+    "internal/sentry/mapping.go:157": "\tfor _, wID := range workflowIds {",
+    "internal/sentry/mapping.go:158": "\t\tw, ok := workflowMap[wID]",
+    "internal/sentry/mapping.go:159": "\t\tif !ok {",
+    "internal/sentry/mapping.go:163": "\t\tactions := collectWorkflowActions(w)",
+    "internal/sentry/mapping.go:164": "\t\tif len(actions) == 0 {",
+    "internal/sentry/mapping.go:168": "\t\tif rule.Type == \"alert_rule\" {",
+    "internal/sentry/mapping.go:169": "\t\t\ttrigger := AlertTrigger{",
+    "internal/sentry/mapping.go:170": "\t\t\t\tLabel:   w.Name,",
+    "internal/sentry/mapping.go:171": "\t\t\t\tActions: actions,",
+    "internal/sentry/mapping.go:173": "\t\t\trule.Triggers = append(rule.Triggers, trigger)",
+    "internal/sentry/mapping.go:207": "\t\tType:       a.Type,",
+    "internal/sentry/mapping.go:208": "\t\tTargetType: config.TargetType,",
+    "internal/sentry/mapping.go:210": "\tif a.IntegrationID != nil \u0026\u0026 a.IntegrationID.Value != \"\" {",
+    "internal/sentry/mapping.go:211": "\t\taa.IntegrationID = a.IntegrationID.Value",
+    "internal/sentry/types.go:60": "\tif string(data) == \"null\" {",
+    "internal/sentry/types.go:63": "\tvar s string",
+    "internal/sentry/types.go:64": "\tif err := json.Unmarshal(data, \u0026s); err == nil {",
+    "internal/sentry/types.go:65": "\t\tid.Value = s",
+    "internal/sentry/types.go:68": "\tvar n json.Number",
+    "internal/sentry/types.go:69": "\tif err := json.Unmarshal(data, \u0026n); err == nil {",
+    "internal/sentry/types.go:70": "\t\tid.Value = n.String()",
+    "internal/sentry/types.go:84": "\tvar obj MonitorOwner",
+    "internal/sentry/types.go:85": "\tif err := json.Unmarshal(data, \u0026obj); err == nil \u0026\u0026 obj.Type != \"\" {",
+    "internal/sentry/types.go:86": "\t\to.MonitorOwner = \u0026obj",
+    "internal/sentry/types.go:90": "\tvar s string",
+    "internal/sentry/types.go:91": "\tif err := json.Unmarshal(data, \u0026s); err == nil \u0026\u0026 s != \"\" {",
+    "internal/sentry/types.go:92": "\t\tparts := strings.SplitN(s, \":\", 2)",
+    "internal/sentry/types.go:93": "\t\tif len(parts) == 2 {",
+    "internal/sentry/types.go:94": "\t\t\to.MonitorOwner = \u0026MonitorOwner{Type: parts[0], Name: parts[1]}",
+    "internal/sentry/types.go:96": "\t\t\to.MonitorOwner = \u0026MonitorOwner{Name: s}"
+  }
+}
