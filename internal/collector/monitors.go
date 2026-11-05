@@ -15,7 +15,8 @@ type MonitorMetrics struct {
 	WithAlertTargetsCount int                `json:"with_alert_targets_count"`
 	WithAlertTargetsPct   *int               `json:"with_alert_targets_pct"`
 	DenominatorMonitors   int                `json:"denominator_monitors"`
-	Inventory             []MonitorInventory `json:"inventory,omitempty"`
+	Inventory             []MonitorInventory `json:"inventory,omitzero"`
+	InventoryTruncated    bool               `json:"inventory_truncated,omitempty"`
 }
 
 type MonitorInventory struct {
@@ -40,11 +41,11 @@ type ConnectedWorkflow struct {
 }
 
 type LatestGroup struct {
-	Environment    string          `json:"environment"`
-	Status         string          `json:"status"`
-	LastCheckIn    *time.Time      `json:"last_check_in"`
-	NextCheckIn    *time.Time      `json:"next_check_in"`
-	ActiveIncident *IncidentEntry  `json:"active_incident"`
+	Environment    string         `json:"environment"`
+	Status         string         `json:"status"`
+	LastCheckIn    *time.Time     `json:"last_check_in"`
+	NextCheckIn    *time.Time     `json:"next_check_in"`
+	ActiveIncident *IncidentEntry `json:"active_incident"`
 }
 
 type IncidentEntry struct {
@@ -87,6 +88,7 @@ func computeMonitorMetrics(monitors []sentry.Monitor, level Level) (MonitorMetri
 			msg := fmt.Sprintf("monitors truncated from %d to %d", len(items), maxInventorySize)
 			truncationMsg = &msg
 			items = items[:maxInventorySize]
+			m.InventoryTruncated = true
 		}
 		inv := make([]MonitorInventory, 0, len(items))
 		for _, mon := range items {
@@ -100,14 +102,14 @@ func computeMonitorMetrics(monitors []sentry.Monitor, level Level) (MonitorMetri
 
 func buildMonitorInventory(mon sentry.Monitor, level Level) MonitorInventory {
 	item := MonitorInventory{
-		ID:           mon.ID,
-		Name:         mon.Name,
-		Type:         mon.Type,
-		Status:       mon.Status,
-		IsMuted:      mon.IsMuted,
-		ScheduleType: mon.Config.ScheduleType,
-		Schedule:     mon.Config.Schedule,
-		Project:      mon.Project.Slug,
+		ID:                 mon.ID,
+		Name:               mon.Name,
+		Type:               mon.Type,
+		Status:             mon.Status,
+		IsMuted:            mon.IsMuted,
+		ScheduleType:       mon.Config.ScheduleType,
+		Schedule:           mon.Config.Schedule,
+		Project:            mon.Project.Slug,
 		ConnectedWorkflows: buildConnectedWorkflows(mon),
 		LatestGroup:        buildLatestGroup(mon),
 		Environments:       buildEnvironmentNames(mon),

@@ -97,13 +97,13 @@ func TestComputeMonitorMetrics_AuditIncludesInventory(t *testing.T) {
 	now := time.Now()
 	monitors := []sentry.Monitor{
 		{
-			ID:     "abc123",
-			Name:   "daily-sync",
-			Type:   "cron_job",
-			Status: "active",
-			Config: sentry.MonitorConfig{ScheduleType: "crontab", Schedule: "0 2 * * *"},
+			ID:      "abc123",
+			Name:    "daily-sync",
+			Type:    "cron_job",
+			Status:  "active",
+			Config:  sentry.MonitorConfig{ScheduleType: "crontab", Schedule: "0 2 * * *"},
 			Project: sentry.MonitorProject{Slug: "billing"},
-			Owner:  &sentry.MonitorOwner{Type: "team", Name: "backend"},
+			Owner:   &sentry.MonitorOwner{Type: "team", Name: "backend"},
 			AlertRule: &sentry.MonitorAlert{
 				Targets: []sentry.AlertTarget{{TargetType: 2, TargetIdentifier: 42}},
 			},

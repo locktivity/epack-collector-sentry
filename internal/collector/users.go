@@ -7,28 +7,29 @@ import (
 )
 
 type UserMetrics struct {
-	TotalCount           int              `json:"total_count"`
-	ActiveCount          int              `json:"active_count"`
-	PendingCount         int              `json:"pending_count"`
-	Has2FACount          int              `json:"has_2fa_count"`
-	Has2FAPct            *int             `json:"has_2fa_pct"`
-	SSOLinkedCount       int              `json:"sso_linked_count"`
-	SSOLinkedPct         *int             `json:"sso_linked_pct"`
-	DenominatorActiveUsers int            `json:"denominator_active_users"`
-	Inventory            []UserInventory  `json:"inventory,omitempty"`
+	TotalCount             int             `json:"total_count"`
+	ActiveCount            int             `json:"active_count"`
+	PendingCount           int             `json:"pending_count"`
+	Has2FACount            int             `json:"has_2fa_count"`
+	Has2FAPct              *int            `json:"has_2fa_pct"`
+	SSOLinkedCount         int             `json:"sso_linked_count"`
+	SSOLinkedPct           *int            `json:"sso_linked_pct"`
+	DenominatorActiveUsers int             `json:"denominator_active_users"`
+	Inventory              []UserInventory `json:"inventory,omitzero"`
+	InventoryTruncated     bool            `json:"inventory_truncated,omitempty"`
 }
 
 type UserInventory struct {
-	ID               string            `json:"id"`
-	Email            string            `json:"email"`
-	Name             string            `json:"name"`
-	OrgRole          string            `json:"org_role"`
-	Has2FA           bool              `json:"has_2fa"`
-	SSOLinked        bool              `json:"sso_linked"`
-	IsActive         bool              `json:"is_active"`
-	DateCreated      string            `json:"date_created,omitempty"`
-	LastActive       string            `json:"last_active,omitempty"`
-	TeamMemberships  []TeamMembership  `json:"team_memberships,omitempty"`
+	ID              string           `json:"id"`
+	Email           string           `json:"email"`
+	Name            string           `json:"name"`
+	OrgRole         string           `json:"org_role"`
+	Has2FA          bool             `json:"has_2fa"`
+	SSOLinked       bool             `json:"sso_linked"`
+	IsActive        bool             `json:"is_active"`
+	DateCreated     string           `json:"date_created,omitempty"`
+	LastActive      string           `json:"last_active,omitempty"`
+	TeamMemberships []TeamMembership `json:"team_memberships,omitzero"`
 }
 
 type TeamMembership struct {
@@ -74,14 +75,13 @@ func computeUserMetrics(members []sentry.Member, level Level, teamMemberships Te
 			msg := fmt.Sprintf("users truncated from %d to %d", len(items), maxInventorySize)
 			truncationMsg = &msg
 			items = items[:maxInventorySize]
+			m.InventoryTruncated = true
 		}
 		inv := make([]UserInventory, 0, len(items))
 		for _, mem := range items {
 			item := buildUserInventory(mem)
 			if level.AtLeast(LevelInternal) && teamMemberships != nil {
-				if memberships, ok := teamMemberships[mem.ID]; ok {
-					item.TeamMemberships = memberships
-				}
+				item.TeamMemberships = append([]TeamMembership{}, teamMemberships[mem.ID]...)
 			}
 			inv = append(inv, item)
 		}

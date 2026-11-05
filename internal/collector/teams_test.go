@@ -47,7 +47,8 @@ func TestComputeTeamMetrics_AuditIncludesInventory(t *testing.T) {
 	teams := []sentry.Team{
 		{
 			ID: "t42", Slug: "backend", Name: "Backend Team",
-			MemberCount: 6, ProjectCount: 3,
+			MemberCount: 6,
+			Projects:    []sentry.TeamProject{{Slug: "billing"}, {Slug: "reporting"}, {Slug: "api"}},
 			DateCreated: "2024-01-10T09:00:00Z",
 		},
 	}
@@ -65,7 +66,7 @@ func TestComputeTeamMetrics_AuditIncludesInventory(t *testing.T) {
 		t.Errorf("MemberCount = %d, want 6", inv.MemberCount)
 	}
 	if inv.ProjectCount != 3 {
-		t.Errorf("ProjectCount = %d, want 3", inv.ProjectCount)
+		t.Errorf("ProjectCount = %d, want 3 from the team's projects", inv.ProjectCount)
 	}
 }
 
@@ -75,8 +76,8 @@ func TestComputeTeamMetrics_InternalIncludesMembers(t *testing.T) {
 	}
 	teamMembers := TeamMembersMap{
 		"backend": {
-			{ID: "u1", Email: "jane@acme.com", Name: "Jane", TeamRole: "admin"},
-			{ID: "u2", Email: "bob@acme.com", Name: "Bob", TeamRole: "contributor"},
+			{ID: "u1", Email: "jane@acme.com", Name: "Jane", TeamRole: "admin", User: &sentry.MemberUser{ID: "9001"}},
+			{ID: "u2", Email: "bob@acme.com", Name: "Bob", TeamRole: "contributor", User: &sentry.MemberUser{ID: "9002"}},
 		},
 	}
 
@@ -93,6 +94,38 @@ func TestComputeTeamMetrics_InternalIncludesMembers(t *testing.T) {
 	}
 	if m.Inventory[0].Members[1].TeamRole != "contributor" {
 		t.Errorf("TeamRole = %q, want %q", m.Inventory[0].Members[1].TeamRole, "contributor")
+	}
+}
+
+// A team member's user_id is the id of the member's Sentry user. The entry's
+// own id is the organization membership's, which is a different number.
+// A member invited to the team who has not joined has no user, so the
+// user_id is null.
+func TestComputeTeamMetrics_MemberUserID(t *testing.T) {
+	teams := []sentry.Team{
+		{ID: "t1", Slug: "backend", Name: "Backend", MemberCount: 2},
+	}
+	teamMembers := TeamMembersMap{
+		"backend": {
+			{ID: "57377908164", Email: "jane@acme.com", TeamRole: "contributor", User: &sentry.MemberUser{ID: "280094367316"}},
+			{ID: "57377908165", Email: "new@acme.com", TeamRole: "contributor"},
+		},
+	}
+
+	m, _ := computeTeamMetrics(teams, LevelInternal, teamMembers)
+
+	members := m.Inventory[0].Members
+	if len(members) != 2 {
+		t.Fatalf("expected 2 members, got %d", len(members))
+	}
+	switch got := members[0].UserID; {
+	case got == nil:
+		t.Error("UserID is nil, want the user's id 280094367316")
+	case *got != "280094367316":
+		t.Errorf("UserID = %q, want the user's id 280094367316", *got)
+	}
+	if got := members[1].UserID; got != nil {
+		t.Errorf("UserID = %q for a member with no user, want nil", *got)
 	}
 }
 

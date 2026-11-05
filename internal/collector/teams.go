@@ -7,25 +7,29 @@ import (
 )
 
 type TeamMetrics struct {
-	TotalCount       int              `json:"total_count"`
-	WithMembersCount int              `json:"with_members_count"`
-	Inventory        []TeamInventory  `json:"inventory,omitempty"`
+	TotalCount         int             `json:"total_count"`
+	WithMembersCount   int             `json:"with_members_count"`
+	Inventory          []TeamInventory `json:"inventory,omitzero"`
+	InventoryTruncated bool            `json:"inventory_truncated,omitempty"`
 }
 
 type TeamInventory struct {
-	ID           string              `json:"id"`
-	Slug         string              `json:"slug"`
-	Name         string              `json:"name"`
-	MemberCount  int                 `json:"member_count"`
-	ProjectCount int                 `json:"project_count"`
-	DateCreated  string              `json:"date_created,omitempty"`
-	Members      []TeamMemberDetail  `json:"members,omitempty"`
+	ID           string             `json:"id"`
+	Slug         string             `json:"slug"`
+	Name         string             `json:"name"`
+	MemberCount  int                `json:"member_count"`
+	ProjectCount int                `json:"project_count"`
+	DateCreated  string             `json:"date_created,omitempty"`
+	Members      []TeamMemberDetail `json:"members,omitzero"`
 }
 
+// TeamMemberDetail is one member of a team. UserID is the id of the
+// member's Sentry user. It is null for a member who has not joined yet and
+// so has no user.
 type TeamMemberDetail struct {
-	UserID   string `json:"user_id"`
-	Email    string `json:"email"`
-	TeamRole string `json:"team_role"`
+	UserID   *string `json:"user_id"`
+	Email    string  `json:"email"`
+	TeamRole string  `json:"team_role"`
 }
 
 type TeamMembersMap map[string][]sentry.TeamMember
@@ -48,6 +52,7 @@ func computeTeamMetrics(teams []sentry.Team, level Level, teamMembers TeamMember
 			msg := fmt.Sprintf("teams truncated from %d to %d", len(items), maxInventorySize)
 			truncationMsg = &msg
 			items = items[:maxInventorySize]
+			m.InventoryTruncated = true
 		}
 		inv := make([]TeamInventory, 0, len(items))
 		for _, t := range items {
@@ -56,18 +61,19 @@ func computeTeamMetrics(teams []sentry.Team, level Level, teamMembers TeamMember
 				Slug:         t.Slug,
 				Name:         t.Name,
 				MemberCount:  t.MemberCount,
-				ProjectCount: t.ProjectCount,
+				ProjectCount: len(t.Projects),
 				DateCreated:  t.DateCreated,
 			}
 			if level.AtLeast(LevelInternal) && teamMembers != nil {
 				if members, ok := teamMembers[t.Slug]; ok {
 					details := make([]TeamMemberDetail, 0, len(members))
 					for _, tm := range members {
-						details = append(details, TeamMemberDetail{
-							UserID:   tm.ID,
-							Email:    tm.Email,
-							TeamRole: tm.TeamRole,
-						})
+						detail := TeamMemberDetail{Email: tm.Email, TeamRole: tm.TeamRole}
+						if tm.User != nil {
+							id := tm.User.ID
+							detail.UserID = &id
+						}
+						details = append(details, detail)
 					}
 					ti.Members = details
 				}

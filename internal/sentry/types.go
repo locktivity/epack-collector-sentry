@@ -8,18 +8,18 @@ import (
 )
 
 type Monitor struct {
-	ID          string          `json:"id"`
-	Name        string          `json:"name"`
-	Slug        string          `json:"slug"`
-	Status      string          `json:"status"`
-	Type        string          `json:"type"`
-	IsMuted     bool            `json:"isMuted"`
-	Config      MonitorConfig   `json:"config"`
-	Project     MonitorProject  `json:"project"`
-	AlertRule   *MonitorAlert   `json:"alertRule"`
-	Owner       *MonitorOwner   `json:"owner"`
+	ID           string         `json:"id"`
+	Name         string         `json:"name"`
+	Slug         string         `json:"slug"`
+	Status       string         `json:"status"`
+	Type         string         `json:"type"`
+	IsMuted      bool           `json:"isMuted"`
+	Config       MonitorConfig  `json:"config"`
+	Project      MonitorProject `json:"project"`
+	AlertRule    *MonitorAlert  `json:"alertRule"`
+	Owner        *MonitorOwner  `json:"owner"`
 	Environments []MonitorEnv   `json:"environments"`
-	DateCreated time.Time       `json:"dateCreated"`
+	DateCreated  time.Time      `json:"dateCreated"`
 }
 
 type MonitorConfig struct {
@@ -101,11 +101,11 @@ func (o *OwnerField) UnmarshalJSON(data []byte) error {
 }
 
 type MonitorEnv struct {
-	Name            string           `json:"name"`
-	Status          string           `json:"status"`
-	LastCheckIn     *time.Time       `json:"lastCheckIn"`
-	NextCheckIn     *time.Time       `json:"nextCheckIn"`
-	ActiveIncident  *ActiveIncident  `json:"activeIncident"`
+	Name           string          `json:"name"`
+	Status         string          `json:"status"`
+	LastCheckIn    *time.Time      `json:"lastCheckIn"`
+	NextCheckIn    *time.Time      `json:"nextCheckIn"`
+	ActiveIncident *ActiveIncident `json:"activeIncident"`
 }
 
 type ActiveIncident struct {
@@ -114,20 +114,20 @@ type ActiveIncident struct {
 }
 
 type AlertRule struct {
-	ID            string            `json:"id"`
-	Name          string            `json:"name"`
-	Type          string            `json:"type"`
-	Status        any               `json:"status"`
-	DateCreated   string            `json:"dateCreated"`
-	Projects      []string          `json:"projects"`
-	Environment   *string           `json:"environment"`
-	Owner         *OwnerField       `json:"owner"`
-	Triggers      []AlertTrigger    `json:"triggers,omitempty"`
-	Actions       []AlertAction     `json:"actions,omitempty"`
-	Aggregate     string            `json:"aggregate,omitempty"`
-	TimeWindow    float64           `json:"timeWindow,omitempty"`
-	ThresholdType int               `json:"thresholdType,omitempty"`
-	DetectionType string            `json:"detectionType,omitempty"`
+	ID            string         `json:"id"`
+	Name          string         `json:"name"`
+	Type          string         `json:"type"`
+	Status        any            `json:"status"`
+	DateCreated   string         `json:"dateCreated"`
+	Projects      []string       `json:"projects"`
+	Environment   *string        `json:"environment"`
+	Owner         *OwnerField    `json:"owner"`
+	Triggers      []AlertTrigger `json:"triggers,omitempty"`
+	Actions       []AlertAction  `json:"actions,omitempty"`
+	Aggregate     string         `json:"aggregate,omitempty"`
+	TimeWindow    float64        `json:"timeWindow,omitempty"` // minutes
+	ThresholdType int            `json:"thresholdType,omitempty"`
+	DetectionType string         `json:"detectionType,omitempty"`
 }
 
 type AlertTrigger struct {
@@ -137,9 +137,9 @@ type AlertTrigger struct {
 }
 
 type AlertAction struct {
-	Type           string `json:"type"`
-	TargetType     string `json:"targetType"`
-	IntegrationID  any    `json:"integrationId,omitempty"`
+	Type          string `json:"type"`
+	TargetType    string `json:"targetType"`
+	IntegrationID any    `json:"integrationId,omitempty"`
 }
 
 type Member struct {
@@ -165,65 +165,84 @@ type MemberFlags struct {
 	SSOLinked bool `json:"sso:linked"`
 }
 
-type Team struct {
-	ID           string `json:"id"`
-	Slug         string `json:"slug"`
-	Name         string `json:"name"`
-	MemberCount  int    `json:"memberCount"`
-	ProjectCount int    `json:"projectCount,omitempty"`
-	DateCreated  string `json:"dateCreated"`
+// AuthProvider is the org SSO configuration. RequireLink is the "Require SSO"
+// enforcement setting: when true, members must authenticate through the
+// provider and cannot use password login.
+type AuthProvider struct {
+	ProviderName string `json:"provider_name"`
+	RequireLink  bool   `json:"require_link"`
+	ScimEnabled  bool   `json:"scim_enabled"`
 }
 
+type Team struct {
+	ID          string        `json:"id"`
+	Slug        string        `json:"slug"`
+	Name        string        `json:"name"`
+	MemberCount int           `json:"memberCount"`
+	Projects    []TeamProject `json:"projects"`
+	DateCreated string        `json:"dateCreated"`
+}
+
+// TeamProject is a project the team is assigned to.
+type TeamProject struct {
+	Slug string `json:"slug"`
+}
+
+// TeamMember is one entry of a team's members list. ID is the organization
+// membership's id, the same id the organization's members list gives. User
+// is the member's Sentry user, with its own id. It is null for a member who
+// was invited and has not joined yet.
 type TeamMember struct {
-	ID       string `json:"id"`
-	Email    string `json:"email"`
-	Name     string `json:"name"`
-	TeamRole string `json:"teamRole"`
+	ID       string      `json:"id"`
+	Email    string      `json:"email"`
+	Name     string      `json:"name"`
+	TeamRole string      `json:"teamRole"`
+	User     *MemberUser `json:"user"`
 }
 
 // Detector represents a monitoring rule from the documented
 // GET /api/0/organizations/{org}/detectors/ endpoint.
 type Detector struct {
-	ID           string              `json:"id"`
-	ProjectID    string              `json:"projectId"`
-	Name         string              `json:"name"`
-	Type         string              `json:"type"`
-	Description  *string             `json:"description"`
-	Owner        *OwnerField         `json:"owner"`
-	CreatedBy    *string             `json:"createdBy"`
-	DateCreated  string              `json:"dateCreated"`
-	DateUpdated  string              `json:"dateUpdated"`
-	WorkflowIds  []string            `json:"workflowIds"`
-	DataSources  []DetectorDataSource `json:"dataSources"`
+	ID             string                  `json:"id"`
+	ProjectID      string                  `json:"projectId"`
+	Name           string                  `json:"name"`
+	Type           string                  `json:"type"`
+	Description    *string                 `json:"description"`
+	Owner          *OwnerField             `json:"owner"`
+	CreatedBy      *string                 `json:"createdBy"`
+	DateCreated    string                  `json:"dateCreated"`
+	DateUpdated    string                  `json:"dateUpdated"`
+	WorkflowIds    []string                `json:"workflowIds"`
+	DataSources    []DetectorDataSource    `json:"dataSources"`
 	ConditionGroup *DetectorConditionGroup `json:"conditionGroup"`
-	Config       DetectorConfig      `json:"config"`
-	Enabled      bool                `json:"enabled"`
+	Config         DetectorConfig          `json:"config"`
+	Enabled        bool                    `json:"enabled"`
 }
 
 type DetectorDataSource struct {
-	ID       string                `json:"id"`
-	Type     string                `json:"type"`
-	SourceID string                `json:"sourceId"`
-	QueryObj *DetectorQueryObj     `json:"queryObj"`
+	ID       string            `json:"id"`
+	Type     string            `json:"type"`
+	SourceID string            `json:"sourceId"`
+	QueryObj *DetectorQueryObj `json:"queryObj"`
 }
 
 type DetectorQueryObj struct {
-	ID          string               `json:"id"`
-	SnubaQuery  *DetectorSnubaQuery  `json:"snubaQuery"`
+	ID         string              `json:"id"`
+	SnubaQuery *DetectorSnubaQuery `json:"snubaQuery"`
 }
 
 type DetectorSnubaQuery struct {
-	Dataset     string   `json:"dataset"`
-	Query       string   `json:"query"`
-	Aggregate   string   `json:"aggregate"`
-	TimeWindow  float64  `json:"timeWindow"`
-	Environment *string  `json:"environment"`
+	Dataset     string  `json:"dataset"`
+	Query       string  `json:"query"`
+	Aggregate   string  `json:"aggregate"`
+	TimeWindow  float64 `json:"timeWindow"`
+	Environment *string `json:"environment"`
 }
 
 type DetectorConditionGroup struct {
-	ID         string               `json:"id"`
-	LogicType  string               `json:"logicType"`
-	Conditions []DetectorCondition  `json:"conditions"`
+	ID         string              `json:"id"`
+	LogicType  string              `json:"logicType"`
+	Conditions []DetectorCondition `json:"conditions"`
 }
 
 type DetectorCondition struct {
@@ -241,20 +260,20 @@ type DetectorConfig struct {
 // Workflow represents a notification/action config from the documented
 // GET /api/0/organizations/{org}/workflows/ endpoint.
 type Workflow struct {
-	ID             string              `json:"id"`
-	Name           string              `json:"name"`
-	OrganizationID string              `json:"organizationId"`
-	CreatedBy      *string             `json:"createdBy"`
-	DateCreated    string              `json:"dateCreated"`
-	DateUpdated    string              `json:"dateUpdated"`
-	Triggers       *WorkflowTriggers   `json:"triggers"`
+	ID             string                 `json:"id"`
+	Name           string                 `json:"name"`
+	OrganizationID string                 `json:"organizationId"`
+	CreatedBy      *string                `json:"createdBy"`
+	DateCreated    string                 `json:"dateCreated"`
+	DateUpdated    string                 `json:"dateUpdated"`
+	Triggers       *WorkflowTriggers      `json:"triggers"`
 	ActionFilters  []WorkflowActionFilter `json:"actionFilters"`
-	Environment    *string             `json:"environment"`
-	Config         json.RawMessage     `json:"config"`
-	DetectorIds    []string            `json:"detectorIds"`
-	Enabled        bool                `json:"enabled"`
-	LastTriggered  *string             `json:"lastTriggered"`
-	Owner          *string             `json:"owner"`
+	Environment    *string                `json:"environment"`
+	Config         json.RawMessage        `json:"config"`
+	DetectorIds    []string               `json:"detectorIds"`
+	Enabled        bool                   `json:"enabled"`
+	LastTriggered  *string                `json:"lastTriggered"`
+	Owner          *string                `json:"owner"`
 }
 
 type WorkflowTriggers struct {
@@ -289,4 +308,41 @@ type Project struct {
 	ID   string `json:"id"`
 	Slug string `json:"slug"`
 	Name string `json:"name"`
+}
+
+// Organization is the part of the organization details the collector reads.
+// Require2FA is nil when the response leaves out require2FA.
+type Organization struct {
+	ID         string `json:"id"`
+	Slug       string `json:"slug"`
+	Name       string `json:"name"`
+	Require2FA *bool  `json:"require2FA"`
+}
+
+// Integration is an integration installed in the organization, such as Slack
+// or GitHub. OrganizationIntegrationStatus is active, disabled, or
+// pending_deletion.
+type Integration struct {
+	ID                            string              `json:"id"`
+	Name                          string              `json:"name"`
+	Provider                      IntegrationProvider `json:"provider"`
+	OrganizationIntegrationStatus string              `json:"organizationIntegrationStatus"`
+}
+
+// IntegrationProvider names the service an integration connects to.
+type IntegrationProvider struct {
+	Key string `json:"key"`
+}
+
+// SentryAppInstallation is a Sentry app installed in the organization. Its
+// Status is pending, installed, or pending_deletion.
+type SentryAppInstallation struct {
+	UUID   string                   `json:"uuid"`
+	Status string                   `json:"status"`
+	App    SentryAppInstallationApp `json:"app"`
+}
+
+// SentryAppInstallationApp names the installed app.
+type SentryAppInstallationApp struct {
+	Slug string `json:"slug"`
 }

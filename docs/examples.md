@@ -61,6 +61,12 @@ collectors:
   "collected_at": "2026-06-26T14:00:00Z",
   "collected_at_level": "trust",
   "organization": "acme-corp",
+  "auth": {
+    "sso_configured": true,
+    "sso_provider": "okta",
+    "sso_required": true,
+    "scim_enabled": false
+  },
   "monitoring_summary": {
     "alerts_or_monitors_enabled": true
   },

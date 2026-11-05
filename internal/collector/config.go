@@ -2,6 +2,7 @@ package collector
 
 import (
 	"fmt"
+	"net/url"
 	"strings"
 )
 
@@ -36,6 +37,9 @@ func ParseConfig(raw map[string]any) (Config, error) {
 		}
 		if s != "" && !strings.HasPrefix(s, "https://") {
 			return cfg, fmt.Errorf("config key 'sentry_url' must use https://")
+		}
+		if u, err := url.Parse(s); s != "" && (err != nil || u.Hostname() == "") {
+			return cfg, fmt.Errorf("config key 'sentry_url' must be a URL with a host")
 		}
 		cfg.SentryURL = s
 	}

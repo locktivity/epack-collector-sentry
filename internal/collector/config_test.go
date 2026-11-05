@@ -92,4 +92,3 @@ func TestParseConfig_SentryURLAcceptsHTTPS(t *testing.T) {
 		t.Errorf("SentryURL = %q, want %q", cfg.SentryURL, "https://sentry.example.com")
 	}
 }
-

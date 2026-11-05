@@ -5,38 +5,45 @@ import (
 	"testing"
 )
 
-func TestParseLinkHeader_WithNext(t *testing.T) {
-	resp := &http.Response{Header: http.Header{}}
-	resp.Header.Set("Link",
-		`<https://sentry.io/api/0/organizations/acme/monitors/?cursor=1234:0:0>; rel="previous"; results="false"; cursor="1234:0:1", `+
-			`<https://sentry.io/api/0/organizations/acme/monitors/?cursor=5678:100:0>; rel="next"; results="true"; cursor="5678:100:0"`)
+const pagedURL = "https://sentry.io/api/0/organizations/acme/monitors/"
 
-	info := parseLinkHeader(resp)
-	if !info.HasNext {
-		t.Error("expected HasNext = true")
+func linkResponse(link string) *http.Response {
+	resp := &http.Response{Header: http.Header{}}
+	if link != "" {
+		resp.Header.Set("Link", link)
 	}
-	if info.NextCursor != "5678:100:0" {
-		t.Errorf("NextCursor = %q, want %q", info.NextCursor, "5678:100:0")
+	return resp
+}
+
+func TestNextPageFollowsTheNextLink(t *testing.T) {
+	resp := linkResponse(`<` + pagedURL + `?cursor=1234:0:1>; rel="previous"; results="false"; cursor="1234:0:1", ` +
+		`<` + pagedURL + `?cursor=5678:100:0>; rel="next"; results="true"; cursor="5678:100:0"`)
+
+	next, ok := nextPage(resp)
+	if !ok || next.String() != pagedURL+"?cursor=5678:100:0" {
+		t.Errorf("nextPage = %v, %v; want %s?cursor=5678:100:0", next, ok, pagedURL)
 	}
 }
 
-func TestParseLinkHeader_NoNext(t *testing.T) {
-	resp := &http.Response{Header: http.Header{}}
-	resp.Header.Set("Link",
-		`<https://sentry.io/api/0/organizations/acme/monitors/?cursor=1234:0:0>; rel="previous"; results="false"; cursor="1234:0:1", `+
-			`<https://sentry.io/api/0/organizations/acme/monitors/?cursor=5678:100:0>; rel="next"; results="false"; cursor="5678:100:0"`)
+func TestNextPageStopsWhenTheNextLinkHasNoResults(t *testing.T) {
+	resp := linkResponse(`<` + pagedURL + `?cursor=1234:0:1>; rel="previous"; results="true"; cursor="1234:0:1", ` +
+		`<` + pagedURL + `?cursor=5678:100:0>; rel="next"; results="false"; cursor="5678:100:0"`)
 
-	info := parseLinkHeader(resp)
-	if info.HasNext {
-		t.Error("expected HasNext = false")
+	if next, ok := nextPage(resp); ok {
+		t.Errorf("nextPage = %v, want no next page", next)
 	}
 }
 
-func TestParseLinkHeader_Empty(t *testing.T) {
-	resp := &http.Response{Header: http.Header{}}
+func TestNextPageFollowsANextLinkWithoutResults(t *testing.T) {
+	resp := linkResponse(`<` + pagedURL + `?cursor=5678:100:0>; rel="next"`)
 
-	info := parseLinkHeader(resp)
-	if info.HasNext {
-		t.Error("expected HasNext = false for empty header")
+	if next, ok := nextPage(resp); !ok || next.String() != pagedURL+"?cursor=5678:100:0" {
+		t.Errorf("nextPage = %v, %v; want %s?cursor=5678:100:0", next, ok, pagedURL)
+	}
+}
+
+func TestNextPageWithoutALinkHeader(t *testing.T) {
+	if next, ok := nextPage(linkResponse("")); ok {
+		t.Errorf("nextPage = %v, want no next page", next)
 	}
 }
