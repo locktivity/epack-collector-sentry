@@ -113,6 +113,8 @@ func (c *Collector) Collect(ctx context.Context) (*Output, error) {
 		return nil, fmt.Errorf("signing in to Sentry: %w", err)
 	}
 	c.rec.SignedInAs(componentsdk.Principal{Provider: "sentry", Kind: "auth_token", TenantID: org.Slug})
+	c.rec.Targets(componentsdk.TargetOrganization, location("/organization")).
+		ChosenBy(componentsdk.ChosenByConfig, "organization")
 
 	monitors, monitorsErr := c.client.ListMonitors(ctx, c.cfg.Projects, c.cfg.Environments)
 	alertRules, alertRulesErr := c.client.ListAlertRules(ctx, c.cfg.Projects)

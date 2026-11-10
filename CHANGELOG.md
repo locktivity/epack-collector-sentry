@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## v0.3.1
+
+- The collector is built on epack v0.10.5.
+- The collector result's `targets` says what the run was pointed at: the organization, chosen by `organization`, at `organization` in `artifacts/sentry.details.json`.
+
 ## v0.3.0
 
 - Each run writes `artifacts/sentry.access-posture.json`, in the `evidencepack/access-posture@v1` format, and `collect` lists it as `access-posture`. It has the organization's sign-in rules, members, admins, and connected apps. Its `sign_in.sso_configured`, `sso_required`, and `scim_enabled` copy the `auth` values. `sign_in.mfa_required` is the organization's require-2FA setting.

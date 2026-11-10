@@ -354,6 +354,41 @@ func TestRunRecordsTheSignedInPrincipal(t *testing.T) {
 	}
 }
 
+// Every level declares the organization the config named, at the detailed
+// artifact's organization slug, which every level holds. Only the audit
+// level counts it.
+func TestRunDeclaresTheConfiguredOrganization(t *testing.T) {
+	one, complete := 1, true
+	for _, tc := range []struct {
+		level     string
+		responses []collectortest.Response
+		count     *int
+	}{
+		{"trust", kitTrustResponses(), nil},
+		{"audit", kitResponses(), &one},
+	} {
+		config := kitConfig()
+		config["level"] = tc.level
+		res := runInProcess(t, config, kitSecrets(), tc.responses)
+		if res.ExitCode != 0 || res.Result == nil {
+			t.Fatalf("%s: run failed with exit %d: %s", tc.level, res.ExitCode, res.Stderr)
+		}
+		want := []componentsdk.ResultTarget{{
+			Kind: componentsdk.TargetOrganization, ChosenBy: componentsdk.ChosenByConfig, ConfigKey: "organization",
+			At:    &componentsdk.Location{Path: artifactPath, Pointer: "/organization"},
+			Count: tc.count, Complete: &complete,
+		}}
+		if !reflect.DeepEqual(res.Result.Targets, want) {
+			got, _ := json.Marshal(res.Result.Targets)
+			wanted, _ := json.Marshal(want)
+			t.Errorf("%s: targets = %s, want %s", tc.level, got, wanted)
+		}
+		for _, f := range res.Result.Checks {
+			t.Errorf("%s: check finding %+v", tc.level, f)
+		}
+	}
+}
+
 func TestRunWithoutMemberReadSucceedsWithAGap(t *testing.T) {
 	responses := replaceResponse(kitResponses(), collectortest.Response{
 		URL:    kitOrg + "/members/",
