@@ -311,12 +311,15 @@ type Project struct {
 }
 
 // Organization is the part of the organization details the collector reads.
-// Require2FA is nil when the response leaves out require2FA.
+// Require2FA and OpenMembership are nil when the response leaves them out.
+// OpenMembership is the Open Membership setting, which lets any member join
+// any team.
 type Organization struct {
-	ID         string `json:"id"`
-	Slug       string `json:"slug"`
-	Name       string `json:"name"`
-	Require2FA *bool  `json:"require2FA"`
+	ID             string `json:"id"`
+	Slug           string `json:"slug"`
+	Name           string `json:"name"`
+	Require2FA     *bool  `json:"require2FA"`
+	OpenMembership *bool  `json:"openMembership"`
 }
 
 // Integration is an integration installed in the organization, such as Slack
