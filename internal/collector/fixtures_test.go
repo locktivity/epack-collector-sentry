@@ -95,7 +95,7 @@ func kitEmptyResponses() []collectortest.Response {
 	}
 }
 
-const kitOrganization = `{"id":"4507","slug":"acme-corp","name":"Acme Corp","require2FA":true,"status":{"id":"active","name":"active"}}`
+const kitOrganization = `{"id":"4507","slug":"acme-corp","name":"Acme Corp","require2FA":true,"openMembership":false,"status":{"id":"active","name":"active"}}`
 
 const (
 	kitIntegrationsURL  = kitOrg + "/integrations/?includeConfig=0&per_page=100"
@@ -232,8 +232,15 @@ const (
 	kitFrontendMembers = `[{"id": "104", "email": "ops@acme.com", "name": "Ops", "teamRole": "contributor", "user": {"id": "9004", "isActive": true, "has2fa": true}}]`
 )
 
+// kitOpenOrganization is kitOrganization with Open Membership on.
+const kitOpenOrganization = `{"id":"4507","slug":"acme-corp","name":"Acme Corp","require2FA":true,"openMembership":true,"status":{"id":"active","name":"active"}}`
+
+// kitOrganizationWithoutOpenMembership is kitOrganization without its
+// openMembership value.
+const kitOrganizationWithoutOpenMembership = `{"id":"4507","slug":"acme-corp","name":"Acme Corp","require2FA":true,"status":{"id":"active","name":"active"}}`
+
 // kitAccessOrganization requires no two-factor authentication.
-const kitAccessOrganization = `{"id":"4507","slug":"acme-corp","name":"Acme Corp","require2FA":false,"status":{"id":"active","name":"active"}}`
+const kitAccessOrganization = `{"id":"4507","slug":"acme-corp","name":"Acme Corp","require2FA":false,"openMembership":false,"status":{"id":"active","name":"active"}}`
 
 // kitAccessAuthProvider is a Google provider with Require SSO off.
 const kitAccessAuthProvider = `{"id":"2","provider_name":"google","pending_links_count":0,"login_url":"https://sentry.io/auth/login/acme-corp/","default_role":"member","require_link":false,"scim_enabled":false}`

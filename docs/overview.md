@@ -4,7 +4,7 @@ epack-collector-sentry is an epack collector built with the [Component SDK](http
 
 Collects application monitoring posture evidence from a Sentry organization. It reads cron monitors, alert rules, users, and teams to produce evidence that production systems are monitored and anomalies trigger response.
 
-Each run also writes `artifacts/sentry.access-posture.json` in the `evidencepack/access-posture@v1` format. It covers the organization's sign-in rules, members, admins, and connected apps. Admins are the members with the owner or manager role. With Require SSO off, members linked to SSO also count as signing in without SSO. The file has no `root` or `credentials` section. Sentry has no root account. Organization auth tokens can be listed only from a browser session or an OAuth app token, which the collector does not use.
+Each run also writes `artifacts/sentry.access-posture.json` in the `evidencepack/access-posture@v1` format. It covers the organization's sign-in rules, members, admins, and connected apps. Admins are the members with the owner or manager role. With Open Membership on, members with the admin role count too, since they can join any team and delete its projects. With Require SSO off, members linked to SSO also count as signing in without SSO. The file has no `root` or `credentials` section. Sentry has no root account. Organization auth tokens can be listed only from a browser session or an OAuth app token, which the collector does not use.
 
 ## Not collected
 

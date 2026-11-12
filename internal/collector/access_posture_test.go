@@ -16,7 +16,7 @@ import (
 // integrations, and two Sentry app installations.
 func accessFake() *fakeSentryAPI {
 	fake := richFake()
-	fake.org = &sentry.Organization{ID: "1", Slug: "acme-corp", Name: "Acme Corp", Require2FA: new(true)}
+	fake.org = &sentry.Organization{ID: "1", Slug: "acme-corp", Name: "Acme Corp", Require2FA: new(true), OpenMembership: new(false)}
 	fake.integrations = []sentry.Integration{
 		{ID: "301", Name: "Acme Workspace", Provider: sentry.IntegrationProvider{Key: "slack"}, OrganizationIntegrationStatus: "active"},
 		{ID: "303", Name: "acme.atlassian.net", Provider: sentry.IntegrationProvider{Key: "jira"}, OrganizationIntegrationStatus: "disabled"},
@@ -101,7 +101,7 @@ func TestTallyMembers(t *testing.T) {
 		deactivated,
 		{OrgRole: "owner", Pending: true},
 	}
-	got := tallyMembers(members, true, goldenTime)
+	got := tallyMembers(members, true, false, goldenTime)
 	want := memberTally{
 		members: 7, sso: 2, local: 5, localMFA: 3, inactive: 3,
 		admins: 3, ssoAdmins: 1, localAdmins: 2, localMFAAdmins: 1,
@@ -121,12 +121,30 @@ func TestTallyMembersCountsSSOLinkedMembersAsLocalUnlessSSOIsRequired(t *testing
 		member("member", true, false, recent),
 		member("member", false, true, recent),
 	}
-	if got, want := tallyMembers(members, true, goldenTime), (memberTally{members: 4, sso: 3, local: 1, localMFA: 1, admins: 2, ssoAdmins: 2}); got != want {
+	if got, want := tallyMembers(members, true, false, goldenTime), (memberTally{members: 4, sso: 3, local: 1, localMFA: 1, admins: 2, ssoAdmins: 2}); got != want {
 		t.Errorf("Require SSO on: tallyMembers() = %+v, want %+v", got, want)
 	}
 	want := memberTally{members: 4, sso: 3, local: 4, localMFA: 2, admins: 2, ssoAdmins: 2, localAdmins: 2, localMFAAdmins: 1}
-	if got := tallyMembers(members, false, goldenTime); got != want {
+	if got := tallyMembers(members, false, false, goldenTime); got != want {
 		t.Errorf("Require SSO off: tallyMembers() = %+v, want %+v", got, want)
+	}
+}
+
+// With Open Membership on, a member with the admin role can join any team
+// and delete its projects, so they count as an admin.
+func TestTallyMembersCountsTheAdminRoleWithOpenMembership(t *testing.T) {
+	recent := "2026-06-25T11:30:00Z"
+	members := []sentry.Member{
+		member("owner", true, true, recent),
+		member("admin", false, false, recent),
+		member("member", false, true, recent),
+	}
+	if got, want := tallyMembers(members, true, false, goldenTime), (memberTally{members: 3, sso: 1, local: 2, localMFA: 1, admins: 1, ssoAdmins: 1}); got != want {
+		t.Errorf("Open Membership off: tallyMembers() = %+v, want %+v", got, want)
+	}
+	want := memberTally{members: 3, sso: 1, local: 2, localMFA: 1, admins: 2, ssoAdmins: 1, localAdmins: 1}
+	if got := tallyMembers(members, true, true, goldenTime); got != want {
+		t.Errorf("Open Membership on: tallyMembers() = %+v, want %+v", got, want)
 	}
 }
 

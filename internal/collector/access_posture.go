@@ -59,7 +59,8 @@ type AccessMembers struct {
 	InactivePct         Percentage `json:"inactive_pct,omitzero"`
 }
 
-// AccessAdmins counts the members with the owner or manager role.
+// AccessAdmins counts the members with the owner or manager role, and with
+// Open Membership on, the members with the admin role.
 type AccessAdmins struct {
 	AdminsPresent            *bool      `json:"admins_present,omitempty"`
 	AdminCount               *int       `json:"admin_count,omitempty"`
@@ -116,6 +117,8 @@ const (
 	noExternalMembers  = "Sentry has no guest or external member type."
 	noRootAccount      = "Sentry has no built-in root account."
 	credentialsNotRead = "Sentry's org auth tokens API lists organization auth tokens only for a browser session or an OAuth app token with org:tokens, and this collector signs in with a personal or internal integration token."
+
+	openMembershipMissing = "The organization's details have no openMembership value, so it is unknown whether members with the admin role can join any team and delete its projects."
 )
 
 // accessPosture builds the access artifact, collected at collectedAt, from
@@ -135,8 +138,13 @@ func (c *Collector) accessPosture(ctx context.Context, collectedAt string, org *
 		c.rec.NotCollected(accessLocation("/admins"), membersErr)
 	} else {
 		required := auth.SSORequired != nil && *auth.SSORequired
-		t := tallyMembers(members, required, c.clock.Now())
+		open := org.OpenMembership != nil && *org.OpenMembership
+		t := tallyMembers(members, required, open, c.clock.Now())
 		a.Members, a.Admins = accessPeople(t, c.level)
+		if org.OpenMembership == nil && hasAdminRole(members) {
+			a.Admins = nil
+			c.rec.NotCollectedCode(accessLocation("/admins"), componentsdk.CodeInvalidResponse, openMembershipMissing)
+		}
 		if auth.SSORequired == nil {
 			c.leaveOutLocal(a.Members, a.Admins, t, authErr)
 		}
@@ -176,20 +184,22 @@ type memberTally struct {
 }
 
 // tallyMembers counts members as of now, with ssoRequired as the Require
-// SSO setting. A pending invitation is not a member yet, so it is not
-// counted. An admin has the owner or manager role. A member is local when
-// not linked to SSO. A member linked to SSO is local too unless Require SSO
-// is on, since they can still sign in with a password. A member is inactive
-// when their Sentry account is deactivated or they were last active more
-// than 90 days before now, or never.
-func tallyMembers(members []sentry.Member, ssoRequired bool, now time.Time) memberTally {
+// SSO setting and open as the Open Membership setting. A pending invitation
+// is not a member yet, so it is not counted. An admin has the owner or
+// manager role. With Open Membership on, a member with the admin role is an
+// admin too, since they can join any team and delete its projects. A member
+// is local when not linked to SSO. A member linked to SSO is local too
+// unless Require SSO is on, since they can still sign in with a password. A
+// member is inactive when their Sentry account is deactivated or they were
+// last active more than 90 days before now, or never.
+func tallyMembers(members []sentry.Member, ssoRequired, open bool, now time.Time) memberTally {
 	var t memberTally
 	for _, m := range members {
 		if m.Pending {
 			continue
 		}
 		t.members++
-		admin := m.OrgRole == "owner" || m.OrgRole == "manager"
+		admin := m.OrgRole == "owner" || m.OrgRole == "manager" || (open && m.OrgRole == "admin")
 		mfa := m.User != nil && m.User.Has2fa
 		if admin {
 			t.admins++
@@ -217,6 +227,17 @@ func tallyMembers(members []sentry.Member, ssoRequired bool, now time.Time) memb
 		}
 	}
 	return t
+}
+
+// hasAdminRole reports whether a member who is not a pending invitation has
+// the admin role.
+func hasAdminRole(members []sentry.Member) bool {
+	for _, m := range members {
+		if !m.Pending && m.OrgRole == "admin" {
+			return true
+		}
+	}
+	return false
 }
 
 // inactive reports whether a member's Sentry account u is deactivated, or
@@ -258,7 +279,8 @@ func accessPeople(t memberTally, level Level) (*AccessMembers, *AccessAdmins) {
 }
 
 // leaveOutLocal leaves out the local values in m and a that depend on the
-// Require SSO setting, which could not be read because of err. t is the
+// Require SSO setting, which could not be read because of err. a is nil when
+// the admins were left out already. t is the
 // tally taken with the setting off. A member linked to SSO is then local
 // only if the setting is off. A member not linked to SSO is local either
 // way, so a present flag stays when such a member is there.
@@ -275,7 +297,7 @@ func (c *Collector) leaveOutLocal(m *AccessMembers, a *AccessAdmins, t memberTal
 			pointers = append(pointers, "/members/local_members_present")
 		}
 	}
-	if t.ssoAdmins > 0 {
+	if a != nil && t.ssoAdmins > 0 {
 		a.LocalAdminCount, a.LocalMFAAdminCount, a.LocalAdminMFACoveragePct = nil, nil, Percentage{}
 		pointers = append(pointers, "/admins/local_admin_mfa_coverage_pct")
 		if c.level.AtLeast(LevelAudit) {

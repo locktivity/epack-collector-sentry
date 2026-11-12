@@ -186,6 +186,30 @@ func TestCollectorKit(t *testing.T) {
 				}},
 			},
 			{
+				// With Open Membership on, the member with the admin role can
+				// join any team and delete its projects, so they count as an
+				// admin beside the manager.
+				Name:      "Open Membership on",
+				Responses: replaceResponse(kitResponses(), collectortest.Response{URL: kitOrg + "/", Body: kitOpenOrganization}),
+				Expect: map[string]map[string]any{accessPosturePath: {
+					"/members/member_count":     3,
+					"/admins/admins_present":    true,
+					"/admins/admin_count":       2,
+					"/admins/admin_share_pct":   67,
+					"/admins/local_admin_count": 0,
+				}},
+			},
+			{
+				// Without the Open Membership setting, the member with the
+				// admin role may or may not be an admin.
+				Name:      "no Open Membership value",
+				Responses: replaceResponse(kitResponses(), collectortest.Response{URL: kitOrg + "/", Body: kitOrganizationWithoutOpenMembership}),
+				Expect: map[string]map[string]any{accessPosturePath: {
+					"/members/member_count": 3,
+					"/admins":               collectortest.Absent,
+				}},
+			},
+			{
 				// Without the SSO settings, the members linked to SSO may or
 				// may not be local. The member not linked to SSO is local
 				// either way, and both admins are linked.
