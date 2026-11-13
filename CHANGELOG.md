@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v0.3.3
+
+- The collector is built on epack v0.12.2.
+
 ## v0.3.2
 
 - In the access file, members with the admin role count as admins when the organization has Open Membership on, since they can join any team and delete its projects. When the organization's details leave out the Open Membership setting and a member has the admin role, `admins` is left out with an `invalid_response` gap.
